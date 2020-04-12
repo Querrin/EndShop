@@ -1,6 +1,6 @@
 name: EndShop
 version: ${project.version}
-main: com.hooklite.endshop.endshop.EndShop
+main: com.hooklite.endshop.EndShop
 api-version: 1.13
 prefix: EndShop
 authors: [Querrin]
