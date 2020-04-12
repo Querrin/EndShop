@@ -6,3 +6,4 @@ prefix: EndShop
 authors: [Querrin]
 description: An advanced shop for survival servers.
 website: hooklite.com
+depend: [Vault]

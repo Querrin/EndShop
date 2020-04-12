@@ -1,14 +1,13 @@
 package com.hooklite.endshop;
 
-import org.bukkit.configuration.file.FileConfiguration;
+import com.hooklite.endshop.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class EndShop extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        FileConfiguration defaultConfig = getConfig();
-        saveDefaultConfig();
+        Configuration.initDefaultConfigs();
 
 
     }
@@ -17,4 +16,5 @@ public final class EndShop extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
     }
+
 }
