@@ -1,0 +1,8 @@
+name: EndShop
+version: ${project.version}
+main: com.hooklite.endshop.endshop.EndShop
+api-version: 1.13
+prefix: EndShop
+authors: [Querrin]
+description: An advanced shop for survival servers.
+website: hooklite.com
