@@ -23,18 +23,23 @@ public class Configuration {
         Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
         InputStream exampleShop = Configuration.class.getResourceAsStream("/example-shop.yml");
 
-        List shops = DEFAULT_CONFIGURATION.getList("shops");
-        System.out.println(shops);
-
-        File makeShopDir = new File(SHOPS_DIRECTORY);
+         File makeShopDir = new File(SHOPS_DIRECTORY);
         if(!makeShopDir.exists()) makeShopDir.mkdir();
-
-        for(Object shopConfig : shops) {
-            System.out.println(shopConfig);
-        }
     }
 
     public static void loadShopConfigs() {
+        List shops = DEFAULT_CONFIGURATION.getList("shops");
 
+        for(Object shopConfig : shops) {
+            try {
+                File config = new File(SHOPS_DIRECTORY, shopConfig.toString() + ".yml");
+                if(!config.exists()) {
+                    config.createNewFile();
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

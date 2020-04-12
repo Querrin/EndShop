@@ -8,8 +8,7 @@ public final class EndShop extends JavaPlugin {
     @Override
     public void onEnable() {
         Configuration.initDefaultConfigs();
-
-
+        Configuration.loadShopConfigs();
     }
 
     @Override
