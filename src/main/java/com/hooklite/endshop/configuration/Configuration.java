@@ -1,7 +1,10 @@
 package com.hooklite.endshop.configuration;
 
+import com.hooklite.endshop.logging.PlayerLogger;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -19,16 +22,16 @@ public class Configuration {
     public static final FileConfiguration DEFAULT_CONFIGURATION = getPluginManager().getPlugin("EndShop").getConfig();
     public static final String SHOPS_DIRECTORY = Paths.get(PLUGIN_DIRECTORY, "shops").toString();
 
-    public static void initDefaultConfigs() {
+    public static void loadConfigs() {
         Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
         InputStream exampleShop = Configuration.class.getResourceAsStream("/example-shop.yml");
 
-         File makeShopDir = new File(SHOPS_DIRECTORY);
-        if(!makeShopDir.exists()) makeShopDir.mkdir();
-    }
-
-    public static void loadShopConfigs() {
         List shops = DEFAULT_CONFIGURATION.getList("shops");
+
+        File makeShopDir = new File(SHOPS_DIRECTORY);
+        if(!makeShopDir.exists()) makeShopDir.mkdir();
+
+        String registeredShops = "";
 
         for(Object shopConfig : shops) {
             try {
@@ -36,10 +39,12 @@ public class Configuration {
                 if(!config.exists()) {
                     config.createNewFile();
                 }
+                registeredShops += shopConfig.toString() + ", ";
             }
             catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println(ChatColor.GREEN + "Shops: " + registeredShops);
     }
 }

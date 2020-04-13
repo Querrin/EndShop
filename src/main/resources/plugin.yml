@@ -7,3 +7,7 @@ authors: [Querrin]
 description: An advanced shop for survival servers.
 website: hooklite.com
 depend: [Vault]
+commands:
+  reload:
+    description: Reloads the configuration files
+    usage: /<command>
