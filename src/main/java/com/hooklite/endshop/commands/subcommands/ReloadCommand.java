@@ -1,13 +1,12 @@
-package com.hooklite.endshop.commands;
+package com.hooklite.endshop.commands.subcommands;
 
 import com.hooklite.endshop.configuration.Configuration;
 import com.hooklite.endshop.logging.MessageLogger;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Reload implements SubCommand {
+import java.util.List;
+
+public class ReloadCommand implements SubCommand {
     private static final String NAME = "reload";
     private static final String DESCRIPTION = "Reloads the configuration files.";
     private static final String SYNTAX = "/es reload";
@@ -23,6 +22,13 @@ public class Reload implements SubCommand {
 
     @Override
     public void execute(Player player, String[] args) {
+        Configuration.loadConfigs();
+        MessageLogger.sendMessage(player, "Configurations reloaded!");
+    }
 
+    @Override
+    public List<String> getArguments(Player player, String[] args) {
+
+        return null;
     }
 }

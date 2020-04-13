@@ -1,5 +1,6 @@
 package com.hooklite.endshop;
 
+import com.hooklite.endshop.commands.CommandManager;
 import com.hooklite.endshop.configuration.Configuration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
