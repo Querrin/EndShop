@@ -1,7 +1,7 @@
 package com.hooklite.endshop.commands;
 
 import com.hooklite.endshop.configuration.Configuration;
-import com.hooklite.endshop.logging.PlayerLogger;
+import com.hooklite.endshop.logging.MessageLogger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +13,14 @@ public class Reload implements CommandExecutor, ICommand {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Configuration.loadConfigs();
-        PlayerLogger.sendMessage((Player) sender, "Configuration reloaded.");
+
+        if(sender instanceof Player) {
+            MessageLogger.sendMessage((Player) sender, "Configuration reloaded.");
+        }
+        else {
+
+        }
+
 
         return true;
     }

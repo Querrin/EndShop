@@ -1,6 +1,5 @@
 package com.hooklite.endshop.configuration;
 
-import com.hooklite.endshop.logging.PlayerLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -9,9 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.bukkit.Bukkit.getPluginManager;

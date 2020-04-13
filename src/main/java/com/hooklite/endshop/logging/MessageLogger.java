@@ -3,7 +3,7 @@ package com.hooklite.endshop.logging;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class PlayerLogger {
+public class MessageLogger {
     public static void sendMessage(Player player, String message) {
         String prefix = String.format("%s[%sEndShop%s]%s: ",
                 ChatColor.DARK_GRAY,
