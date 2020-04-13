@@ -7,26 +7,22 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Reload implements CommandExecutor, ICommand {
+public class Reload implements SubCommand {
     private static final String NAME = "reload";
+    private static final String DESCRIPTION = "Reloads the configuration files.";
+    private static final String SYNTAX = "/es reload";
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Configuration.loadConfigs();
-
-        if(sender instanceof Player) {
-            MessageLogger.sendMessage((Player) sender, "Configuration reloaded.");
-        }
-        else {
-
-        }
-
-
-        return true;
-    }
+    public String getName() { return NAME; }
 
     @Override
-    public String getName() {
-        return NAME;
+    public String getDescription() { return DESCRIPTION; }
+
+    @Override
+    public String getSyntax() { return SYNTAX; }
+
+    @Override
+    public void execute(Player player, String[] args) {
+
     }
 }

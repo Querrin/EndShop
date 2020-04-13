@@ -3,20 +3,12 @@ package com.hooklite.endshop.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class Shop implements CommandExecutor, ICommand {
-    private static final String NAME = "shop";
-
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
+public class Shop implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-
-        return true;
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        return false;
     }
 }

@@ -21,7 +21,7 @@ public class Configuration {
 
     public static void loadConfigs() {
         Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
-        InputStream exampleShop = Configuration.class.getResourceAsStream("/example-shop.yml");
+        // InputStream exampleShop = Configuration.class.getResourceAsStream("/example-shop.yml");
 
         List shops = DEFAULT_CONFIGURATION.getList("shops");
 

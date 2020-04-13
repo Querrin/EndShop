@@ -1,11 +1,8 @@
 package com.hooklite.endshop;
 
-import com.hooklite.endshop.commands.Commands;
-import com.hooklite.endshop.commands.Reload;
 import com.hooklite.endshop.configuration.Configuration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -17,9 +14,7 @@ public final class EndShop extends JavaPlugin {
     @Override
     public void onEnable() {
         Configuration.loadConfigs();
-        Commands.addCommandExecutor(new Reload());
-
-        Commands.registerCommands();
+        getCommand("endshop").setExecutor(new CommandManager());
     }
 
     @Override

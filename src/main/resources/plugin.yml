@@ -8,6 +8,12 @@ description: An advanced shop for survival servers.
 website: hooklite.com
 depend: [Vault]
 commands:
-  reload:
-    description: Reloads the configuration files
+  endshop:
+    description: Displays information about the plugin.
     usage: /<command>
+    permission: endshop
+    aliases: [es]
+  shop:
+    description: Opens the shop GUI
+    usage: /<command>
+    permission: endshop.shop
