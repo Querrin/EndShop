@@ -10,7 +10,7 @@ public class MessageLogger {
         player.sendMessage(PREFIX + message);
     }
 
-    public static void sendToConsole(String message) {
-
+    public static void toConsole(String message) {
+        System.out.println(PREFIX + message);
     }
 }

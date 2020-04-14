@@ -1,15 +1,20 @@
 package com.hooklite.endshop.configuration;
 
+import com.hooklite.endshop.logging.MessageLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.bukkit.Bukkit.getPluginManager;
 
@@ -21,12 +26,20 @@ public class Configuration {
 
     public static void loadConfigs() {
         Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
-        // InputStream exampleShop = Configuration.class.getResourceAsStream("/example-shop.yml");
+
+        // TODO: Get the example-shop.yml file content then write it to new shops
+        //ClassLoader classLoader = Configuration.class.getClassLoader();
+        //InputStream exampleShop = Configuration.class.getResourceAsStream("example-shop.yml");
+
 
         List shops = DEFAULT_CONFIGURATION.getList("shops");
 
         File makeShopDir = new File(SHOPS_DIRECTORY);
-        if(!makeShopDir.exists()) makeShopDir.mkdir();
+        if(!makeShopDir.exists()) {
+            if(!makeShopDir.mkdirs()) {
+                MessageLogger.toConsole(ChatColor.DARK_RED + "Unable to create configuration files!");
+            }
+        }
 
         String registeredShops = "";
 
@@ -42,6 +55,6 @@ public class Configuration {
                 e.printStackTrace();
             }
         }
-        System.out.println(ChatColor.GREEN + "Shops: " + registeredShops);
+        MessageLogger.toConsole(ChatColor.WHITE + "Loaded shops: " + registeredShops);
     }
 }

@@ -15,60 +15,53 @@ import java.util.List;
 
 public class CommandManager implements TabExecutor {
     private ArrayList<SubCommand> subCommands = new ArrayList<>();
+    private ArrayList<String> subCommandNames = new ArrayList<>();
 
 
     public CommandManager() {
         subCommands.add(new InfoCommand());
         subCommands.add(new ReloadCommand());
+
+        for(SubCommand subCommand : subCommands) {
+            subCommandNames.add(subCommand.getName());
+        }
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         if(args.length > 0) {
-            if(sender instanceof Player) {
-                for(SubCommand subCommand : subCommands) {
-                    if(subCommand.getName().equalsIgnoreCase(args[0])) {
-                        subCommand.execute((Player) sender, args);
-                    }
+            for (SubCommand subCommand : subCommands) {
+                if (subCommand.getName().equalsIgnoreCase(args[0])) {
+                    subCommand.execute((Player) sender, args);
                 }
             }
         }
-        else {
-
-        }
-
         return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
-            ArrayList<String> commands = new ArrayList<>();
-            for (int i = 0; i < subCommands.size(); i++) {
-                commands.add(subCommands.get(i).getName());
-            }
-
             if (args[0].isEmpty()) {
-                return commands;
+                return subCommandNames;
             }
             else {
                 ArrayList<String> typeCommands = new ArrayList<>();
-                for(int i = 0; i < commands.size(); i++) {
-                    if(commands.get(i).startsWith(args[0])) {
-                        typeCommands.add(commands.get(i));
+                for (String s : subCommandNames) {
+                    if (s.startsWith(args[0])) {
+                        typeCommands.add(s);
                     }
                 }
                 return typeCommands;
             }
         }
-        else if(args.length == 2) {
+        else if(args.length > 1) {
             for (SubCommand subCommand : subCommands) {
                 if (subCommand.getName().equalsIgnoreCase(args[1])) {
                     return subCommand.getArguments((Player) sender, args);
                 }
             }
         }
-
         return null;
     }
 }
