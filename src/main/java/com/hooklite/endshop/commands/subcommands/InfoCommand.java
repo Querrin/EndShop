@@ -25,7 +25,5 @@ public class InfoCommand implements SubCommand {
     }
 
     @Override
-    public ArrayList<String> getArguments(Player player, String[] args) {
-        return null;
-    }
+    public ArrayList<String> getArguments(Player player, String[] args) { return null; }
 }

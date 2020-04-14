@@ -4,7 +4,7 @@ import com.hooklite.endshop.configuration.Configuration;
 import com.hooklite.endshop.logging.MessageLogger;
 import org.bukkit.entity.Player;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ReloadCommand implements SubCommand {
     private static final String NAME = "reload";
@@ -27,8 +27,5 @@ public class ReloadCommand implements SubCommand {
     }
 
     @Override
-    public List<String> getArguments(Player player, String[] args) {
-
-        return null;
-    }
+    public ArrayList<String> getArguments(Player player, String[] args) { return null; }
 }

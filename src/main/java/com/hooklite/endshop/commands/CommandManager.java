@@ -15,14 +15,11 @@ import java.util.List;
 
 public class CommandManager implements TabExecutor {
     private ArrayList<SubCommand> subCommands = new ArrayList<>();
-    private int b = 0;
 
 
     public CommandManager() {
-        if(b > 0) System.out.println(ChatColor.RED + "Bad");
         subCommands.add(new InfoCommand());
         subCommands.add(new ReloadCommand());
-        b++;
     }
 
     @Override
@@ -45,15 +42,24 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        for(String arg : args) MessageLogger.sendMessage((Player) sender, arg);
-        MessageLogger.sendMessage((Player) sender , Integer.toString(args.length));
-
         if (args.length == 1) {
             ArrayList<String> commands = new ArrayList<>();
             for (int i = 0; i < subCommands.size(); i++) {
                 commands.add(subCommands.get(i).getName());
             }
-            return commands;
+
+            if (args[0].isEmpty()) {
+                return commands;
+            }
+            else {
+                ArrayList<String> typeCommands = new ArrayList<>();
+                for(int i = 0; i < commands.size(); i++) {
+                    if(commands.get(i).startsWith(args[0])) {
+                        typeCommands.add(commands.get(i));
+                    }
+                }
+                return typeCommands;
+            }
         }
         else if(args.length == 2) {
             for (SubCommand subCommand : subCommands) {
