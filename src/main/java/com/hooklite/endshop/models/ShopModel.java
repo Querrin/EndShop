@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class ShopModel {
     private String name;
+    private String title;
     private String currency;
     private ArrayList<ItemModel> items = new ArrayList<>();
     private int slot;
@@ -16,4 +17,6 @@ public class ShopModel {
     public void setItems(ArrayList<ItemModel> items) { this.items = items; }
     public int getSlot() { return slot; }
     public void setSlot(int slot) { this.slot = slot; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 }
