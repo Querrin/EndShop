@@ -4,17 +4,12 @@ import com.hooklite.endshop.logging.MessageLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.yaml.snakeyaml.Yaml;
 
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.nio.file.Files;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
 import static org.bukkit.Bukkit.getPluginManager;
 
@@ -26,11 +21,7 @@ public class Configuration {
 
     public static void loadConfigs() {
         Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
-
-        // TODO: Get the example-shop.yml file content then write it to new shops
-        //ClassLoader classLoader = Configuration.class.getClassLoader();
-        //InputStream exampleShop = Configuration.class.getResourceAsStream("example-shop.yml");
-
+        Map<String, Object> exampleShopConfig = new Yaml().load(Configuration.class.getResourceAsStream("/exampleShop.yml"));
 
         List shops = DEFAULT_CONFIGURATION.getList("shops");
 
