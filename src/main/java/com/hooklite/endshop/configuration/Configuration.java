@@ -1,9 +1,10 @@
 package com.hooklite.endshop.configuration;
 
 import com.hooklite.endshop.logging.MessageLogger;
-import com.hooklite.endshop.models.ShopModel;
+import com.hooklite.endshop.models.Shop;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.yaml.snakeyaml.Yaml;
@@ -21,14 +22,16 @@ public class Configuration {
     public static final String PLUGIN_DIRECTORY = getPluginManager().getPlugin("EndShop").getDataFolder().getPath();
     public static final FileConfiguration DEFAULT_CONFIGURATION = getPluginManager().getPlugin("EndShop").getConfig();
     public static final String SHOPS_DIRECTORY = Paths.get(PLUGIN_DIRECTORY, "shops").toString();
-    private static final ArrayList<ShopModel> SHOP_CONFIGURATIONS = new ArrayList<>();
+    private static final ArrayList<Shop> SHOP_CONFIGURATIONS = new ArrayList<>();
 
     /**
      * Loads and generated all needed configuration files
      */
     public static void loadConfigs() {
-        Map<String, Object> exampleShopConfig = getExampleShopConfig();
+        Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
 
+        // InputStream files should be low caps, otherwise it doesn't work!
+        YamlConfiguration exampleConfiguration = new YamlConfiguration().loadConfiguration(new InputStreamReader(Configuration.class.getResourceAsStream("/exampleshop.yml")));
         List shops = DEFAULT_CONFIGURATION.getList("shops");
 
         File makeShopDir = new File(SHOPS_DIRECTORY);
@@ -39,16 +42,10 @@ public class Configuration {
         }
 
         StringBuilder registeredShops = new StringBuilder();
-
         for(int i = 0; shops != null && i < shops.size(); i++) {
             try {
                 File config = new File(SHOPS_DIRECTORY, shops.get(i).toString() + ".yml");
-                if(!config.exists()) {
-                    if(!config.createNewFile()) { MessageLogger.toConsole("Unable to create config files!"); }
-                }
-                else {
-
-                }
+                exampleConfiguration.save(config);
 
                 if(shops.size() == 1)
                     registeredShops.append(shops.get(i).toString());
@@ -57,6 +54,7 @@ public class Configuration {
             }
             catch (IOException e) {
                 e.printStackTrace();
+
             }
         }
         MessageLogger.toConsole(ChatColor.WHITE + "Loaded shops: " + registeredShops);
@@ -64,19 +62,24 @@ public class Configuration {
         for(int i = 0; shops != null && i < shops.size(); i++) {
             try {
                 //Map<String, Object> configuration = new Yaml().load(new FileReader(new File(shops.get(i).toString() + ".yml")));
-                YamlConfiguration configuration = new Yaml().load(new FileReader(new File(shops.get(i).toString() + ".yml")));
-                ShopModel shopModel = new ShopModel();
-                shopModel.setName(shops.get(i).toString());
-                shopModel.setTitle(configuration.getString("title"));
+                YamlConfiguration configuration = new YamlConfiguration().loadConfiguration(new FileReader(new File(SHOPS_DIRECTORY, shops.get(i).toString() + ".yml")));
+                Shop shop = new Shop();
+                shop.setName(shops.get(i).toString());
+                shop.setTitle(configuration.getString("title"));
 
                 // TODO: Multiple currency support
                 String currency = configuration.getString("currency");
                 if(currency != null) {
                     if(currency.equalsIgnoreCase("money") || currency.equalsIgnoreCase("emeralds"))
-                        shopModel.setCurrency(currency);
+                        shop.setCurrency(currency);
                     else
-                        shopModel.setCurrency("money");
+                        shop.setCurrency("money");
                 }
+                int slot = configuration.getInt("slot");
+                if(slot >= 0) {
+                    shop.setSlot(slot);
+                }
+
 
             }
             catch (FileNotFoundException e) {
@@ -89,8 +92,15 @@ public class Configuration {
     /**
      * @return Example shop yaml configuration
      */
-    public static Map<String, Object> getExampleShopConfig() {
-        Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
-        return new Yaml().load(Configuration.class.getResourceAsStream("/exampleShop.yml"));
-    }
+//    public static Map<String, Object> getExampleShopConfig() {
+//        InputStream stream = Configuration.class.getResourceAsStream("/exampleshop.yml");
+//        Map<String, Object> yaml = new Yaml().load(stream);
+//        try {
+//            stream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        MessageLogger.toConsole(yaml.toString());
+//        return yaml;
+//    }
 }

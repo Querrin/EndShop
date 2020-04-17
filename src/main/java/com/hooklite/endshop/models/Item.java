@@ -2,7 +2,7 @@ package com.hooklite.endshop.models;
 
 import org.bukkit.Material;
 
-public class ItemModel {
+public class Item {
     private String name;
     private Material item;
     private int amount;
