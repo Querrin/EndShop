@@ -16,6 +16,7 @@ public final class EndShop extends JavaPlugin {
     @Override
     public void onEnable() {
         Configuration.loadConfigs();
+
         getCommand("endshop").setExecutor(new CommandManager());
         getCommand("shop").setExecutor(new ShopCommand());
     }

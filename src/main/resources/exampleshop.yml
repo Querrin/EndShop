@@ -1,2 +1,8 @@
 title: Example
-currency: money
+items:
+  example:
+    name: Oak Log
+    item: oak_log
+    amount: 1
+    buy-price: 10
+    sell-price: 5

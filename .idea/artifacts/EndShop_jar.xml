@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="EndShop:jar">
+    <output-path>$PROJECT_DIR$/../../../../Minecraft/TestServer/plugins</output-path>
+    <root id="archive" name="EndShop.jar">
+      <element id="module-output" name="EndShop" />
+    </root>
+  </artifact>
+</component>
