@@ -1,6 +1,9 @@
-package com.hooklite.endshop.models;
+package com.hooklite.endshop.shop;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class ShopItem {
     private String name;

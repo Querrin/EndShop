@@ -1,4 +1,6 @@
 title: Example
+display-item: oak_log
+slot: 0
 items:
   example:
     name: Oak Log

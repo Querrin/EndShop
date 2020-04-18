@@ -1,5 +1,6 @@
 package com.hooklite.endshop.commands.subcommands;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class InfoCommand implements SubCommand {
     public String getSyntax() { return SYNTAX; }
 
     @Override
-    public void execute(Player player, String[] args) {
+    public void execute(CommandSender sender, String[] args) {
 
     }
 

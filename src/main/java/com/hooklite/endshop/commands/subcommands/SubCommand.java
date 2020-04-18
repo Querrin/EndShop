@@ -1,5 +1,6 @@
 package com.hooklite.endshop.commands.subcommands;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -26,10 +27,10 @@ public interface SubCommand {
 
     /**
      * Executes the subcommand with the given parameters.
-     * @param player Sender of the command
+     * @param sender Sender of the command
      * @param args Arguments of the command
      */
-    void execute(Player player, String[] args);
+    void execute(CommandSender sender, String[] args);
 
     /**
      * Automatically completes arguments of a subcommand

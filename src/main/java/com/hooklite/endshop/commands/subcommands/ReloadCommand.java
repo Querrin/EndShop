@@ -2,6 +2,7 @@ package com.hooklite.endshop.commands.subcommands;
 
 import com.hooklite.endshop.configuration.Configuration;
 import com.hooklite.endshop.logging.MessageLogger;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -21,9 +22,12 @@ public class ReloadCommand implements SubCommand {
     public String getSyntax() { return SYNTAX; }
 
     @Override
-    public void execute(Player player, String[] args) {
-        Configuration.loadConfigs();
-        MessageLogger.sendMessage(player, "Configurations reloaded!");
+    public void execute(CommandSender sender, String[] args) {
+        Configuration.reloadConfigs();
+        if(sender instanceof Player) {
+            MessageLogger.toPlayer((Player) sender, "Configurations reloaded!");
+        }
+        MessageLogger.toConsole("Configurations reloaded!");
     }
 
     @Override

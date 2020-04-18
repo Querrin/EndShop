@@ -13,26 +13,26 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandManager implements TabExecutor {
+public class EndshopCommand implements TabExecutor {
     private ArrayList<SubCommand> subCommands = new ArrayList<>();
     private ArrayList<String> subCommandNames = new ArrayList<>();
 
 
-    public CommandManager() {
+    public EndshopCommand() {
         subCommands.add(new InfoCommand());
         subCommands.add(new ReloadCommand());
 
-        for(SubCommand subCommand : subCommands) {
+        for (SubCommand subCommand : subCommands) {
             subCommandNames.add(subCommand.getName());
         }
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-        if(args.length > 0) {
+        if (args.length > 0) {
             for (SubCommand subCommand : subCommands) {
                 if (subCommand.getName().equalsIgnoreCase(args[0])) {
-                    subCommand.execute((Player) sender, args);
+                    subCommand.execute(sender, args);
                 }
             }
         }
@@ -44,8 +44,7 @@ public class CommandManager implements TabExecutor {
         if (args.length == 1) {
             if (args[0].isEmpty()) {
                 return subCommandNames;
-            }
-            else {
+            } else {
                 ArrayList<String> typeCommands = new ArrayList<>();
                 for (String s : subCommandNames) {
                     if (s.startsWith(args[0])) {
@@ -54,8 +53,7 @@ public class CommandManager implements TabExecutor {
                 }
                 return typeCommands;
             }
-        }
-        else if(args.length > 1) {
+        } else if (args.length > 1) {
             for (SubCommand subCommand : subCommands) {
                 if (subCommand.getName().equalsIgnoreCase(args[1])) {
                     return subCommand.getArguments((Player) sender, args);
