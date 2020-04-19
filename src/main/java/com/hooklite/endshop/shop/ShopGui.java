@@ -16,7 +16,7 @@ public class ShopGui {
      * Initializes the GUI for shops
      * @param shops A list of shops
      */
-    public static void initInventory(List<Shop> shops) {
+    public static void initInventories(List<Shop> shops) {
         int maxInventorySlots = 0;
         int inventorySize = 0;
         for (Shop shop : Configuration.getShops()) {

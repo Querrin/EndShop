@@ -5,6 +5,7 @@ import com.hooklite.endshop.logging.MessageLogger;
 import com.hooklite.endshop.shop.ShopGui;
 import com.hooklite.endshop.shop.ShopItem;
 import com.hooklite.endshop.shop.Shop;
+import com.hooklite.endshop.shop.ShopItemGui;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -142,7 +143,7 @@ public class Configuration {
                     MessageLogger.toConsole(String.format("%sFile \"%s\" is improperly configured!", ChatColor.RED, shops.get(i).toString() + ".yml"));
                 }
                 SHOPS.add(shop);
-                shop.initShopItemInventory();
+                ShopGui.initInventories(SHOPS);
             } catch (FileNotFoundException e) {
                 MessageLogger.toConsole(String.format("Could not find \"%s\" file!", shops.get(i).toString() + ".yml"));
                 e.printStackTrace();
@@ -151,7 +152,8 @@ public class Configuration {
                 e.printStackTrace();
             }
         }
-        ShopGui.initInventory(SHOPS);
+        ShopGui.initInventories(SHOPS);
+        ShopItemGui.initShopItemInventories(SHOPS);
     }
 
 
