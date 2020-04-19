@@ -3,10 +3,15 @@ package com.hooklite.endshop.commands;
 import com.hooklite.endshop.configuration.Configuration;
 import com.hooklite.endshop.logging.MessageLogger;
 import com.hooklite.endshop.shop.Shop;
+import com.hooklite.endshop.shop.ShopGui;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -15,10 +20,9 @@ public class ShopCommand implements TabExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         if (commandSender instanceof Player) {
-            MessageLogger.toPlayer((Player) commandSender, Shop.getShopsGui().getContents().toString());
-            ((Player) commandSender).openInventory(Shop.getShopsGui());
+            ((Player) commandSender).openInventory(ShopGui.getInventory());
         }
-
+        
         return true;
     }
 

@@ -1,6 +1,5 @@
 package com.hooklite.endshop.shop;
 
-import com.hooklite.endshop.configuration.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Shop {
     private static Inventory shopsGui;
@@ -53,19 +53,5 @@ public class Shop {
         shopItemInventory = inventory;
     }
 
-    /**
-     * Returns the GUI which contains all shops.
-     * @return Shops inventory
-     */
-    public static void initShopsGui() {
-        Inventory inventory = Bukkit.createInventory(null, 36, "Shops");
-        for(Shop shop : Configuration.getShops()) {
-            ItemStack displayItem = new ItemStack(shop.displayItem, 1);
-            ItemMeta meta = displayItem.getItemMeta();
-            meta.setDisplayName(ChatColor.WHITE + shop.getTitle());
-            displayItem.setItemMeta(meta);
-            inventory.setItem(shop.slot, displayItem);
-        }
-        shopsGui = inventory;
-    }
+
 }
