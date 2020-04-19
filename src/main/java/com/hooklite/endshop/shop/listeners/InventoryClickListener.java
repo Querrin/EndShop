@@ -14,7 +14,7 @@ public class InventoryClickListener implements Listener {
             if (event.isLeftClick() || event.isRightClick() || event.isShiftClick()) {
                 for (Shop shop : Configuration.getShops()) {
                     if (shop.getSlot() == event.getSlot()) {
-                        event.getWhoClicked().openInventory(shop.getShopItemInventories());
+                        // TODO: Implement new inventory system and events
                     }
                 }
             }
