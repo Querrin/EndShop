@@ -176,13 +176,6 @@ public class Configuration {
         return true;
     }
 
-//    private static boolean setupChat() {
-//        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
-//        CHAT = rsp.getProvider();
-//        MessageLogger.toConsole(CHAT.toString());
-//        return true;
-//    }
-
     private static boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
         PERMISSIONS = rsp.getProvider();

@@ -35,8 +35,10 @@ public class ShopGui {
             inventorySize = 45;
         else if (maxInventorySlots < 45)
             inventorySize = 54;
+        else if (maxInventorySlots < 54)
+            inventorySize = 54;
         else
-            throw new IllegalArgumentException("Shop inventory size must be less than 45 because of navigation! Check the slot values in your shops!");
+            throw new IllegalArgumentException("Shop slot cannot be bigger than 53! Check your configs!");
 
         guiInventory = Bukkit.createInventory(null, inventorySize, String.format("%s%sShop", ChatColor.GRAY, ChatColor.BOLD));
 
