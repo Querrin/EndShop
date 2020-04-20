@@ -9,11 +9,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ShopItemGui {
-    private static Map<Shop, List<Inventory>> shopItemInventories;
+    private static HashMap<Shop, List<Inventory>> shopItemInventories = new HashMap<>();
     private static ItemStack backItem;
     private static ItemStack nextPageItem;
     private static ItemStack previousPageItem;
@@ -21,8 +22,8 @@ public class ShopItemGui {
     public static Map<Shop, List<Inventory>> getShopItemInventories() { return shopItemInventories; };
 
     public static void initShopItemInventories(List<Shop> shops) {
+        initNavigationItems();
         for(Shop shop : shops) {
-            initNavigationItems();
             int itemsAmount = shop.getShopItems().size();
             int inventorySize = 0;
 
@@ -48,6 +49,7 @@ public class ShopItemGui {
                     lore.add(String.format("%sBuy: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shopItem.getBuyPrice()));
                     lore.add(String.format("%sSell: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shopItem.getSellPrice()));
                     meta.setLore(lore);
+                    meta.setDisplayName(shopItem.getName());
                     item.setItemMeta(meta);
 
                     inventory.addItem(item);
@@ -76,6 +78,7 @@ public class ShopItemGui {
                         lore.add(String.format("%sBuy: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shopItem.getBuyPrice()));
                         lore.add(String.format("%sSell: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shopItem.getSellPrice()));
                         meta.setLore(lore);
+                        meta.setDisplayName(shopItem.getName());
                         item.setItemMeta(meta);
 
                         if(j % 44 == 0) {
@@ -94,7 +97,7 @@ public class ShopItemGui {
     private static void initNavigationItems() {
         try {
             ItemStack bItem = new ItemStack(Material.CHEST, 1);
-            ItemMeta backMeta = backItem.getItemMeta();
+            ItemMeta backMeta = bItem.getItemMeta();
             backMeta.setDisplayName(String.format("%s%sBack", ChatColor.RED, ChatColor.BOLD));
             bItem.setItemMeta(backMeta);
             backItem = bItem;
@@ -106,7 +109,7 @@ public class ShopItemGui {
             nextPageItem = npItem;
 
             ItemStack ppItem = new ItemStack(Material.GOLD_NUGGET, 1);
-            ItemMeta previousPageMeta = backItem.getItemMeta();
+            ItemMeta previousPageMeta = ppItem.getItemMeta();
             previousPageMeta.setDisplayName(String.format("%sPrevious page", ChatColor.GOLD));
             ppItem.setItemMeta(previousPageMeta);
             previousPageItem = ppItem;

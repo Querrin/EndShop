@@ -40,7 +40,7 @@ public class ShopGui {
         else
             throw new IllegalArgumentException("Shop slot cannot be bigger than 53! Check your configs!");
 
-        guiInventory = Bukkit.createInventory(null, inventorySize, String.format("%s%sShop", ChatColor.GRAY, ChatColor.BOLD));
+        guiInventory = Bukkit.createInventory(null, inventorySize, String.format("%s%sShop", ChatColor.DARK_GRAY, ChatColor.BOLD));
 
         for (Shop shop : shops) {
             ItemStack displayItem = new ItemStack(shop.getDisplayItem(), 1);
