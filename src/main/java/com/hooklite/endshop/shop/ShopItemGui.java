@@ -74,30 +74,37 @@ public class ShopItemGui {
         }
     }
 
-
-    private static Inventory attachSingleInventoryNavigation(Inventory inventory) {
+    private static ItemStack getPagesItem(int pageNumber, int pages) {
         ItemStack pagesItem = new ItemStack(Material.BLUE_STAINED_GLASS);
         ItemMeta pagesMeta = pagesItem.getItemMeta();
         pagesMeta.setDisplayName(String.valueOf(ChatColor.DARK_PURPLE) +
                 ChatColor.BOLD +
                 "Page: " +
                 ChatColor.RED +
-                "1" +
+                pageNumber +
                 ChatColor.GRAY +
                 "/" +
                 ChatColor.RED +
-                "1");
+                pageNumber);
         pagesItem.setItemMeta(pagesMeta);
 
+        return pagesItem;
+    }
+
+
+    private static Inventory attachSingleInventoryNavigation(Inventory inventory) {
         int size = inventory.getSize();
         inventory.setItem(size - 9, backItem);
-        inventory.setItem(size - 5, pagesItem);
+        inventory.setItem(size - 5, getPagesItem(1, 1));
 
         return inventory;
     }
 
-    private static Inventory attachPagedInventoryNavigation(Inventory inventory, int page) {
-        // TODO: Finish function and implement variable page number
+    private static Inventory attachPagedInventoryNavigation(Inventory inventory, int pageNumber, int pages) {
+        inventory.setItem(45, backItem);
+        inventory.setItem(48, previousPageItem);
+        inventory.setItem(49, getPagesItem(pageNumber, pages));
+        inventory.setItem(50, nextPageItem);
 
         return inventory;
     }
