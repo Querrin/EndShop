@@ -11,10 +11,15 @@ import java.util.List;
 
 public class ShopItemGui {
     private static List<String> shopItemTitles = new ArrayList<>();
+    private static List<ShopItem> allShopItems = new ArrayList<>();
+
     public static List<String> getShopItemTitles() { return shopItemTitles; }
+    public static List<ShopItem> getAllShopItems() { return allShopItems; }
 
     public static void initShopItemInventories(List<Shop> shops) {
         initItemShopTitles(shops);
+        initAllShopItems(shops);
+
         for (Shop shop : shops) {
             int itemsAmount = shop.getShopItems().size();
             int inventorySize;
@@ -89,9 +94,20 @@ public class ShopItemGui {
         }
     }
 
-    public static void initItemShopTitles(List<Shop> shops) {
+    private static void initItemShopTitles(List<Shop> shops) {
         for (Shop shop : shops) {
-            shopItemTitles.add(shop.getTitle());
+            shopItemTitles.add(String.format("%s%sShops %s> %s%s",
+                    ChatColor.DARK_GRAY,
+                    ChatColor.BOLD,
+                    ChatColor.BLACK,
+                    ChatColor.RESET,
+                    shop.getTitle()));
+        }
+    }
+
+    private static void initAllShopItems(List<Shop> shops) {
+        for(Shop shop : shops) {
+            allShopItems.addAll(shop.getShopItems());
         }
     }
 }

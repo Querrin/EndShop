@@ -26,15 +26,15 @@ public class ShopGui {
         }
 
         if (maxInventorySlots < 9)
-            inventorySize = 18;
+            inventorySize = 9;
         else if (maxInventorySlots < 18)
-            inventorySize = 27;
+            inventorySize = 18;
         else if (maxInventorySlots < 27)
-            inventorySize = 36;
+            inventorySize = 27;
         else if (maxInventorySlots < 36)
-            inventorySize = 45;
+            inventorySize = 36;
         else if (maxInventorySlots < 45)
-            inventorySize = 54;
+            inventorySize = 45;
         else if (maxInventorySlots < 54)
             inventorySize = 54;
         else
@@ -48,6 +48,7 @@ public class ShopGui {
             meta.setDisplayName(ChatColor.WHITE + shop.getTitle());
             displayItem.setItemMeta(meta);
             guiInventory.setItem(shop.getSlot(), displayItem);
+
         }
     }
 

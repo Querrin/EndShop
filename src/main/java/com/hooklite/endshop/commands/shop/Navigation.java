@@ -12,6 +12,10 @@ public class Navigation {
     private static ItemStack nextPageItem = new ItemStack(Material.IRON_NUGGET, 1);
     private static ItemStack previousPageItem = new ItemStack(Material.IRON_NUGGET, 1);
 
+    public static ItemStack getBackItem() { return backItem; }
+    public static ItemStack getNextPageItem() { return nextPageItem; }
+    public static ItemStack getPreviousPageItem() { return previousPageItem; }
+
     static {
         try {
             ItemStack bItem = new ItemStack(Material.CHEST, 1);
@@ -74,7 +78,7 @@ public class Navigation {
     }
 
     static Inventory attachBuySellNavigation(Inventory inventory) {
-        inventory.setItem(13, backItem);
+        inventory.setItem(inventory.getSize() - 5, backItem);
         return inventory;
     }
 }
