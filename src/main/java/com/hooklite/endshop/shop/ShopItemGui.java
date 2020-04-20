@@ -8,7 +8,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,8 @@ public class ShopItemGui {
     private static ItemStack backItem;
     private static ItemStack nextPageItem;
     private static ItemStack previousPageItem;
+
+    public static Map<Shop, List<Inventory>> getShopItemInventories() { return shopItemInventories; };
 
     public static void initShopItemInventories(List<Shop> shops) {
         for(Shop shop : shops) {
@@ -34,10 +35,24 @@ public class ShopItemGui {
                     inventorySize = 36;
                 else if (itemsAmount < 36)
                     inventorySize = 45;
-                else if (itemsAmount < 45)
+                else
                     inventorySize = 54;
 
                 Inventory inventory = attachSingleInventoryNavigation(Bukkit.createInventory(null, inventorySize, shop.getTitle()));
+
+                for(ShopItem shopItem : shop.getShopItems()) {
+                    ItemStack item = new ItemStack(shopItem.getItem(), 1);
+                    ItemMeta meta = item.getItemMeta();
+
+                    ArrayList<String> lore = new ArrayList<>();
+                    lore.add(String.format("%sBuy: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shopItem.getBuyPrice()));
+                    lore.add(String.format("%sSell: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shopItem.getSellPrice()));
+                    meta.setLore(lore);
+                    item.setItemMeta(meta);
+
+                    inventory.addItem(item);
+                }
+
                 List<Inventory> inventories = new ArrayList<>();
                 inventories.add(inventory);
                 shopItemInventories.put(shop, inventories);
@@ -47,9 +62,29 @@ public class ShopItemGui {
                 double inventoryNumber = Math.ceil(shop.getShopItems().size() / 45.0);
                 List<Inventory> inventories = new ArrayList<>();
 
+                int j = 0;
                 for(int i = 0; i < shops.size(); i++) {
                     Inventory inventory = attachPagedInventoryNavigation(Bukkit.createInventory(null, 54, shops.get(i).getTitle()), i + 1, (int) inventoryNumber);
                     inventories.add(inventory);
+
+                    while(j < shops.get(i).getShopItems().size()) {
+                        ShopItem shopItem = shops.get(i).getShopItems().get(j);
+                        ItemStack item = new ItemStack(shopItem.getItem(), 1);
+                        ItemMeta meta = item.getItemMeta();
+
+                        ArrayList<String> lore = new ArrayList<>();
+                        lore.add(String.format("%sBuy: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shopItem.getBuyPrice()));
+                        lore.add(String.format("%sSell: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shopItem.getSellPrice()));
+                        meta.setLore(lore);
+                        item.setItemMeta(meta);
+
+                        if(j % 44 == 0) {
+                            j++;
+                            break;
+                        }
+                        inventory.addItem(item);
+                        j++;
+                    }
                 }
                 shopItemInventories.put(shop, inventories);
             }

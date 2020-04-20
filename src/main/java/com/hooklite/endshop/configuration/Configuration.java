@@ -133,7 +133,6 @@ public class Configuration {
                             ShopItem shopItem = new ShopItem();
                             shopItem.setName(configuration.getString("items." + item + ".name"));
                             shopItem.setItem(Material.matchMaterial(configuration.getString("items." + item + ".item")));
-                            shopItem.setAmount(configuration.getInt("items." + item + ".amount"));
                             shopItem.setBuyPrice(configuration.getDouble("items." + item + ".buy-price"));
                             shopItem.setSellPrice(configuration.getDouble("items." + item + ".sell-price"));
                             shop.addShopItem(shopItem);
