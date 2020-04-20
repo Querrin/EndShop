@@ -1,4 +1,4 @@
-package com.hooklite.endshop.shop.events;
+package com.hooklite.endshop.commands.shop.events;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

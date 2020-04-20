@@ -1,4 +1,4 @@
-package com.hooklite.endshop.shop;
+package com.hooklite.endshop.commands.shop;
 
 import org.bukkit.Material;
 

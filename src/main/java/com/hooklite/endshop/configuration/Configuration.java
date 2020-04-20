@@ -2,10 +2,10 @@ package com.hooklite.endshop.configuration;
 
 import com.hooklite.endshop.EndShop;
 import com.hooklite.endshop.logging.MessageLogger;
-import com.hooklite.endshop.shop.ShopGui;
-import com.hooklite.endshop.shop.ShopItem;
-import com.hooklite.endshop.shop.Shop;
-import com.hooklite.endshop.shop.ShopItemGui;
+import com.hooklite.endshop.commands.shop.ShopGui;
+import com.hooklite.endshop.commands.shop.ShopItem;
+import com.hooklite.endshop.commands.shop.Shop;
+import com.hooklite.endshop.commands.shop.ShopItemGui;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -32,11 +32,8 @@ public class Configuration {
     private static ArrayList<Shop> SHOPS = new ArrayList<>();
     private static Economy ECONOMY = null;
     private static Permission PERMISSIONS = null;
-    private static Chat CHAT = null;
 
-    public static List<Shop> getShops() {
-        return SHOPS;
-    }
+    public static List<Shop> getShops() { return SHOPS; }
 
     /**
      * Loads and creates all needed configuration files

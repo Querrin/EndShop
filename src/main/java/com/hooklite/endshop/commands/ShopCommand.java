@@ -1,17 +1,10 @@
 package com.hooklite.endshop.commands;
 
-import com.hooklite.endshop.configuration.Configuration;
-import com.hooklite.endshop.logging.MessageLogger;
-import com.hooklite.endshop.shop.Shop;
-import com.hooklite.endshop.shop.ShopGui;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import com.hooklite.endshop.commands.shop.ShopGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 

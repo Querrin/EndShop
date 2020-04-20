@@ -1,4 +1,4 @@
-package com.hooklite.endshop.shop;
+package com.hooklite.endshop.commands.shop;
 
 import com.hooklite.endshop.configuration.Configuration;
 import org.bukkit.Bukkit;
@@ -18,7 +18,7 @@ public class ShopGui {
      */
     public static void initInventories(List<Shop> shops) {
         int maxInventorySlots = 0;
-        int inventorySize = 0;
+        int inventorySize;
         for (Shop shop : Configuration.getShops()) {
             if (shop.getSlot() > maxInventorySlots) {
                 maxInventorySlots = shop.getSlot();
@@ -40,7 +40,7 @@ public class ShopGui {
         else
             throw new IllegalArgumentException("Shop slot cannot be bigger than 53! Check your configs!");
 
-        guiInventory = Bukkit.createInventory(null, inventorySize, String.format("%s%sShop", ChatColor.DARK_GRAY, ChatColor.BOLD));
+        guiInventory = Bukkit.createInventory(null, inventorySize, String.format("%s%sShops", ChatColor.DARK_GRAY, ChatColor.BOLD));
 
         for (Shop shop : shops) {
             ItemStack displayItem = new ItemStack(shop.getDisplayItem(), 1);

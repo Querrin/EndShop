@@ -3,8 +3,6 @@ package com.hooklite.endshop.commands;
 import com.hooklite.endshop.commands.subcommands.InfoCommand;
 import com.hooklite.endshop.commands.subcommands.ReloadCommand;
 import com.hooklite.endshop.commands.subcommands.SubCommand;
-import com.hooklite.endshop.logging.MessageLogger;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;

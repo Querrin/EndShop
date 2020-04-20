@@ -1,4 +1,4 @@
-package com.hooklite.endshop.shop;
+package com.hooklite.endshop.commands.shop;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -29,4 +29,5 @@ public class Shop {
     public void setDisplayItem(Material displayItem) { this.displayItem = displayItem; }
     public List<Inventory> getShopItemInventories() { return shopItemInventories; }
     public static Inventory getShopsGui() { return shopsGui; }
+    public void setShopItemInventories(List<Inventory> shopItemInventories) { this.shopItemInventories = shopItemInventories; }
 }

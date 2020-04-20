@@ -3,7 +3,7 @@ package com.hooklite.endshop;
 import com.hooklite.endshop.commands.EndshopCommand;
 import com.hooklite.endshop.commands.ShopCommand;
 import com.hooklite.endshop.configuration.Configuration;
-import com.hooklite.endshop.shop.listeners.InventoryClickListener;
+import com.hooklite.endshop.commands.shop.listeners.InventoryClickListener;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
