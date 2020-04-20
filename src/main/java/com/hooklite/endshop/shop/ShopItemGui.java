@@ -38,14 +38,20 @@ public class ShopItemGui {
                     inventorySize = 54;
 
                 Inventory inventory = attachSingleInventoryNavigation(Bukkit.createInventory(null, inventorySize, shop.getTitle()));
-                List<Inventory> list = new ArrayList<>();
-                list.add(inventory);
-                shopItemInventories.put(shop, list);
+                List<Inventory> inventories = new ArrayList<>();
+                inventories.add(inventory);
+                shopItemInventories.put(shop, inventories);
 
             }
             else {
-                // TODO: Finish loop for inventory navigation attachment
-                double inventories = Math.ceil(shop.getShopItems().size() / 45.0);
+                double inventoryNumber = Math.ceil(shop.getShopItems().size() / 45.0);
+                List<Inventory> inventories = new ArrayList<>();
+
+                for(int i = 0; i < shops.size(); i++) {
+                    Inventory inventory = attachPagedInventoryNavigation(Bukkit.createInventory(null, 54, shops.get(i).getTitle()), i + 1, (int) inventoryNumber);
+                    inventories.add(inventory);
+                }
+                shopItemInventories.put(shop, inventories);
             }
         }
     }
