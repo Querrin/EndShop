@@ -1,4 +1,4 @@
-package com.hooklite.endshop.commands.shop.listeners;
+package com.hooklite.endshop.commands.shop.gui;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -8,37 +8,51 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
-public class ShopInventory implements Inventory {
-    private List<ItemStack> items = new ArrayList<>();
+public class BuySellInventory implements Inventory {
+    private ItemStack[] items;
+    private int maxStackSize = 64;
+    private InventoryHolder holder;
+    private int size;
+    private String title;
+
+    public BuySellInventory(InventoryHolder holder, int size, String title) {
+        if(size <= 54 && size >= 9 && size % 9 == 0) {
+            this.items = new ItemStack[size];
+            this.holder = holder;
+            this.size = size;
+            this.title = title;
+        }
+        else
+            throw new IllegalArgumentException("Inventory size must be 9-45 and dividable by 9!");
+    }
 
     @Override
     public int getSize() {
-        return items.size();
+        return items.length;
     }
 
     @Override
     public int getMaxStackSize() {
-        return 0;
+        return maxStackSize;
     }
 
     @Override
     public void setMaxStackSize(int size) {
-
+        maxStackSize = size;
     }
 
     @Override
     public ItemStack getItem(int index) {
-        return null;
+        return items[index];
     }
 
     @Override
     public void setItem(int index, ItemStack item) {
-
+        items[index] = item;
     }
 
     @Override
@@ -63,36 +77,60 @@ public class ShopInventory implements Inventory {
 
     @Override
     public ItemStack[] getStorageContents() {
-        return new ItemStack[0];
+        return items;
+
     }
 
     @Override
     public void setStorageContents(ItemStack[] items) throws IllegalArgumentException {
-
+        this.items = items;
     }
 
     @Override
     public boolean contains(Material material) throws IllegalArgumentException {
+        for(ItemStack item : items) {
+            if(item.getType().equals(material))
+                return true;
+        }
         return false;
     }
 
     @Override
     public boolean contains(ItemStack item) {
+        for(ItemStack itemStack : items) {
+            if(itemStack.equals(item))
+                return true;
+        }
         return false;
     }
 
     @Override
     public boolean contains(Material material, int amount) throws IllegalArgumentException {
+        for(ItemStack item : items) {
+            if(item.getType().equals(material))
+                if(item.getAmount() == amount)
+                    return true;
+        }
         return false;
     }
 
     @Override
     public boolean contains(ItemStack item, int amount) {
+        for(ItemStack itemStack : items) {
+            if(itemStack.equals(item))
+                if(itemStack.getAmount() == amount)
+                    return true;
+        }
         return false;
     }
 
     @Override
     public boolean containsAtLeast(ItemStack item, int amount) {
+        for(ItemStack itemStack : items) {
+            if(itemStack.equals(item))
+                if(itemStack.getAmount() >= amount)
+                    return true;
+        }
         return false;
     }
 
@@ -123,22 +161,29 @@ public class ShopInventory implements Inventory {
 
     @Override
     public void remove(Material material) throws IllegalArgumentException {
-
+        for(int i = 0; i < items.length; i++) {
+            if(items[i].getType().equals(material)) {
+                items[i] = null;
+            }
+        }
     }
 
     @Override
     public void remove(ItemStack item) {
-
+        for(ItemStack itemStack : items) {
+            if(itemStack.equals(item))
+                itemStack = null;
+        }
     }
 
     @Override
     public void clear(int index) {
-
+        items[index] = null;
     }
 
     @Override
     public void clear() {
-
+        items = new ItemStack[size];
     }
 
     @Override
@@ -148,12 +193,12 @@ public class ShopInventory implements Inventory {
 
     @Override
     public InventoryType getType() {
-        return null;
+        return InventoryType.CHEST;
     }
 
     @Override
     public InventoryHolder getHolder() {
-        return null;
+        return holder;
     }
 
     @Override

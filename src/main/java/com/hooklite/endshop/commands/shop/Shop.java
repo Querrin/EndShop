@@ -14,7 +14,7 @@ public class Shop {
     private Material displayItem;
     private ArrayList<ShopItem> shopItems = new ArrayList<>();
     private int slot;
-    private List<Inventory> shopItemInventories;
+    private List<Inventory> shopInventories;
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -27,7 +27,7 @@ public class Shop {
     public void setTitle(String title) { this.title = title; }
     public Material getDisplayItem() { return displayItem; }
     public void setDisplayItem(Material displayItem) { this.displayItem = displayItem; }
-    public List<Inventory> getShopItemInventories() { return shopItemInventories; }
+    public List<Inventory> getShopInventories() { return shopInventories; }
     public static Inventory getShopsGui() { return shopsGui; }
-    public void setShopItemInventories(List<Inventory> shopItemInventories) { this.shopItemInventories = shopItemInventories; }
+    public void setShopInventories(List<Inventory> shopInventories) { this.shopInventories = shopInventories; }
 }

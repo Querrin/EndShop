@@ -1,6 +1,6 @@
 package com.hooklite.endshop.commands;
 
-import com.hooklite.endshop.commands.shop.ShopGui;
+import com.hooklite.endshop.commands.shop.gui.ShopsGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -13,7 +13,7 @@ public class ShopCommand implements TabExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         if (commandSender instanceof Player) {
-            ((Player) commandSender).openInventory(ShopGui.getInventory());
+            ((Player) commandSender).openInventory(ShopsGui.getInventory());
         }
         
         return true;

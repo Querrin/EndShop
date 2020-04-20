@@ -1,4 +1,4 @@
-package com.hooklite.endshop.commands.shop;
+package com.hooklite.endshop.commands.shop.gui;
 
 import com.hooklite.endshop.logging.MessageLogger;
 import org.bukkit.ChatColor;
@@ -60,7 +60,7 @@ public class Navigation {
         return pagesItem;
     }
 
-    static Inventory attachSingleInventoryNavigation(Inventory inventory) {
+    public static Inventory attachSingleInventoryNavigation(Inventory inventory) {
         int size = inventory.getSize();
         inventory.setItem(size - 9, backItem);
         inventory.setItem(size - 5, getPagesItem(1, 1));
@@ -68,7 +68,7 @@ public class Navigation {
         return inventory;
     }
 
-    static Inventory attachPagedInventoryNavigation(Inventory inventory, int pageNumber, int pages) {
+    public static Inventory attachPagedInventoryNavigation(Inventory inventory, int pageNumber, int pages) {
         inventory.setItem(45, backItem);
         inventory.setItem(48, previousPageItem);
         inventory.setItem(49, getPagesItem(pageNumber, pages));
@@ -77,7 +77,7 @@ public class Navigation {
         return inventory;
     }
 
-    static Inventory attachBuySellNavigation(Inventory inventory) {
+    public static Inventory attachBuySellNavigation(Inventory inventory) {
         inventory.setItem(inventory.getSize() - 5, backItem);
         return inventory;
     }

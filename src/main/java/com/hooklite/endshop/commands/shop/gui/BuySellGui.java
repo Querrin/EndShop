@@ -1,5 +1,6 @@
-package com.hooklite.endshop.commands.shop;
+package com.hooklite.endshop.commands.shop.gui;
 
+import com.hooklite.endshop.commands.shop.ShopItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuySellMenu {
+public class BuySellGui {
     public Inventory getInventory(ShopItem item) {
         Inventory inventory = Bukkit.createInventory(null, 36, String.format("%s%s> %s%s", ChatColor.BLACK, ChatColor.BOLD, ChatColor.RESET, item.getName()));
         Navigation.attachBuySellNavigation(inventory);

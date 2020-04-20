@@ -1,5 +1,6 @@
-package com.hooklite.endshop.commands.shop;
+package com.hooklite.endshop.commands.shop.gui;
 
+import com.hooklite.endshop.commands.shop.Shop;
 import com.hooklite.endshop.configuration.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class ShopGui {
+public class ShopsGui {
     private static Inventory guiInventory;
 
     /**

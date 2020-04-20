@@ -1,5 +1,7 @@
-package com.hooklite.endshop.commands.shop;
+package com.hooklite.endshop.commands.shop.gui;
 
+import com.hooklite.endshop.commands.shop.Shop;
+import com.hooklite.endshop.commands.shop.ShopItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.Inventory;
@@ -9,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopItemGui {
+public class ShopGui {
     private static List<String> shopItemTitles = new ArrayList<>();
     private static List<ShopItem> allShopItems = new ArrayList<>();
 
@@ -58,7 +60,7 @@ public class ShopItemGui {
 
                 List<Inventory> inventories = new ArrayList<>();
                 inventories.add(inventory);
-                shop.setShopItemInventories(inventories);
+                shop.setShopInventories(inventories);
             } else {
                 double inventoryNumber = Math.ceil(shop.getShopItems().size() / 45.0);
                 List<Inventory> inventories = new ArrayList<>();
@@ -89,7 +91,7 @@ public class ShopItemGui {
                         j++;
                     }
                 }
-                shop.setShopItemInventories(inventories);
+                shop.setShopInventories(inventories);
             }
         }
     }
