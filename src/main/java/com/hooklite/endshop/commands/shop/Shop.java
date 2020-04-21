@@ -15,6 +15,7 @@ public class Shop {
     private ArrayList<ShopItem> shopItems = new ArrayList<>();
     private int slot;
     private List<Inventory> shopInventories;
+    private List<Inventory> buySellInventories;
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -30,4 +31,6 @@ public class Shop {
     public List<Inventory> getShopInventories() { return shopInventories; }
     public static Inventory getShopsGui() { return shopsGui; }
     public void setShopInventories(List<Inventory> shopInventories) { this.shopInventories = shopInventories; }
+    public List<Inventory> getBuySellInventories() { return buySellInventories; }
+    public void setBuySellInventories(List<Inventory> buySellInventories) { this.buySellInventories = buySellInventories; }
 }

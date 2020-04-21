@@ -1,11 +1,12 @@
 package com.hooklite.endshop.configuration;
 
 import com.hooklite.endshop.EndShop;
-import com.hooklite.endshop.logging.MessageLogger;
-import com.hooklite.endshop.commands.shop.gui.ShopsGui;
-import com.hooklite.endshop.commands.shop.ShopItem;
 import com.hooklite.endshop.commands.shop.Shop;
+import com.hooklite.endshop.commands.shop.ShopItem;
+import com.hooklite.endshop.commands.shop.gui.BuySellGui;
 import com.hooklite.endshop.commands.shop.gui.ShopGui;
+import com.hooklite.endshop.commands.shop.gui.ShopsGui;
+import com.hooklite.endshop.logging.MessageLogger;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
@@ -149,6 +150,7 @@ public class Configuration {
         }
         ShopsGui.initInventories(SHOPS);
         ShopGui.initShopItemInventories(SHOPS);
+        BuySellGui.initBuySellInventories(SHOPS);
     }
 
 

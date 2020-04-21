@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopGui {
-    private static List<String> shopItemTitles = new ArrayList<>();
-    private static List<ShopItem> allShopItems = new ArrayList<>();
+    private static final List<String> shopItemTitles = new ArrayList<>();
+    private static final List<ShopItem> allShopItems = new ArrayList<>();
 
     public static List<String> getShopItemTitles() { return shopItemTitles; }
     public static List<ShopItem> getAllShopItems() { return allShopItems; }
@@ -45,17 +45,17 @@ public class ShopGui {
                         ChatColor.RESET,
                         shop.getTitle())));
 
-                for (ShopItem shopItem : shop.getShopItems()) {
-                    ItemStack item = new ItemStack(shopItem.getItem(), 1);
+                for (int i = 0; i < shop.getShopItems().size(); i++) {
+                    ItemStack item = new ItemStack(shop.getShopItems().get(i).getItem(), 1);
                     ItemMeta meta = item.getItemMeta();
 
                     ArrayList<String> lore = new ArrayList<>();
-                    lore.add(String.format("%sBuy: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shopItem.getBuyPrice()));
-                    lore.add(String.format("%sSell: %s$%s", ChatColor.GRAY, ChatColor.RED, shopItem.getSellPrice()));
+                    lore.add(String.format("%sBuy: %s$%s", ChatColor.GRAY, ChatColor.GREEN, shop.getShopItems().get(i).getBuyPrice()));
+                    lore.add(String.format("%sSell: %s$%s", ChatColor.GRAY, ChatColor.RED, shop.getShopItems().get(i).getSellPrice()));
                     meta.setLore(lore);
-                    meta.setDisplayName(shopItem.getName());
+                    meta.setDisplayName(shop.getShopItems().get(i).getName());
                     item.setItemMeta(meta);
-                    inventory.addItem(item);
+                    inventory.setItem(i, item);
                 }
 
                 List<Inventory> inventories = new ArrayList<>();

@@ -4,7 +4,6 @@ import com.hooklite.endshop.commands.EndshopCommand;
 import com.hooklite.endshop.commands.ShopCommand;
 import com.hooklite.endshop.commands.shop.listeners.InventoryDragListener;
 import com.hooklite.endshop.configuration.Configuration;
-import com.hooklite.endshop.commands.shop.listeners.InventoryClickListener;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,7 +23,6 @@ public final class EndShop extends JavaPlugin {
         getCommand("endshop").setExecutor(new EndshopCommand());
         getCommand("shop").setExecutor(new ShopCommand());
 
-        getPluginManager().registerEvents(new InventoryClickListener(), this);
         getPluginManager().registerEvents(new InventoryDragListener(), this);
     }
 
