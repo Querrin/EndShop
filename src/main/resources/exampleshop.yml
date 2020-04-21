@@ -1,9 +1,0 @@
-title: Example
-display-item: oak_log
-slot: 0
-items:
-  example:
-    name: Oak Log
-    item: oak_log
-    buy-price: 10
-    sell-price: 5

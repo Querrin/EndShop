@@ -1,34 +1,21 @@
 package com.hooklite.endshop;
 
-import com.hooklite.endshop.commands.EndshopCommand;
-import com.hooklite.endshop.commands.ShopCommand;
-import com.hooklite.endshop.commands.shop.listeners.InventoryDragListener;
-import com.hooklite.endshop.configuration.Configuration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-import static org.bukkit.Bukkit.getPluginManager;
 
 public final class EndShop extends JavaPlugin {
 
-    // TODO: command prefixing
 
     @Override
     public void onEnable() {
-        Configuration.loadConfigs();
-
-        getCommand("endshop").setExecutor(new EndshopCommand());
-        getCommand("shop").setExecutor(new ShopCommand());
-
-        getPluginManager().registerEvents(new InventoryDragListener(), this);
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
     }
 
     @Override

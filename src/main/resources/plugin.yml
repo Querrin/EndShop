@@ -7,13 +7,3 @@ authors: [Querrin]
 description: An advanced shop for survival servers.
 website: hooklite.com
 depend: [Vault]
-commands:
-  endshop:
-    description: Displays information about the plugin.
-    usage: /<command>
-    permission: endshop
-    aliases: [es]
-  shop:
-    description: Opens the shop GUI
-    usage: /<command>
-    permission: endshop.shop
