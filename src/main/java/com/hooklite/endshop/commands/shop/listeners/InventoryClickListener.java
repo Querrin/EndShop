@@ -19,7 +19,7 @@ public class InventoryClickListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getClickedInventory() != null && event.getCurrentItem() != null) {
+        if (event.getClickedInventory() != null) {
             if (event.getClickedInventory().equals(ShopsGui.getInventory())) {
                 if (event.getCurrentItem() != null && event.getCurrentItem().getType() != Material.AIR && event.getClickedInventory() != null) {
                     if (event.isLeftClick() || event.isRightClick() || event.isShiftClick()) {
@@ -35,31 +35,41 @@ public class InventoryClickListener implements Listener {
                 for (Shop shop : Configuration.getShops()) {
                     for (Inventory inventory : shop.getShopInventories()) {
                         if (event.getClickedInventory().equals(inventory)) {
-                            ItemStack clickedItem = event.getCurrentItem();
-                            Inventory clickedInventory = event.getClickedInventory();
+                            if (event.isLeftClick() || event.isRightClick() || event.isShiftClick()) {
+                                ItemStack clickedItem = event.getCurrentItem();
+                                Inventory clickedInventory = event.getClickedInventory();
 
-                            if (clickedItem.equals(Navigation.getBackItem())) {
-                                event.getWhoClicked().openInventory(ShopsGui.getInventory());
-                                break;
-                            }
-                            if (clickedItem.equals(Navigation.getNextPageItem())) {
-                                for (int i = 0; i < shop.getShopInventories().size(); i++) {
-                                    if (shop.getShopInventories().get(i).equals(clickedInventory)) {
-                                        if (shop.getShopInventories().size() > i) {
-                                            event.getWhoClicked().openInventory(shop.getShopInventories().get(i + 1));
-                                        }
+                                if (event.getCurrentItem() != null) {
+                                    if (clickedItem.equals(Navigation.getBackItem())) {
+                                        event.getWhoClicked().openInventory(ShopsGui.getInventory());
+                                        event.setCancelled(true);
                                         break;
                                     }
-                                }
-                            }
-                            if (clickedItem.equals(Navigation.getPreviousPageItem())) {
-                                for (int i = 0; i < shop.getShopInventories().size(); i++) {
-                                    if (shop.getShopInventories().get(i).equals(clickedInventory)) {
-                                        if (i > 0) {
-                                            event.getWhoClicked().openInventory(shop.getShopInventories().get(i - 1));
+                                    if (clickedItem.equals(Navigation.getNextPageItem())) {
+                                        for (int i = 0; i < shop.getShopInventories().size(); i++) {
+                                            if (shop.getShopInventories().get(i).equals(clickedInventory)) {
+                                                if (shop.getShopInventories().size() > i) {
+                                                    event.getWhoClicked().openInventory(shop.getShopInventories().get(i + 1));
+                                                }
+                                                event.setCancelled(true);
+                                                break;
+                                            }
                                         }
-                                        break;
                                     }
+                                    if (clickedItem.equals(Navigation.getPreviousPageItem())) {
+                                        for (int i = 0; i < shop.getShopInventories().size(); i++) {
+                                            if (shop.getShopInventories().get(i).equals(clickedInventory)) {
+                                                if (i > 0) {
+                                                    event.getWhoClicked().openInventory(shop.getShopInventories().get(i - 1));
+                                                }
+                                                event.setCancelled(true);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    event.setCancelled(true);
+                                    break;
                                 }
                             }
                         }
