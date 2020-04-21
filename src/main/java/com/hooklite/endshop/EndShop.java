@@ -12,6 +12,7 @@ public final class EndShop extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
     }
 
     @Override

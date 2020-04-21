@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data;
+package com.hooklite.endshop.data.models;
 
 import java.util.List;
 
