@@ -1,10 +1,10 @@
 package com.hooklite.endshop;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import com.hooklite.endshop.commands.CommandManager;
+import com.hooklite.endshop.listeners.InventoryEventListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
+import static org.bukkit.Bukkit.getPluginManager;
 
 
 public final class EndShop extends JavaPlugin {
@@ -12,20 +12,13 @@ public final class EndShop extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        getCommand("shop").setExecutor(new CommandManager());
+        getCommand("endshop").setExecutor(new CommandManager());
 
+        getPluginManager().registerEvents(new InventoryEventListener(), this);
     }
 
     @Override
     public void onDisable() {
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return super.onCommand(sender, command, label, args);
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return super.onTabComplete(sender, command, alias, args);
     }
 }
