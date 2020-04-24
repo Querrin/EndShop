@@ -1,13 +1,8 @@
 package com.hooklite.endshop.data.config;
 
-import com.hooklite.endshop.data.models.ECurrency;
-import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.data.models.EPage;
-import com.hooklite.endshop.data.models.EShop;
-import com.hooklite.endshop.data.rewards.ItemReward;
+import com.hooklite.endshop.data.models.DataModel;
 import com.hooklite.endshop.logging.MessageLogger;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -21,13 +16,14 @@ import java.util.Objects;
 public class Configuration {
     private static YamlConfiguration defaultConfig;
     private static final List<YamlConfiguration> shopConfigs = new ArrayList<>();
-    private static final List<EShop> shops = new ArrayList<>();
+    private static List<DataModel> shops = new ArrayList<>();
 
     static {
         try {
             setDefaultConfig();
             setShopConfigs();
-            setShopModels();
+
+            shops = ShopLoader.getModels(shopConfigs);
         } catch (InvalidConfigurationException e) {
             MessageLogger.toConsole(e.getMessage());
             e.printStackTrace();
@@ -47,7 +43,7 @@ public class Configuration {
         return shopConfigs;
     }
 
-    public static List<EShop> getShops() {
+    public static List<DataModel> getShops() {
         return shops;
     }
 
@@ -85,72 +81,5 @@ public class Configuration {
     private static void loadExampleConfig(File file) throws IOException {
         YamlConfiguration exampleConfig = new YamlConfiguration().loadConfiguration(new InputStreamReader(Configuration.class.getResourceAsStream("/example.yml")));
         exampleConfig.save(file);
-    }
-
-    private static void setShopModels() throws InvalidConfigurationException {
-        for (YamlConfiguration config : shopConfigs) {
-            EShop shop = new EShop();
-
-            shop.title = config.getString("title");
-            shop.description = config.getStringList("description");
-            shop.slot = config.getInt("slot");
-            shop.currency = ECurrency.VAULT;
-            shop.config = config;
-            shop.pages = getPages(getItems(config));
-            shop.displayItem = Material.matchMaterial(config.getString("display-item"));
-
-            shops.add(shop);
-        }
-    }
-
-    private static List<EPage> getPages(List<EItem> items) {
-        ArrayList<EPage> pages = new ArrayList<>();
-        int pageAmount = (int) Math.ceil(items.size() / 45.0);
-
-        int j = 0;
-        for (int i = 0; i < pageAmount; i++) {
-            EPage page = new EPage();
-            page.setNumber(i);
-
-            ArrayList<EItem> eItems = new ArrayList<>();
-            while (j < items.size()) {
-                eItems.add(items.get(j));
-
-                if (j % 44 == 0) {
-                    j++;
-                    break;
-                }
-                j++;
-            }
-
-            page.setItems(eItems);
-            pages.add(page);
-        }
-
-        return pages;
-    }
-
-    private static List<EItem> getItems(YamlConfiguration config) throws InvalidConfigurationException {
-        if (config.getConfigurationSection("items") != null) {
-            ArrayList<EItem> items = new ArrayList<>();
-
-            for (String item : config.getConfigurationSection("items").getKeys(true)) {
-                if (!item.contains(".")) {
-                    EItem eItem = new EItem();
-
-                    eItem.name = config.getString("name");
-                    eItem.description = config.getStringList("description").isEmpty() ? config.getStringList("description") : new ArrayList<>();
-                    eItem.displayItem = Material.matchMaterial(config.getString("display-item"));
-                    eItem.buyPrice = config.getDouble("buy-price");
-                    eItem.sellPrice = config.getDouble("sell-price");
-
-                    // TODO: Get a valid reward from the configuration file
-                    eItem.reward = new ItemReward();
-                }
-            }
-            return items;
-        } else {
-            throw new InvalidConfigurationException("Items are not properly configured!");
-        }
     }
 }

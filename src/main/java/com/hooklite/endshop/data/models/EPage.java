@@ -3,7 +3,7 @@ package com.hooklite.endshop.data.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EPage {
+public class EPage extends DataModel {
     private int number;
     private List<EItem> items = new ArrayList<>();
 

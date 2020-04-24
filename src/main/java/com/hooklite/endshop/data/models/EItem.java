@@ -5,9 +5,10 @@ import org.bukkit.Material;
 
 import java.util.List;
 
-public class EItem {
+public class EItem extends DataModel {
     public String name;
     public List<String> description;
+    public int slot;
     public Material displayItem;
     public double buyPrice;
     public double sellPrice;

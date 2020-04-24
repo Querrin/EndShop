@@ -6,7 +6,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EShop {
+public class EShop extends DataModel {
     public String title;
     public List<String> description;
     public Material displayItem;

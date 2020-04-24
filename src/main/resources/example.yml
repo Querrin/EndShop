@@ -7,3 +7,6 @@ slot: 0
 currency: vault
 items:
   example-item:
+    name: MyLog
+    display-item: BIRCH_LOG
+    rewards:
