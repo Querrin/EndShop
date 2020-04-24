@@ -12,5 +12,6 @@ public class EItem extends DataModel {
     public Material displayItem;
     public double buyPrice;
     public double sellPrice;
-    public EReward reward;
+    public List<EReward> buyRewards;
+    public List<EReward> sellRewards;
 }

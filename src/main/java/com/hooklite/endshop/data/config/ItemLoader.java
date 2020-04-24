@@ -1,7 +1,6 @@
 package com.hooklite.endshop.data.config;
 
 import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.data.rewards.ItemReward;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -35,7 +34,6 @@ class ItemLoader {
                     eItem.sellPrice = config.getDouble(String.format("items.%s.sell-price", item));
 
                     // TODO: Get a valid reward from the configuration file
-                    eItem.reward = new ItemReward();
 
                     items.add(eItem);
                 }

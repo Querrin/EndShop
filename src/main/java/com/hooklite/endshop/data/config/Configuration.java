@@ -1,6 +1,10 @@
 package com.hooklite.endshop.data.config;
 
 import com.hooklite.endshop.data.models.DataModel;
+import com.hooklite.endshop.data.rewards.types.EBalanceRewardType;
+import com.hooklite.endshop.data.rewards.types.ECommandRewardType;
+import com.hooklite.endshop.data.rewards.types.EItemRewardType;
+import com.hooklite.endshop.data.rewards.types.ERewardType;
 import com.hooklite.endshop.logging.MessageLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -17,11 +21,16 @@ public class Configuration {
     private static YamlConfiguration defaultConfig;
     private static final List<YamlConfiguration> shopConfigs = new ArrayList<>();
     private static List<DataModel> shops = new ArrayList<>();
+    private static final List<ERewardType> rewardTypes = new ArrayList<>();
 
     static {
         try {
             setDefaultConfig();
             setShopConfigs();
+
+            rewardTypes.add(new EBalanceRewardType());
+            rewardTypes.add(new ECommandRewardType());
+            rewardTypes.add(new EItemRewardType());
 
             shops = ShopLoader.getModels(shopConfigs);
         } catch (InvalidConfigurationException e) {
@@ -45,6 +54,14 @@ public class Configuration {
 
     public static List<DataModel> getShops() {
         return shops;
+    }
+
+    public static List<ERewardType> getRewardTypes() {
+        return rewardTypes;
+    }
+
+    public static void addReward(ERewardType type) {
+        rewardTypes.add(type);
     }
 
     private static void setDefaultConfig() throws NullPointerException {

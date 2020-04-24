@@ -1,4 +1,4 @@
 package com.hooklite.endshop.data.rewards;
 
-public class ItemReward extends EReward {
+public class EItemReward implements EReward {
 }
