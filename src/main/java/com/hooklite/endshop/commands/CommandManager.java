@@ -1,6 +1,6 @@
 package com.hooklite.endshop.commands;
 
-import com.hooklite.endshop.shop.events.ShopMenuOpenEvent;
+import com.hooklite.endshop.events.ShopMenuOpenEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

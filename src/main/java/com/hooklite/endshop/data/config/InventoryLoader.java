@@ -82,7 +82,7 @@ public class InventoryLoader {
     }
 
     private static int getSize(int itemAmount) {
-        int size = 0;
+        int size;
 
         if (itemAmount <= 9)
             size = 18;

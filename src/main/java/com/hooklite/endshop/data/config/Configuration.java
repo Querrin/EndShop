@@ -39,6 +39,8 @@ public class Configuration {
             econ = VaultLoader.getEcon();
             perms = VaultLoader.getPerms();
             shops = ShopLoader.getModels(shopConfigs);
+
+            listRegisteredShops();
         } catch (Exception e) {
             MessageLogger.toConsole(e.getMessage());
             e.printStackTrace();
@@ -86,9 +88,7 @@ public class Configuration {
                 MessageLogger.toConsole("Unable to create shops directory!");
         }
 
-        List<String> shopList = (List<String>) defaultConfig.getList("shops");
-
-        MessageLogger.toConsole(shopList.toString());
+        List<String> shopList = defaultConfig.getStringList("shops");
 
         for (String shop : shopList) {
             File file = new File(shopsDirectory.getPath(), shop + ".yml");
@@ -108,6 +108,22 @@ public class Configuration {
 
             shopConfigs.add(configuration);
         }
+    }
+
+    private static void listRegisteredShops() {
+        List<String> shopList = defaultConfig.getStringList("shops");
+        StringBuilder registeredShops = new StringBuilder();
+
+        for (int i = 0; i < shopList.size(); i++) {
+            if (shopList.size() == 1)
+                registeredShops.append(shopList.get(i));
+            else if (i == shopList.size() - 1)
+                registeredShops.append(shopList.get(i));
+            else
+                registeredShops.append(shopList.get(i)).append(", ");
+        }
+
+        MessageLogger.toConsole("Loaded shops: " + registeredShops.toString());
     }
 
     private static void loadExampleConfig(File file) throws IOException {

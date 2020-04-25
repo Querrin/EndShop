@@ -1,8 +1,8 @@
-package com.hooklite.endshop.shop.listeners;
+package com.hooklite.endshop.listeners;
 
 import com.hooklite.endshop.data.config.Configuration;
 import com.hooklite.endshop.data.config.InventoryLoader;
-import com.hooklite.endshop.shop.events.ShopMenuOpenEvent;
+import com.hooklite.endshop.events.ShopMenuOpenEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

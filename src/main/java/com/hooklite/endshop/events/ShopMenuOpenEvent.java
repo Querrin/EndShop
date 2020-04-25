@@ -1,4 +1,4 @@
-package com.hooklite.endshop.shop.events;
+package com.hooklite.endshop.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
