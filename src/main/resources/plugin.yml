@@ -1,6 +1,7 @@
 name: EndShop
 version: ${project.version}
 main: com.hooklite.endshop.EndShop
+load: POSTWORLD
 api-version: 1.13
 prefix: EndShop
 authors: [Querrin]
