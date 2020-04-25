@@ -1,10 +1,9 @@
-title: &6An example shop
+title: &aAn example shop
 description:
   - &aHello world
   - &6How are you?
 display-item: OAK_LOG
 slot: 0
-currency: vault
 items:
   example-item:
     name: MyLog

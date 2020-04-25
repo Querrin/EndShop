@@ -1,6 +1,5 @@
 package com.hooklite.endshop.data.config;
 
-import com.hooklite.endshop.data.models.ECurrency;
 import com.hooklite.endshop.data.models.EShop;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -26,7 +25,6 @@ class ShopLoader {
             shop.title = config.getString("title");
             shop.description = config.getStringList("description");
             shop.slot = config.getInt("slot");
-            shop.currency = ECurrency.VAULT;
             shop.config = config;
             shop.pages = PageLoader.getModels(ItemLoader.getModels(config));
             shop.displayItem = Material.matchMaterial(config.getString("display-item"));

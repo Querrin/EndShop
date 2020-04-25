@@ -75,7 +75,7 @@ public class InventoryLoader {
         ItemStack item = new ItemStack(Material.GOLD_NUGGET, 1);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(String.format("%sBalance: %s$%s", ChatColor.GRAY, ChatColor.GREEN, VaultLoader.getEcon().getBalance(player)));
+        meta.setDisplayName(String.format("%sBalance: %s$%s", ChatColor.GRAY, ChatColor.GREEN, Configuration.getEcon().getBalance(player)));
         item.setItemMeta(meta);
 
         return item;

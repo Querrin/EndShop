@@ -12,6 +12,5 @@ public class EShop extends DataModel {
     public Material displayItem;
     public int slot;
     public List<EPage> pages = new ArrayList<>();
-    public ECurrency currency;
     public YamlConfiguration config;
 }

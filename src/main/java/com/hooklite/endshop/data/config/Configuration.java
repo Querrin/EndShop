@@ -6,6 +6,8 @@ import com.hooklite.endshop.data.rewards.types.ECommandRewardType;
 import com.hooklite.endshop.data.rewards.types.EItemRewardType;
 import com.hooklite.endshop.data.rewards.types.ERewardType;
 import com.hooklite.endshop.logging.MessageLogger;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -22,6 +24,8 @@ public class Configuration {
     private static final List<YamlConfiguration> shopConfigs = new ArrayList<>();
     private static List<EShop> shops = new ArrayList<>();
     private static final List<ERewardType> rewardTypes = new ArrayList<>();
+    private static Economy econ;
+    private static Permission perms;
 
     public static void configurePlugin() {
         try {
@@ -32,14 +36,11 @@ public class Configuration {
             rewardTypes.add(new ECommandRewardType());
             rewardTypes.add(new EItemRewardType());
 
-            VaultLoader.setupVault();
+            econ = VaultLoader.getEcon();
+            perms = VaultLoader.getPerms();
             shops = ShopLoader.getModels(shopConfigs);
-        } catch (InvalidConfigurationException e) {
-            MessageLogger.toConsole(e.getMessage());
-            e.printStackTrace();
-            Bukkit.getPluginManager().disablePlugin(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("EndShop")));
         } catch (Exception e) {
-            MessageLogger.toConsole("Unable to load configuration files!");
+            MessageLogger.toConsole(e.getMessage());
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("EndShop")));
         }
@@ -63,6 +64,14 @@ public class Configuration {
 
     public static void addReward(ERewardType type) {
         rewardTypes.add(type);
+    }
+
+    public static Permission getPerms() {
+        return perms;
+    }
+
+    public static Economy getEcon() {
+        return econ;
     }
 
     private static void setDefaultConfig() throws NullPointerException {
