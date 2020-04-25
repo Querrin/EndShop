@@ -1,13 +1,28 @@
 package com.hooklite.endshop.data.rewards;
 
+import org.bukkit.entity.Player;
+
 public class EBalanceReward implements EReward {
-    // TODO: Implement a reward system
-    public EReward getReward() {
-        return null;
+    private double reward;
+    private RewardAction action;
+
+    @Override
+    public void executeReward(Player player) {
+        // TODO: Set the reward action
     }
 
     @Override
-    public EReward setReward(String reward) {
-        return null;
+    public RewardAction getRewardAction() {
+        return action;
+    }
+
+    @Override
+    public void setRewardAction(RewardAction action) {
+        this.action = action;
+    }
+
+    @Override
+    public void setReward(String reward) {
+        this.reward = Double.parseDouble(reward);
     }
 }

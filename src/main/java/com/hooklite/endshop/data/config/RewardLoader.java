@@ -1,22 +1,31 @@
 package com.hooklite.endshop.data.config;
 
 import com.hooklite.endshop.data.rewards.EReward;
+import com.hooklite.endshop.data.rewards.RewardAction;
 import com.hooklite.endshop.data.rewards.types.ERewardType;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 class RewardLoader {
-    static EReward getBuyModel(YamlConfiguration config, String item) {
-        ERewardType rewardType = getRewardType(config.getString("items." + item + ".buy-reward.type"));
-        String rewardString = config.getString("items." + item + ".buy-reward.reward");
+    static EReward getModel(YamlConfiguration config, String item, RewardAction action) throws InvalidConfigurationException {
+        ERewardType rewardType;
+        String rewardString;
 
-        return getReward(rewardType, rewardString);
-    }
+        if (action == RewardAction.BUY) {
+            rewardType = getRewardType(config.getString("items." + item + ".buy-reward.type"));
+            rewardString = config.getString("items." + item + ".buy-reward.reward");
+        } else {
+            rewardType = getRewardType(config.getString("items." + item + ".sell-reward.type"));
+            rewardString = config.getString("items." + item + ".sell-reward.reward");
+        }
 
-    static EReward getSellModel(YamlConfiguration config, String item) {
-        ERewardType rewardType = getRewardType(config.getString("items." + item + ".sell-reward.type"));
-        String rewardString = config.getString("items." + item + ".buy-reward.reward");
+        if (rewardType == null || rewardString == null)
+            throw new InvalidConfigurationException(String.format("Rewards of %s are improperly configured!", item));
 
-        return getReward(rewardType, rewardString);
+        EReward reward = getReward(rewardType, rewardString);
+        reward.setRewardAction(action);
+
+        return reward;
     }
 
     private static EReward getReward(ERewardType rewardType, String rewardString) {
