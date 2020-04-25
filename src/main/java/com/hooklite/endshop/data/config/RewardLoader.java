@@ -23,7 +23,6 @@ class RewardLoader {
             throw new InvalidConfigurationException(String.format("Rewards of %s are improperly configured!", item));
 
         EReward reward = getReward(rewardType, rewardString);
-        reward.setRewardAction(action);
 
         return reward;
     }
