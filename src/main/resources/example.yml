@@ -12,15 +12,10 @@ items:
     slot: 0
     buy-price: 10.0
     sell-price: 5.0
-    buy-rewards:
-      one:
-        type: balance
-        reward: 10.0
-      two:
-        type: item
-        reward: stone_bricks
-    sell-rewards:
-      one:
-        type: command
-        reward: lp user %player% permission set idiot.yes
+    buy-reward:
+      type: balance
+      reward: 10.0
+    sell-reward:
+      type: command
+      reward: lp user %player% permission set idiot.yes
 

@@ -5,4 +5,9 @@ public class EItemReward implements EReward {
     public EReward getReward() {
         return null;
     }
+
+    @Override
+    public EReward setReward(String reward) {
+        return null;
+    }
 }

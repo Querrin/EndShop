@@ -32,8 +32,8 @@ class ItemLoader {
                     eItem.displayItem = Material.matchMaterial(String.format("items.%s.display-item", item));
                     eItem.buyPrice = config.getDouble(String.format("items.%s.buy-price", item));
                     eItem.sellPrice = config.getDouble(String.format("items.%s.sell-price", item));
-                    eItem.buyRewards = RewardLoader.getBuyModels(config, item);
-                    eItem.sellRewards = RewardLoader.getSellModels(config, item);
+                    eItem.buyReward = RewardLoader.getBuyModel(config, item);
+                    eItem.sellReward = RewardLoader.getSellModel(config, item);
 
                     items.add(eItem);
                 }
