@@ -6,11 +6,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import static org.bukkit.Bukkit.getServer;
 
-public class VaultLoader {
+class VaultLoader {
     private static Economy econ = null;
     private static Permission perms = null;
 
-    public static void setupVault() {
+    static void setupVault() {
         setupEconomy();
         setupPermissions();
     }
