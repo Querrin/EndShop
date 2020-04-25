@@ -1,23 +1,20 @@
 package com.hooklite.endshop.commands;
 
-import com.hooklite.endshop.logging.MessageLogger;
+import com.hooklite.endshop.shop.events.ShopMenuOpenEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 
 import java.util.List;
 
 public class CommandManager implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            if (command.getName().equalsIgnoreCase("shop")) {
-                Inventory inventory = Bukkit.createInventory(null, 9, "Hello!");
-                MessageLogger.toPlayer((Player) sender, inventory.getClass().toString());
-                ((Player) sender).openInventory(Bukkit.createInventory(null, 9, "Hello!"));
+        if (command.getName().equalsIgnoreCase("shop")) {
+            if (sender instanceof Player) {
+                Bukkit.getServer().getPluginManager().callEvent(new ShopMenuOpenEvent(((Player) sender).getPlayer()));
             }
         }
 

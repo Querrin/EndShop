@@ -1,6 +1,6 @@
 package com.hooklite.endshop.data.config;
 
-import com.hooklite.endshop.data.models.DataModel;
+import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.data.rewards.types.EBalanceRewardType;
 import com.hooklite.endshop.data.rewards.types.ECommandRewardType;
 import com.hooklite.endshop.data.rewards.types.EItemRewardType;
@@ -20,7 +20,7 @@ import java.util.Objects;
 public class Configuration {
     private static YamlConfiguration defaultConfig;
     private static final List<YamlConfiguration> shopConfigs = new ArrayList<>();
-    private static List<DataModel> shops = new ArrayList<>();
+    private static List<EShop> shops = new ArrayList<>();
     private static final List<ERewardType> rewardTypes = new ArrayList<>();
 
     static {
@@ -33,6 +33,7 @@ public class Configuration {
             rewardTypes.add(new EItemRewardType());
 
             shops = ShopLoader.getModels(shopConfigs);
+
         } catch (InvalidConfigurationException e) {
             MessageLogger.toConsole(e.getMessage());
             e.printStackTrace();
@@ -52,7 +53,7 @@ public class Configuration {
         return shopConfigs;
     }
 
-    public static List<DataModel> getShops() {
+    public static List<EShop> getShops() {
         return shops;
     }
 

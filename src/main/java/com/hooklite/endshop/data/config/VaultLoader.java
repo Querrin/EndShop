@@ -18,6 +18,18 @@ public class VaultLoader {
         setupChat();
     }
 
+    public static Economy getEcon() {
+        return econ;
+    }
+
+    public static Permission getPerms() {
+        return perms;
+    }
+
+    public static Chat getChat() {
+        return chat;
+    }
+
     private static boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;

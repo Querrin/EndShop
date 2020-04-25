@@ -1,6 +1,5 @@
 package com.hooklite.endshop.data.config;
 
-import com.hooklite.endshop.data.models.DataModel;
 import com.hooklite.endshop.data.models.ECurrency;
 import com.hooklite.endshop.data.models.EShop;
 import org.bukkit.Material;
@@ -19,8 +18,8 @@ class ShopLoader {
      * @return A list of EShop data models.
      * @throws InvalidConfigurationException If the configuration is improperly configured.
      */
-    static List<DataModel> getModels(List<YamlConfiguration> shopConfigs) throws InvalidConfigurationException {
-        List<DataModel> shops = new ArrayList<>();
+    static List<EShop> getModels(List<YamlConfiguration> shopConfigs) throws InvalidConfigurationException {
+        List<EShop> shops = new ArrayList<>();
         for (YamlConfiguration config : shopConfigs) {
             EShop shop = new EShop();
 
