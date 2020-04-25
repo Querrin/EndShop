@@ -1,6 +1,5 @@
 package com.hooklite.endshop.data.config;
 
-import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -10,12 +9,10 @@ import static org.bukkit.Bukkit.getServer;
 public class VaultLoader {
     private static Economy econ = null;
     private static Permission perms = null;
-    private static Chat chat = null;
 
-    static {
+    public static void setupVault() {
         setupEconomy();
         setupPermissions();
-        setupChat();
     }
 
     public static Economy getEcon() {
@@ -24,10 +21,6 @@ public class VaultLoader {
 
     public static Permission getPerms() {
         return perms;
-    }
-
-    public static Chat getChat() {
-        return chat;
     }
 
     private static boolean setupEconomy() {
@@ -39,12 +32,6 @@ public class VaultLoader {
             return false;
         }
         econ = rsp.getProvider();
-        return true;
-    }
-
-    private static boolean setupChat() {
-        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
-        chat = rsp.getProvider();
         return true;
     }
 

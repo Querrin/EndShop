@@ -5,6 +5,7 @@ import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.shop.ItemMenu;
 import com.hooklite.endshop.shop.ShopMenu;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -23,17 +24,17 @@ public class InventoryLoader {
     static {
         ItemStack backItem = new ItemStack(Material.CHEST, 1);
         ItemMeta backItemMeta = backItem.getItemMeta();
-        backItemMeta.setDisplayName("&c&lBack");
+        backItemMeta.setDisplayName(String.format("%s%sBack", ChatColor.RED, ChatColor.BOLD));
         backItem.setItemMeta(backItemMeta);
 
         ItemStack nextPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
         ItemMeta nextPageItemMeta = nextPageItem.getItemMeta();
-        nextPageItemMeta.setDisplayName("&a&lNext page");
+        nextPageItemMeta.setDisplayName(String.format("%s%sNext page", ChatColor.GREEN, ChatColor.BOLD));
         nextPageItem.setItemMeta(nextPageItemMeta);
 
         ItemStack previousPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
         ItemMeta previousPageItemMeta = nextPageItem.getItemMeta();
-        previousPageItemMeta.setDisplayName("&a&lPrevious page");
+        previousPageItemMeta.setDisplayName(String.format("%s%sPrevious page", ChatColor.GREEN, ChatColor.BOLD));
         nextPageItem.setItemMeta(nextPageItemMeta);
 
         BACK_ITEM = backItem;
@@ -42,7 +43,7 @@ public class InventoryLoader {
     }
 
     public static Inventory getShopMenu(List<EShop> shops, Player player) {
-        Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), "&6Shops");
+        Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
 
         for (EShop shop : shops) {
             inventory.setItem(shop.slot, new ItemStack(shop.displayItem, 1));
@@ -63,7 +64,8 @@ public class InventoryLoader {
         ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(String.format("&5%s&8/&5%s", number, shop.pages.size()));
+        // TODO: Simplify display name
+        meta.setDisplayName(String.format("%s%s%s/%s%s", ChatColor.RED, number, ChatColor.DARK_GRAY, ChatColor.RED, shop.pages.size()));
         item.setItemMeta(meta);
 
         return item;
@@ -73,7 +75,7 @@ public class InventoryLoader {
         ItemStack item = new ItemStack(Material.GOLD_NUGGET, 1);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(String.format("&8Balance: &a%s", VaultLoader.getEcon().getBalance(player)));
+        meta.setDisplayName(String.format("%sBalance: %s$%s", ChatColor.GRAY, ChatColor.GREEN, VaultLoader.getEcon().getBalance(player)));
         item.setItemMeta(meta);
 
         return item;

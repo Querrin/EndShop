@@ -15,5 +15,4 @@ commands:
     permission: endshop
   shop:
     description: Opens the shop menu
-    aliases: [shops]
     permission: endshop.shop

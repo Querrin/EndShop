@@ -23,7 +23,7 @@ public class Configuration {
     private static List<EShop> shops = new ArrayList<>();
     private static final List<ERewardType> rewardTypes = new ArrayList<>();
 
-    static {
+    public static void configurePlugin() {
         try {
             setDefaultConfig();
             setShopConfigs();
@@ -32,8 +32,8 @@ public class Configuration {
             rewardTypes.add(new ECommandRewardType());
             rewardTypes.add(new EItemRewardType());
 
+            VaultLoader.setupVault();
             shops = ShopLoader.getModels(shopConfigs);
-
         } catch (InvalidConfigurationException e) {
             MessageLogger.toConsole(e.getMessage());
             e.printStackTrace();
@@ -67,17 +67,22 @@ public class Configuration {
 
     private static void setDefaultConfig() throws NullPointerException {
         defaultConfig = (YamlConfiguration) Bukkit.getPluginManager().getPlugin("EndShop").getConfig();
+        Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
     }
 
     private static void setShopConfigs() throws NullPointerException, IOException, InvalidConfigurationException {
         File shopsDirectory = new File(Bukkit.getPluginManager().getPlugin("EndShop").getDataFolder().getPath(), "shops");
-        if (!shopsDirectory.mkdirs())
-            MessageLogger.toConsole("Unable to create shops directory!");
+        if (!shopsDirectory.exists()) {
+            if (!shopsDirectory.mkdirs())
+                MessageLogger.toConsole("Unable to create shops directory!");
+        }
 
         List<String> shopList = (List<String>) defaultConfig.getList("shops");
 
+        MessageLogger.toConsole(shopList.toString());
+
         for (String shop : shopList) {
-            File file = new File(shopsDirectory.getPath() + shop + ".yml");
+            File file = new File(shopsDirectory.getPath(), shop + ".yml");
             if (!file.exists()) {
                 if (file.createNewFile())
                     loadExampleConfig(file);
