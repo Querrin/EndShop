@@ -2,19 +2,19 @@ title: '&lAn example shop'
 description:
   - '&6Hello world'
   - 'How are you?'
-display-item: OAK_LOG
+display-item: 'oak_log'
 slot: 0
 items:
   example-item:
     name: '&7MyLog'
-    display-item: BIRCH_LOG
+    display-item: 'birch_log'
     slot: 0
     buy-price: 10.0
     sell-price: 5.0
     buy-reward:
-      type: balance
+      type: 'balance'
       reward: 10.0
     sell-reward:
-      type: command
-      reward: lp user %player% permission set idiot.yes
+      type: 'command'
+      reward: '(CONSOLE) lp user %player% permission set idiot.yes'
 
