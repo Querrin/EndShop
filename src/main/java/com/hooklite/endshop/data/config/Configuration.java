@@ -115,7 +115,7 @@ public class Configuration {
             try {
                 configuration.load(file);
             } catch (InvalidConfigurationException e) {
-                throw new InvalidConfigurationException(String.format("File \"%s\" is improperly configured!"));
+                throw new InvalidConfigurationException(String.format("File \"%s\" is improperly configured!", file));
             }
 
             shopConfigs.add(configuration);

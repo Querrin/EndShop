@@ -1,12 +1,12 @@
-title: &aAn example shop
+title: '&lAn example shop'
 description:
-  - &aHello world
-  - &6How are you?
+  - '&6Hello world'
+  - 'How are you?'
 display-item: OAK_LOG
 slot: 0
 items:
   example-item:
-    name: MyLog
+    name: '&7MyLog'
     display-item: BIRCH_LOG
     slot: 0
     buy-price: 10.0

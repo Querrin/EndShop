@@ -44,7 +44,7 @@ public class InventoryLoader {
     }
 
     /**
-     * Creates a new inventory and loads all the shop data into it.
+     * Creates a new inventory and loads all the registered shops into it.
      *
      * @param shops  A list of shops that will be loaded.
      * @param player A player object, used for getting the balance.
@@ -53,8 +53,16 @@ public class InventoryLoader {
     public static Inventory getShopMenu(List<EShop> shops, Player player) {
         Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
 
+
         for (EShop shop : shops) {
-            inventory.setItem(shop.slot, new ItemStack(shop.displayItem, 1));
+            ItemStack item = new ItemStack(shop.displayItem, 1);
+
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(shop.title);
+            meta.setLore(shop.description);
+            item.setItemMeta(meta);
+
+            inventory.setItem(shop.slot, item);
         }
 
         inventory.setItem(inventory.getSize() - 5, getBalanceItem(player));

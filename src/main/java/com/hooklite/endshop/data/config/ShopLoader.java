@@ -1,12 +1,14 @@
 package com.hooklite.endshop.data.config;
 
 import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.logging.Colors;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 class ShopLoader {
 
@@ -22,12 +24,21 @@ class ShopLoader {
         for (YamlConfiguration config : shopConfigs) {
             EShop shop = new EShop();
 
-            shop.title = config.getString("title");
-            shop.description = config.getStringList("description");
+            List<String> description = config.getStringList("description");
+            for (String line : description) {
+                line = Colors.loadColors(line);
+            }
+
+            if (Material.matchMaterial(config.getString("display-item")) == null) {
+                throw new InvalidConfigurationException(String.format("display-item of \"%s\" is improperly configured!", config.getName()));
+            }
+
+            shop.title = Colors.loadColors(Colors.loadColors(config.getString("title")));
+            shop.description = description;
             shop.slot = config.getInt("slot");
             shop.config = config;
             shop.pages = PageLoader.getModels(ItemLoader.getModels(config));
-            shop.displayItem = Material.matchMaterial(config.getString("display-item"));
+            shop.displayItem = Material.matchMaterial(Objects.requireNonNull(config.getString("display-name")));
 
             shops.add(shop);
         }
