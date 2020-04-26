@@ -27,9 +27,8 @@ class ShopLoader {
             Material displayItem = Material.matchMaterial(Objects.requireNonNull(config.getString("display-item")));
             List<String> description = new ArrayList<>();
 
-            if (displayItem == null) {
+            if (displayItem == null)
                 throw new InvalidConfigurationException(String.format("display-item of shop \"%s\" is improperly configured!", config.getName()));
-            }
 
             if (!config.getStringList("description").isEmpty()) {
                 description = config.getStringList("description");

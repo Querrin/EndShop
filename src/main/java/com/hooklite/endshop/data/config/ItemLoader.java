@@ -23,38 +23,36 @@ class ItemLoader {
      */
     static List<EItem> getModels(YamlConfiguration config) throws InvalidConfigurationException, NullPointerException {
         List<EItem> items = new ArrayList<>();
-        Set<String> itemKeys = config.getConfigurationSection("items").getKeys(true);
+        Set<String> itemKeys = config.getConfigurationSection("items").getKeys(false);
 
         if (!itemKeys.isEmpty()) {
             for (String item : itemKeys) {
-                if (!item.contains(".")) {
-                    EItem eItem = new EItem();
+                EItem eItem = new EItem();
 
-                    Material displayItem = Material.matchMaterial(String.format("items.%s.display-item", item));
-                    List<String> description = new ArrayList<>();
+                Material displayItem = Material.matchMaterial(config.getString(String.format("items.%s.display-item", item)));
+                List<String> description = new ArrayList<>();
 
-                    if (displayItem == null)
-                        throw new InvalidConfigurationException(String.format("display-item in item \"%s\" in file \"%s\" is improperly configured!", item, config));
+                if (displayItem == null)
+                    throw new InvalidConfigurationException(String.format("display-item in item \"%s\" is improperly configured!", item));
 
-                    if (!config.getStringList("description").isEmpty()) {
-                        description = config.getStringList("description");
+                if (!config.getStringList("description").isEmpty()) {
+                    description = config.getStringList("description");
 
-                        for (int i = 0; i < description.size(); i++) {
-                            description.set(i, Colors.loadColors(description.get(i)));
-                        }
+                    for (int i = 0; i < description.size(); i++) {
+                        description.set(i, Colors.loadColors(description.get(i)));
                     }
-
-                    eItem.name = config.getString(Colors.loadColors(String.format("items.%s.name", item)));
-                    eItem.description = description;
-                    eItem.slot = config.getInt(String.format("items.%s.slot", item));
-                    eItem.displayItem = displayItem;
-                    eItem.buyPrice = config.getDouble(String.format("items.%s.buy-price", item));
-                    eItem.sellPrice = config.getDouble(String.format("items.%s.sell-price", item));
-                    eItem.buyReward = RewardLoader.getModel(config, item, RewardAction.BUY);
-                    eItem.sellReward = RewardLoader.getModel(config, item, RewardAction.SELL);
-
-                    items.add(eItem);
                 }
+
+                eItem.name = config.getString(Colors.loadColors(String.format("items.%s.name", item)));
+                eItem.description = description;
+                eItem.slot = config.getInt(String.format("items.%s.slot", item));
+                eItem.displayItem = displayItem;
+                eItem.buyPrice = config.getDouble(String.format("items.%s.buy-price", item));
+                eItem.sellPrice = config.getDouble(String.format("items.%s.sell-price", item));
+                eItem.buyReward = RewardLoader.getModel(config, item, RewardAction.BUY);
+                eItem.sellReward = RewardLoader.getModel(config, item, RewardAction.SELL);
+
+                items.add(eItem);
             }
         }
 

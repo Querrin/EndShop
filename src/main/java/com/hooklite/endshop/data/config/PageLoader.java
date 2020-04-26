@@ -27,7 +27,6 @@ class PageLoader {
             while (j < items.size()) {
                 eItems.add(items.get(j));
 
-
                 if (j % 44 == 0) {
                     j++;
                     break;
