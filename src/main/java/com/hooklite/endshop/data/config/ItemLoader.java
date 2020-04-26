@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 class ItemLoader {
 
@@ -21,10 +22,11 @@ class ItemLoader {
      * @throws NullPointerException          If the configuration section doesn't exist.
      */
     static List<EItem> getModels(YamlConfiguration config) throws InvalidConfigurationException, NullPointerException {
-        if (config.getConfigurationSection("items") != null) {
-            List<EItem> items = new ArrayList<>();
+        List<EItem> items = new ArrayList<>();
+        Set<String> itemKeys = config.getConfigurationSection("items").getKeys(true);
 
-            for (String item : config.getConfigurationSection("items").getKeys(true)) {
+        if (!itemKeys.isEmpty()) {
+            for (String item : itemKeys) {
                 if (!item.contains(".")) {
                     EItem eItem = new EItem();
 
@@ -54,9 +56,8 @@ class ItemLoader {
                     items.add(eItem);
                 }
             }
-            return items;
-        } else {
-            throw new InvalidConfigurationException("Items are not properly configured!");
         }
+
+        return items;
     }
 }
