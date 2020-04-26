@@ -24,13 +24,19 @@ class ShopLoader {
         for (YamlConfiguration config : shopConfigs) {
             EShop shop = new EShop();
 
-            List<String> description = config.getStringList("description");
-            for (String line : description) {
-                line = Colors.loadColors(line);
+            Material displayItem = Material.matchMaterial(Objects.requireNonNull(config.getString("display-item")));
+            List<String> description = new ArrayList<>();
+
+            if (displayItem == null) {
+                throw new InvalidConfigurationException(String.format("display-item of shop \"%s\" is improperly configured!", config.getName()));
             }
 
-            if (Material.matchMaterial(config.getString("display-item")) == null) {
-                throw new InvalidConfigurationException(String.format("display-item of \"%s\" is improperly configured!", config.getName()));
+            if (!config.getStringList("description").isEmpty()) {
+                description = config.getStringList("description");
+
+                for (int i = 0; i < description.size(); i++) {
+                    description.set(i, Colors.loadColors(description.get(i)));
+                }
             }
 
             shop.title = Colors.loadColors(Colors.loadColors(config.getString("title")));
@@ -38,7 +44,7 @@ class ShopLoader {
             shop.slot = config.getInt("slot");
             shop.config = config;
             shop.pages = PageLoader.getModels(ItemLoader.getModels(config));
-            shop.displayItem = Material.matchMaterial(Objects.requireNonNull(config.getString("display-name")));
+            shop.displayItem = displayItem;
 
             shops.add(shop);
         }
