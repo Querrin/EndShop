@@ -55,14 +55,7 @@ public class InventoryLoader {
 
 
         for (EShop shop : shops) {
-            ItemStack item = new ItemStack(shop.displayItem, 1);
-
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(shop.title);
-            meta.setLore(shop.description);
-            item.setItemMeta(meta);
-
-            inventory.setItem(shop.slot, item);
+            inventory.setItem(shop.slot, shop.displayItem);
         }
 
         inventory.setItem(inventory.getSize() - 5, getBalanceItem(player));

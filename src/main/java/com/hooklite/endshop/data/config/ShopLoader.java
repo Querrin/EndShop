@@ -5,6 +5,8 @@ import com.hooklite.endshop.logging.Colors;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +26,10 @@ class ShopLoader {
         for (YamlConfiguration config : shopConfigs) {
             EShop shop = new EShop();
 
-            Material displayItem = Material.matchMaterial(Objects.requireNonNull(config.getString("display-item")));
+            Material displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString("display-item")));
             List<String> description = new ArrayList<>();
 
-            if (displayItem == null)
+            if (displayItemMaterial == null)
                 throw new InvalidConfigurationException(String.format("display-item of shop \"%s\" is improperly configured!", config.getName()));
 
             if (!config.getStringList("description").isEmpty()) {
@@ -38,11 +40,18 @@ class ShopLoader {
                 }
             }
 
-            shop.title = Colors.loadColors(Colors.loadColors(config.getString("title")));
+            shop.title = Colors.loadColors(config.getString("title"));
             shop.description = description;
             shop.slot = config.getInt("slot");
             shop.config = config;
             shop.pages = PageLoader.getModels(ItemLoader.getModels(config));
+
+            ItemStack displayItem = new ItemStack(displayItemMaterial);
+            ItemMeta meta = displayItem.getItemMeta();
+            meta.setDisplayName(shop.title);
+            meta.setLore(shop.description);
+            displayItem.setItemMeta(meta);
+
             shop.displayItem = displayItem;
 
             shops.add(shop);
