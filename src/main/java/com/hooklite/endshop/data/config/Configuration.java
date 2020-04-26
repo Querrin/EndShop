@@ -37,9 +37,9 @@ public class Configuration {
             setDefaultConfig();
             setShopConfigs();
 
-            rewardTypes.add(new EBalanceRewardType());
-            rewardTypes.add(new ECommandRewardType());
-            rewardTypes.add(new EItemRewardType());
+            addRewardType(new EBalanceRewardType());
+            addRewardType(new ECommandRewardType());
+            addRewardType(new EItemRewardType());
 
             econ = VaultLoader.getEcon();
             perms = VaultLoader.getPerms();
@@ -79,6 +79,22 @@ public class Configuration {
 
     public static Economy getEcon() {
         return econ;
+    }
+
+    /**
+     * Registers a new reward type.
+     *
+     * @param type An ERewardType object.
+     * @return true if it was added, false if the list already contains the object.
+     */
+    public static boolean addRewardType(ERewardType type) {
+        if (!rewardTypes.contains(type)) {
+            rewardTypes.add(type);
+
+            return true;
+        }
+
+        return false;
     }
 
     private static void setDefaultConfig() throws NullPointerException {
