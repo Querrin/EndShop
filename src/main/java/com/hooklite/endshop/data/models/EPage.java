@@ -18,6 +18,10 @@ public class EPage extends DataModel {
         this.number = number;
     }
 
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
     public List<EItem> getItems() {
         return items;
     }
@@ -29,10 +33,6 @@ public class EPage extends DataModel {
     public void setItems(List<EItem> items) {
         if (items.size() > 45)
             throw new IllegalArgumentException("A page should not contain more than 45 items!");
-
-        for (EItem item : items) {
-
-        }
 
         this.items = items;
     }

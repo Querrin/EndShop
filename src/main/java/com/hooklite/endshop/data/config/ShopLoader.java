@@ -44,7 +44,11 @@ class ShopLoader {
             shop.description = description;
             shop.slot = config.getInt("slot");
             shop.config = config;
-            shop.pages = PageLoader.getModels(ItemLoader.getModels(config));
+            shop.pages = PageLoader.getModels(ItemLoader.getModels(config), shop);
+
+            for (int i = 0; i < shop.pages.size(); i++) {
+                PageLoader.setInventory(shop, i);
+            }
 
             ItemStack displayItem = new ItemStack(displayItemMaterial);
             ItemMeta meta = displayItem.getItemMeta();

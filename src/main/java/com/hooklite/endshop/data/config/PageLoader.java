@@ -2,6 +2,7 @@ package com.hooklite.endshop.data.config;
 
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EPage;
+import com.hooklite.endshop.data.models.EShop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ class PageLoader {
      * @param items A list of items that will be put into multiple pages.
      * @return A list EPage data models.
      */
-    static List<EPage> getModels(List<EItem> items) {
+    static List<EPage> getModels(List<EItem> items, EShop shop) {
         ArrayList<EPage> pages = new ArrayList<>();
         int pageAmount = (int) Math.ceil(items.size() / 45.0);
 
@@ -35,9 +36,15 @@ class PageLoader {
             }
 
             page.setItems(eItems);
+
+
             pages.add(page);
         }
 
         return pages;
+    }
+
+    static void setInventory(EShop shop, int pageNumber) {
+        shop.pages.get(pageNumber).setInventory(InventoryLoader.getPageMenu(shop, pageNumber));
     }
 }

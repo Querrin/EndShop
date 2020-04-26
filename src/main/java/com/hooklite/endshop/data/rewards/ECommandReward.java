@@ -10,6 +10,7 @@ public class ECommandReward implements EReward {
 
     @Override
     public void executeReward(Player player, RewardAction action, int amount) {
+        // FIXME: Strip of format command of executor
         String command = reward;
         command = command.replace("%player%", player.getName());
 

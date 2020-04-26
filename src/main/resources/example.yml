@@ -7,6 +7,9 @@ slot: 0
 items:
   example-item:
     name: '&7MyLog'
+    description:
+      - 'Abc'
+      - 'Egf'
     display-item: 'birch_log'
     slot: 0
     buy-price: 10.0
@@ -16,5 +19,5 @@ items:
       reward: 10.0
     sell-reward:
       type: 'command'
-      reward: '(CONSOLE) lp user %player% permission set idiot.yes'
+      reward: '(CONSOLE)  lp user %player% permission set idiot.yes'
 

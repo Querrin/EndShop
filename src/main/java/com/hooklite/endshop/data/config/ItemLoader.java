@@ -6,6 +6,8 @@ import com.hooklite.endshop.logging.Colors;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,28 +31,35 @@ class ItemLoader {
             for (String item : itemKeys) {
                 EItem eItem = new EItem();
 
-                Material displayItem = Material.matchMaterial(config.getString(String.format("items.%s.display-item", item)));
+                Material displayItemMaterial = Material.matchMaterial(config.getString(String.format("items.%s.display-item", item)));
                 List<String> description = new ArrayList<>();
 
-                if (displayItem == null)
+                if (displayItemMaterial == null)
                     throw new InvalidConfigurationException(String.format("display-item in item \"%s\" is improperly configured!", item));
 
-                if (!config.getStringList("description").isEmpty()) {
-                    description = config.getStringList("description");
+                if (!config.getStringList(String.format("items.%s.description", item)).isEmpty()) {
+                    description = config.getStringList(String.format("items.%s.description", item));
 
                     for (int i = 0; i < description.size(); i++) {
                         description.set(i, Colors.loadColors(description.get(i)));
                     }
                 }
 
-                eItem.name = config.getString(Colors.loadColors(String.format("items.%s.name", item)));
+                eItem.name = Colors.loadColors(config.getString(String.format("items.%s.name", item)));
                 eItem.description = description;
                 eItem.slot = config.getInt(String.format("items.%s.slot", item));
-                eItem.displayItem = displayItem;
                 eItem.buyPrice = config.getDouble(String.format("items.%s.buy-price", item));
                 eItem.sellPrice = config.getDouble(String.format("items.%s.sell-price", item));
                 eItem.buyReward = RewardLoader.getModel(config, item, RewardAction.BUY);
                 eItem.sellReward = RewardLoader.getModel(config, item, RewardAction.SELL);
+
+                ItemStack displayItem = new ItemStack(displayItemMaterial, 1);
+                ItemMeta meta = displayItem.getItemMeta();
+                meta.setDisplayName(eItem.name);
+                meta.setLore(eItem.description);
+                displayItem.setItemMeta(meta);
+
+                eItem.displayItem = displayItem;
 
                 items.add(eItem);
             }

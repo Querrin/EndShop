@@ -7,24 +7,21 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class InventoryEventListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        ItemStack clickedItem = event.getCurrentItem();
-
-        if (clickedItem != null) {
+        if (event.getClickedInventory() != null) {
+            int clickedSlot = event.getSlot();
             Inventory clickedInventory = event.getClickedInventory();
 
-            if (clickedInventory instanceof ShopMenu) {
+            if (clickedInventory.getHolder() instanceof ShopMenu) {
                 for (EShop shop : Configuration.getShops()) {
-                    if (shop.displayItem == clickedItem) {
-                        shop.pages.get(0).getInventory();
+                    if (shop.slot == clickedSlot) {
+                        event.getWhoClicked().openInventory(shop.pages.get(0).getInventory());
                         break;
                     }
                 }
-
                 event.setCancelled(true);
             }
         }
