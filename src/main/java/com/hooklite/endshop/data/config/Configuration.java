@@ -27,6 +27,11 @@ public class Configuration {
     private static Economy econ;
     private static Permission perms;
 
+    /**
+     * Loads all the required configurations for the plugin to function.
+     * <p>
+     * THIS METHOD SHOULD ONLY BE CALLED UPON THE START OF THE APPLICATION!
+     */
     public static void configurePlugin() {
         try {
             setDefaultConfig();
@@ -81,11 +86,18 @@ public class Configuration {
         Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
     }
 
+    /**
+     * Creates the shops directory and loads the configuration files if they don't exist.
+     *
+     * @throws NullPointerException          If the list element of config.yml is null.
+     * @throws IOException                   If the function failed creating the shops directory or the files that come with it.
+     * @throws InvalidConfigurationException If the configuration file is improperly configured.
+     */
     private static void setShopConfigs() throws NullPointerException, IOException, InvalidConfigurationException {
         File shopsDirectory = new File(Bukkit.getPluginManager().getPlugin("EndShop").getDataFolder().getPath(), "shops");
         if (!shopsDirectory.exists()) {
             if (!shopsDirectory.mkdirs())
-                MessageLogger.toConsole("Unable to create shops directory!");
+                throw new IOException("Unable to create shops directory!");
         }
 
         List<String> shopList = defaultConfig.getStringList("shops");
@@ -110,6 +122,9 @@ public class Configuration {
         }
     }
 
+    /**
+     * Outputs the registered shops to the console.
+     */
     private static void listRegisteredShops() {
         List<String> shopList = defaultConfig.getStringList("shops");
         StringBuilder registeredShops = new StringBuilder();
@@ -126,6 +141,12 @@ public class Configuration {
         MessageLogger.toConsole("Loaded shops: " + registeredShops.toString());
     }
 
+    /**
+     * Loads the example configuration data from a resource stream to a file.
+     *
+     * @param file The file that the data will be loaded into.
+     * @throws IOException If the resource stream data could not be loaded.
+     */
     private static void loadExampleConfig(File file) throws IOException {
         YamlConfiguration exampleConfig = new YamlConfiguration().loadConfiguration(new InputStreamReader(Configuration.class.getResourceAsStream("/example.yml")));
         exampleConfig.save(file);

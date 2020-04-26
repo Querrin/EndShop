@@ -21,6 +21,7 @@ public class InventoryLoader {
     private static ItemStack pageNumberItem;
     private static ItemStack balanceItem;
 
+    // TODO: Check, because god knows if static initializers work
     static {
         ItemStack backItem = new ItemStack(Material.CHEST, 1);
         ItemMeta backItemMeta = backItem.getItemMeta();
@@ -42,6 +43,13 @@ public class InventoryLoader {
         PREVIOUS_PAGE_ITEM = previousPageItem;
     }
 
+    /**
+     * Creates a new inventory and loads all the shop data into it.
+     *
+     * @param shops  A list of shops that will be loaded.
+     * @param player A player object, used for getting the balance.
+     * @return An inventory with shops.
+     */
     public static Inventory getShopMenu(List<EShop> shops, Player player) {
         Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
 
@@ -54,12 +62,25 @@ public class InventoryLoader {
         return inventory;
     }
 
+    /**
+     * Creates a new inventory with items from the page given.
+     *
+     * @param page A page with items.
+     * @return An inventory with navigation and items
+     */
     public static Inventory getPageMenu(EPage page) {
         Inventory inventory = Bukkit.createInventory(new ItemMenu(), getSize(page.getItems().size()));
 
         return inventory;
     }
 
+    /**
+     * Creates an item that shows pages.
+     *
+     * @param shop   A shop with pages.
+     * @param number The page number.
+     * @return An item that displays the current page.
+     */
     private static ItemStack getPageNumberItem(EShop shop, int number) {
         ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
@@ -71,6 +92,12 @@ public class InventoryLoader {
         return item;
     }
 
+    /**
+     * Creates an item that shows balance.
+     *
+     * @param player The player which the balance will be displayed from.
+     * @return An item that displays the player's balance.
+     */
     private static ItemStack getBalanceItem(Player player) {
         ItemStack item = new ItemStack(Material.GOLD_NUGGET, 1);
         ItemMeta meta = item.getItemMeta();
@@ -81,6 +108,12 @@ public class InventoryLoader {
         return item;
     }
 
+    /**
+     * Gets the size of an inventory depending on the amount of items.
+     *
+     * @param itemAmount Amount of items.
+     * @return A integer that represents the amount of slots in an inventory.
+     */
     private static int getSize(int itemAmount) {
         int size;
 

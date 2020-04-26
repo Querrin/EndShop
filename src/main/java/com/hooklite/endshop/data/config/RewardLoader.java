@@ -7,6 +7,16 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 class RewardLoader {
+
+    /**
+     * Deserializes the reward from the item section in an configuration file, depending on the reward action.
+     *
+     * @param config A configuration file that the reward will be read from.
+     * @param item   An item that contains a reward.
+     * @param action If the reward is for buy/sell.
+     * @return An object of EReward with all values configured.
+     * @throws InvalidConfigurationException If the configuration file is improperly configured.
+     */
     static EReward getModel(YamlConfiguration config, String item, RewardAction action) throws InvalidConfigurationException {
         ERewardType rewardType;
         String rewardString;
@@ -27,6 +37,13 @@ class RewardLoader {
         return reward;
     }
 
+    /**
+     * Gets an reward object from a reward type.
+     *
+     * @param rewardType   The reward type.
+     * @param rewardString The reward string from the configuration file.
+     * @return An EReward object corresponding to the type.
+     */
     private static EReward getReward(ERewardType rewardType, String rewardString) {
         EReward reward = null;
 
@@ -41,7 +58,13 @@ class RewardLoader {
         return reward;
     }
 
-    private static ERewardType getRewardType(String type) {
+    /**
+     * Gets the type of the reward from a given string.
+     *
+     * @param type The reward string
+     * @return An object of ERewardType that corresponds with the reward type string.
+     */
+    private static ERewardType getRewardType(String type) throws NullPointerException {
         ERewardType eRewardType = null;
 
         for (ERewardType rewardType : Configuration.getRewardTypes()) {
@@ -49,6 +72,9 @@ class RewardLoader {
                 eRewardType = rewardType;
             }
         }
+
+        if (eRewardType == null)
+            throw new NullPointerException("The reward doesn't have a type!");
 
         return eRewardType;
     }
