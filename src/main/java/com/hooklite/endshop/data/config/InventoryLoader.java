@@ -83,8 +83,6 @@ public class InventoryLoader {
      * @return A list of inventories with navigation and items.
      */
     public static Inventory getPageMenu(EShop shop, int pageNumber) {
-        // TODO: Single page no navigation check
-
         int inventorySize = getSize(shop.pages.get(pageNumber).getItems().size());
         Inventory inventory = Bukkit.createInventory(new ItemMenu(), inventorySize, shop.title);
 
@@ -94,10 +92,12 @@ public class InventoryLoader {
         }
 
         // Adds navigation elements to the inventory
+        if (shop.pages.size() > 1) {
+            inventory.setItem(inventorySize - 6, PREVIOUS_PAGE_ITEM);
+            inventory.setItem(inventorySize - 4, NEXT_PAGE_ITEM);
+        }
         inventory.setItem(inventorySize - 9, BACK_ITEM);
-        inventory.setItem(inventorySize - 6, PREVIOUS_PAGE_ITEM);
         inventory.setItem(inventorySize - 5, getPageNumberItem(shop, pageNumber));
-        inventory.setItem(inventorySize - 4, NEXT_PAGE_ITEM);
 
         return inventory;
     }

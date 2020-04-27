@@ -4,6 +4,7 @@ import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.rewards.RewardAction;
 import com.hooklite.endshop.logging.Colors;
 import com.hooklite.endshop.logging.MessageLogger;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -32,7 +33,7 @@ class ItemLoader {
         try {
             itemKeys = config.getConfigurationSection("items").getKeys(false);
         } catch (NullPointerException e) {
-            MessageLogger.toConsole("abc");
+            MessageLogger.toConsole(String.format("The shop \"%s%s\" has no items.", Colors.loadColors(config.getString("title")), ChatColor.RESET));
         }
 
         if (itemKeys != null) {
