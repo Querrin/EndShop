@@ -21,7 +21,6 @@ public class InventoryLoader {
     private static ItemStack pageNumberItem;
     private static ItemStack balanceItem;
 
-    // TODO: Check, because god knows if static initializers work
     static {
         ItemStack backItem = new ItemStack(Material.CHEST, 1);
         ItemMeta backItemMeta = backItem.getItemMeta();
@@ -33,11 +32,10 @@ public class InventoryLoader {
         nextPageItemMeta.setDisplayName(String.format("%s%sNext page", ChatColor.GREEN, ChatColor.BOLD));
         nextPageItem.setItemMeta(nextPageItemMeta);
 
-        // FIXME: item not loading properly
         ItemStack previousPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
         ItemMeta previousPageItemMeta = nextPageItem.getItemMeta();
         previousPageItemMeta.setDisplayName(String.format("%s%sPrevious page", ChatColor.GREEN, ChatColor.BOLD));
-        nextPageItem.setItemMeta(nextPageItemMeta);
+        previousPageItem.setItemMeta(previousPageItemMeta);
 
         BACK_ITEM = backItem;
         NEXT_PAGE_ITEM = nextPageItem;
