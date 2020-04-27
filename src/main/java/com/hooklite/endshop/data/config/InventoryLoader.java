@@ -117,7 +117,7 @@ public class InventoryLoader {
         inventory.setItem(16, getBuyItem(item.buyPrice * 32, 32));
         inventory.setItem(17, getBuyItem(item.buyPrice * 64, 64));
 
-        inventory.setItem(30, BACK_ITEM);
+        inventory.setItem(31, BACK_ITEM);
 
         return inventory;
     }
@@ -173,7 +173,7 @@ public class InventoryLoader {
     private static ItemStack getSellItem(double price, int amount) {
         ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
-        Objects.requireNonNull(meta).setDisplayName(String.format("%Sell %sx%s%s", ChatColor.RED, ChatColor.GRAY, ChatColor.GOLD, amount));
+        Objects.requireNonNull(meta).setDisplayName(String.format("%sSell %sx%s%s", ChatColor.RED, ChatColor.GRAY, ChatColor.GOLD, amount));
 
         List<String> lore = new ArrayList<>();
         lore.add(String.format("%sPrice: %s$%s", ChatColor.GRAY, ChatColor.RED, price));

@@ -36,14 +36,16 @@ public class InventoryClickListener implements Listener {
                 } else if (item.equals(InventoryLoader.getPreviousPageItem())) {
                     Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.PREVIOUS_PAGE));
                 } else {
-                    Bukkit.getPluginManager().callEvent(new BuySellMenuOpenEvent((Player) event.getWhoClicked(), clickedSlot));
+                    Bukkit.getPluginManager().callEvent(new BuySellMenuOpenEvent((Player) event.getWhoClicked(), item, clickedSlot));
                 }
 
                 event.setCancelled(true);
             }
 
             if (clickedInventory.getHolder() instanceof BuySellMenu) {
+                ItemStack item = event.getCurrentItem();
 
+                event.setCancelled(true);
             }
         }
 
