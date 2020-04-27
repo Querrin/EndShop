@@ -17,7 +17,7 @@ class PageLoader {
      */
     static List<EPage> getModels(List<EItem> items, EShop shop) {
         ArrayList<EPage> pages = new ArrayList<>();
-        int pageAmount = (int) Math.ceil(items.size() / 45.0);
+        int pageAmount = (int) Math.ceil(items.size() / 45.0) == 0 ? 1 : (int) Math.ceil(items.size() / 45.0);
 
         int j = 0;
         for (int i = 0; i < pageAmount; i++) {

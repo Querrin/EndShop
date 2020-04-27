@@ -3,6 +3,7 @@ package com.hooklite.endshop.data.config;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.rewards.RewardAction;
 import com.hooklite.endshop.logging.Colors;
+import com.hooklite.endshop.logging.MessageLogger;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,11 +25,17 @@ class ItemLoader {
      * @throws InvalidConfigurationException If the configuration file is improperly configured.
      * @throws NullPointerException          If the configuration section doesn't exist.
      */
-    static List<EItem> getModels(YamlConfiguration config) throws InvalidConfigurationException, NullPointerException {
+    static List<EItem> getModels(YamlConfiguration config) throws InvalidConfigurationException {
         List<EItem> items = new ArrayList<>();
-        Set<String> itemKeys = config.getConfigurationSection("items").getKeys(false);
+        Set<String> itemKeys = null;
 
-        if (!itemKeys.isEmpty()) {
+        try {
+            itemKeys = config.getConfigurationSection("items").getKeys(false);
+        } catch (NullPointerException e) {
+            MessageLogger.toConsole("abc");
+        }
+
+        if (itemKeys != null) {
             for (String item : itemKeys) {
                 EItem eItem = new EItem();
 
