@@ -16,18 +16,16 @@ public class PageNavigationListener implements Listener {
         boolean matchFound = false;
 
         for (EShop eShop : Configuration.getShops()) {
+            if (matchFound)
+                break;
+
             for (EPage ePage : eShop.pages) {
-                if (!matchFound) {
-                    if (event.getInventory().equals(ePage.getInventory())) {
-                        shop = eShop;
-                        page = ePage;
-                        matchFound = true;
-                        break;
-                    }
-                } else {
+                if (event.getInventory().equals(ePage.getInventory())) {
+                    shop = eShop;
+                    page = ePage;
+                    matchFound = true;
                     break;
                 }
-
             }
         }
 

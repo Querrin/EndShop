@@ -1,11 +1,16 @@
 package com.hooklite.endshop.listeners.inventory;
 
+import com.hooklite.endshop.data.config.Configuration;
 import com.hooklite.endshop.data.config.InventoryLoader;
+import com.hooklite.endshop.data.models.EItem;
+import com.hooklite.endshop.data.models.EPage;
+import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.events.*;
 import com.hooklite.endshop.shop.BuySellMenu;
 import com.hooklite.endshop.shop.ItemMenu;
 import com.hooklite.endshop.shop.ShopMenu;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,6 +49,23 @@ public class InventoryClickListener implements Listener {
 
             if (clickedInventory.getHolder() instanceof BuySellMenu) {
                 ItemStack item = event.getCurrentItem();
+
+                if (item.equals(InventoryLoader.getBackItem())) {
+                    for (EShop shop : Configuration.getShops()) {
+                        for (EPage page : shop.pages) {
+                            for (EItem eItem : page.getItems()) {
+                                if (eItem.displayItem.equals(clickedInventory.getStorageContents()[13])) {
+                                    player.openInventory(page.getInventory());
+                                    event.setCancelled(true);
+                                }
+                            }
+                        }
+                    }
+                } else if (item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
+                    Bukkit.getPluginManager().callEvent(new BuyEvent(clickedInventory.getStorageContents()[13], player, item.getAmount()));
+                } else if (item.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
+                    Bukkit.getPluginManager().callEvent(new SellEvent(clickedInventory.getStorageContents()[13], player, item.getAmount()));
+                }
 
                 event.setCancelled(true);
             }

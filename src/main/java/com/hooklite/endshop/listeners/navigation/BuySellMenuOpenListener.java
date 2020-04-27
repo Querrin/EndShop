@@ -8,31 +8,27 @@ import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.events.BuySellMenuOpenEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 public class BuySellMenuOpenListener implements Listener {
     @EventHandler
     public void onBuySellMenuOpen(BuySellMenuOpenEvent event) {
-        EItem item = null;
-        boolean matchFound = false;
+        EItem item = getItemMatch(event.getItem());
 
+        event.getWhoOpened().openInventory(InventoryLoader.getBuySellMenu(item));
+    }
+
+    private EItem getItemMatch(ItemStack eventItem) {
         for (EShop shop : Configuration.getShops()) {
-            if (matchFound)
-                break;
-
             for (EPage page : shop.pages) {
-                if (matchFound)
-                    break;
-
                 for (EItem eItem : page.getItems()) {
-                    if (eItem.displayItem.equals(event.getItem())) {
-                        item = eItem;
-                        matchFound = true;
-                        break;
+                    if (eItem.displayItem.equals(eventItem)) {
+                        return eItem;
                     }
                 }
             }
         }
 
-        event.getWhoOpened().openInventory(InventoryLoader.getBuySellMenu(item));
+        return null;
     }
 }

@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Configuration {
     private static YamlConfiguration defaultConfig;
@@ -53,7 +52,7 @@ public class Configuration {
         } catch (Exception e) {
             MessageLogger.toConsole(e.getMessage());
             e.printStackTrace();
-            Bukkit.getPluginManager().disablePlugin(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("EndShop")));
+            Bukkit.getPluginManager().disablePlugin(plugin);
         }
     }
 

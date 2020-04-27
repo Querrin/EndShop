@@ -33,10 +33,9 @@ public class EItemReward implements EReward {
 
         } else {
             // TODO: Possibly allows illegal item stacking ??
-
-
             if (playerInventory.containsAtLeast(item, amount)) {
-                playerInventory.addItem(item);
+                playerInventory.removeItem(item);
+                MessageLogger.toPlayer(player, String.format("Successfully sold x%s %s.", amount, item.getType().toString().replace("_", " ").toLowerCase()));
             } else {
                 MessageLogger.toPlayer(player, "You do not have enough items to sell!");
             }

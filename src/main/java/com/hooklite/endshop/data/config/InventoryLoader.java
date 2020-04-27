@@ -158,7 +158,7 @@ public class InventoryLoader {
     }
 
     private static ItemStack getBuyItem(double price, int amount) {
-        ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
+        ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, amount);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%sBuy %sx%s%s", ChatColor.GREEN, ChatColor.GRAY, ChatColor.GOLD, amount));
 
@@ -171,7 +171,7 @@ public class InventoryLoader {
     }
 
     private static ItemStack getSellItem(double price, int amount) {
-        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
+        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, amount);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%sSell %sx%s%s", ChatColor.RED, ChatColor.GRAY, ChatColor.GOLD, amount));
 
