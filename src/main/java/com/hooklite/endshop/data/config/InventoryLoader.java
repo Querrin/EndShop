@@ -13,28 +13,29 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Objects;
 
 public class InventoryLoader {
     private static final ItemStack BACK_ITEM;
     private static final ItemStack NEXT_PAGE_ITEM;
     private static final ItemStack PREVIOUS_PAGE_ITEM;
-    private static ItemStack pageNumberItem;
-    private static ItemStack balanceItem;
 
     static {
+        // Loads the static navigation elements
+
         ItemStack backItem = new ItemStack(Material.CHEST, 1);
         ItemMeta backItemMeta = backItem.getItemMeta();
-        backItemMeta.setDisplayName(String.format("%s%sBack", ChatColor.RED, ChatColor.BOLD));
+        Objects.requireNonNull(backItemMeta).setDisplayName(String.format("%s%sBack", ChatColor.RED, ChatColor.BOLD));
         backItem.setItemMeta(backItemMeta);
 
         ItemStack nextPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
         ItemMeta nextPageItemMeta = nextPageItem.getItemMeta();
-        nextPageItemMeta.setDisplayName(String.format("%s%sNext page", ChatColor.GREEN, ChatColor.BOLD));
+        Objects.requireNonNull(nextPageItemMeta).setDisplayName(String.format("%s%sNext page", ChatColor.GREEN, ChatColor.BOLD));
         nextPageItem.setItemMeta(nextPageItemMeta);
 
         ItemStack previousPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta previousPageItemMeta = nextPageItem.getItemMeta();
-        previousPageItemMeta.setDisplayName(String.format("%s%sPrevious page", ChatColor.GREEN, ChatColor.BOLD));
+        ItemMeta previousPageItemMeta = previousPageItem.getItemMeta();
+        Objects.requireNonNull(previousPageItemMeta).setDisplayName(String.format("%s%sPrevious page", ChatColor.GREEN, ChatColor.BOLD));
         previousPageItem.setItemMeta(previousPageItemMeta);
 
         BACK_ITEM = backItem;
@@ -64,6 +65,7 @@ public class InventoryLoader {
     public static Inventory getShopMenu(List<EShop> shops, Player player) {
         Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
 
+        // Sets the shop display items
         for (EShop shop : shops) {
             inventory.setItem(shop.slot, shop.displayItem);
         }
@@ -86,10 +88,12 @@ public class InventoryLoader {
         int inventorySize = getSize(shop.pages.get(pageNumber).getItems().size());
         Inventory inventory = Bukkit.createInventory(new ItemMenu(), inventorySize, shop.title);
 
+        // Sets the inventory items
         for (EItem item : shop.pages.get(pageNumber).getItems()) {
             inventory.setItem(item.slot, item.displayItem);
         }
 
+        // Adds navigation elements to the inventory
         inventory.setItem(inventorySize - 9, BACK_ITEM);
         inventory.setItem(inventorySize - 6, PREVIOUS_PAGE_ITEM);
         inventory.setItem(inventorySize - 5, getPageNumberItem(shop, pageNumber));

@@ -90,7 +90,7 @@ public class Configuration {
     }
 
     /**
-     * Registers a new reward type.
+     * Registers a new reward type if it isn't already registered.
      *
      * @param type An ERewardType object.
      */
@@ -99,7 +99,10 @@ public class Configuration {
             rewardTypes.add(type);
     }
 
-    private static void setDefaultConfig() throws NullPointerException {
+    /**
+     * Sets, reads then saves the default plugin configuration file.
+     */
+    private static void setDefaultConfig() {
         defaultConfig = (YamlConfiguration) plugin.getConfig();
         plugin.saveDefaultConfig();
     }
@@ -111,16 +114,17 @@ public class Configuration {
      * @throws IOException                   If the function failed creating the shops directory or the files that come with it.
      * @throws InvalidConfigurationException If the configuration file is improperly configured.
      */
-    private static void setShopConfigs() throws NullPointerException, IOException, InvalidConfigurationException {
+    private static void setShopConfigs() throws IOException, InvalidConfigurationException {
+
+        // Creates the shops directory
         File shopsDirectory = new File(plugin.getDataFolder().getPath(), "shops");
         if (!shopsDirectory.exists()) {
             if (!shopsDirectory.mkdirs())
                 throw new IOException("Unable to create shops directory!");
         }
 
-        List<String> shopList = defaultConfig.getStringList("shops");
-
-        for (String shop : shopList) {
+        // Creates a new file for the registered shop if it doesn't exist, then loads the example into it
+        for (String shop : defaultConfig.getStringList("shops")) {
             File file = new File(shopsDirectory.getPath(), shop + ".yml");
             if (!file.exists()) {
                 if (file.createNewFile())
@@ -147,6 +151,7 @@ public class Configuration {
         List<String> shopList = defaultConfig.getStringList("shops");
         StringBuilder registeredShops = new StringBuilder();
 
+        // Creates a string of registered shops then outputs it into console.
         for (int i = 0; i < shopList.size(); i++) {
             if (shopList.size() == 1)
                 registeredShops.append(shopList.get(i));
@@ -166,6 +171,8 @@ public class Configuration {
      * @throws IOException If the resource stream data could not be loaded.
      */
     private static void loadExampleConfig(File file) throws IOException {
+
+        // Reads the example config file from the resources folder, then saves it to a file.
         new YamlConfiguration();
         YamlConfiguration exampleConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(Configuration.class.getResourceAsStream("/example.yml")));
         exampleConfig.save(file);

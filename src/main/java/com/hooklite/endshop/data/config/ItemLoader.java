@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 class ItemLoader {
@@ -31,12 +32,13 @@ class ItemLoader {
             for (String item : itemKeys) {
                 EItem eItem = new EItem();
 
-                Material displayItemMaterial = Material.matchMaterial(config.getString(String.format("items.%s.display-item", item)));
+                Material displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString(String.format("items.%s.display-item", item))));
                 List<String> description = new ArrayList<>();
 
                 if (displayItemMaterial == null)
                     throw new InvalidConfigurationException(String.format("display-item in item \"%s\" is improperly configured!", item));
 
+                // Translates minecraft color codes into compatible ChatColor types
                 if (!config.getStringList(String.format("items.%s.description", item)).isEmpty()) {
                     description = config.getStringList(String.format("items.%s.description", item));
 
@@ -45,6 +47,7 @@ class ItemLoader {
                     }
                 }
 
+                // Gets and sets all needed values from the config into a new instance of EItem
                 eItem.name = Colors.loadColors(config.getString(String.format("items.%s.name", item)));
                 eItem.description = description;
                 eItem.slot = config.getInt(String.format("items.%s.slot", item));

@@ -21,6 +21,7 @@ class RewardLoader {
         ERewardType rewardType;
         String rewardString;
 
+        // Gets the reward depending on the RewardAction type
         if (action == RewardAction.BUY) {
             rewardType = getRewardType(config.getString("items." + item + ".buy-reward.type"));
             rewardString = config.getString("items." + item + ".buy-reward.reward");

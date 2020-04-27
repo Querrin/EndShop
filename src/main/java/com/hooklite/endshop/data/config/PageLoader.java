@@ -24,6 +24,7 @@ class PageLoader {
             EPage page = new EPage();
             page.setNumber(i);
 
+            // Loads the items into this current page
             ArrayList<EItem> eItems = new ArrayList<>();
             while (j < items.size()) {
                 eItems.add(items.get(j));

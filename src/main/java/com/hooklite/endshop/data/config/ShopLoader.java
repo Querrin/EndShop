@@ -26,6 +26,7 @@ class ShopLoader {
         for (YamlConfiguration config : shopConfigs) {
             EShop shop = new EShop();
 
+            // Gets the display item material
             Material displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString("display-item")));
             List<String> description = new ArrayList<>();
 
@@ -40,6 +41,7 @@ class ShopLoader {
                 }
             }
 
+            // Loads the required values into a new instance of EShop
             shop.title = Colors.loadColors(config.getString("title"));
             shop.description = description;
             shop.slot = config.getInt("slot");
