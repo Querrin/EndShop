@@ -11,6 +11,7 @@ import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class Configuration {
     private static final List<YamlConfiguration> shopConfigs = new ArrayList<>();
     private static List<EShop> shops = new ArrayList<>();
     private static final List<ERewardType> rewardTypes = new ArrayList<>();
+    private static Plugin plugin;
     private static Economy econ;
     private static Permission perms;
 
@@ -32,8 +34,10 @@ public class Configuration {
      * <p>
      * THIS METHOD SHOULD ONLY BE CALLED UPON THE START OF THE APPLICATION!
      */
-    public static void configurePlugin() {
+    public static void configurePlugin(Plugin pl) {
         try {
+            plugin = pl;
+
             setDefaultConfig();
             setShopConfigs();
 
@@ -79,6 +83,10 @@ public class Configuration {
 
     public static Economy getEcon() {
         return econ;
+    }
+
+    public static Plugin getPlugin() {
+        return plugin;
     }
 
     /**

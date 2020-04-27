@@ -5,6 +5,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
+// TODO: Add one time buy option
 public class EItem extends DataModel {
     public String name;
     public List<String> description;
