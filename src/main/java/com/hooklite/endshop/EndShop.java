@@ -24,7 +24,7 @@ public final class EndShop extends JavaPlugin {
         getPluginManager().registerEvents(new BuySellMenuOpenListener(), this);
 
         getPluginManager().registerEvents(new BackListener(), this);
-        getPluginManager().registerEvents(new NextPageListener(), this);
+        getPluginManager().registerEvents(new PageNavigationListener(), this);
         getPluginManager().registerEvents(new PreviousPageListener(), this);
     }
 

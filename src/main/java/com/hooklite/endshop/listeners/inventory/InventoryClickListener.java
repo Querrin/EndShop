@@ -1,9 +1,6 @@
 package com.hooklite.endshop.listeners.inventory;
 
-import com.hooklite.endshop.data.config.Configuration;
 import com.hooklite.endshop.data.config.InventoryLoader;
-import com.hooklite.endshop.data.models.EPage;
-import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.events.*;
 import com.hooklite.endshop.shop.BuySellMenu;
 import com.hooklite.endshop.shop.ItemMenu;
@@ -35,26 +32,9 @@ public class InventoryClickListener implements Listener {
                 if (item.equals(InventoryLoader.getBackItem())) {
                     Bukkit.getPluginManager().callEvent(new ShopMenuOpenEvent(player));
                 } else if (item.equals(InventoryLoader.getNextPageItem())) {
-                    // TODO: Optimize unnecessary looping
-                    for (EShop shop : Configuration.getShops()) {
-                        for (EPage page : shop.pages) {
-                            if (clickedInventory.equals(page.getInventory())) {
-                                Bukkit.getPluginManager().callEvent(new NextPageEvent(shop, page, player));
-                            }
-                            break;
-                        }
-                    }
+                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.NEXT_PAGE));
                 } else if (item.equals(InventoryLoader.getPreviousPageItem())) {
-                    // TODO: Optimize unnecessary looping
-                    for (EShop shop : Configuration.getShops()) {
-                        for (EPage page : shop.pages) {
-                            if (clickedInventory.equals(page.getInventory())) {
-                                Bukkit.getPluginManager().callEvent(new PreviousPageEvent(shop, page, player));
-                            }
-
-                            break;
-                        }
-                    }
+                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.PREVIOUS_PAGE));
                 } else {
                     Bukkit.getPluginManager().callEvent(new BuySellMenuOpenEvent((Player) event.getWhoClicked(), clickedSlot));
                 }
@@ -66,5 +46,6 @@ public class InventoryClickListener implements Listener {
 
             }
         }
+
     }
 }
