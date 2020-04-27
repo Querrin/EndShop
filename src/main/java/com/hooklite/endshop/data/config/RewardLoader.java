@@ -32,9 +32,7 @@ class RewardLoader {
         if (rewardType == null || rewardString == null)
             throw new InvalidConfigurationException(String.format("Rewards of %s are improperly configured!", item));
 
-        EReward reward = getReward(rewardType, rewardString);
-
-        return reward;
+        return getReward(rewardType, rewardString);
     }
 
     /**
@@ -72,9 +70,6 @@ class RewardLoader {
                 eRewardType = rewardType;
             }
         }
-
-        if (eRewardType == null)
-            throw new NullPointerException("The reward doesn't have a type!");
 
         return eRewardType;
     }

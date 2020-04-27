@@ -93,21 +93,15 @@ public class Configuration {
      * Registers a new reward type.
      *
      * @param type An ERewardType object.
-     * @return true if it was added, false if the list already contains the object.
      */
-    public static boolean addRewardType(ERewardType type) {
-        if (!rewardTypes.contains(type)) {
+    public static void addRewardType(ERewardType type) {
+        if (!rewardTypes.contains(type))
             rewardTypes.add(type);
-
-            return true;
-        }
-
-        return false;
     }
 
     private static void setDefaultConfig() throws NullPointerException {
-        defaultConfig = (YamlConfiguration) Bukkit.getPluginManager().getPlugin("EndShop").getConfig();
-        Bukkit.getPluginManager().getPlugin("EndShop").saveDefaultConfig();
+        defaultConfig = (YamlConfiguration) plugin.getConfig();
+        plugin.saveDefaultConfig();
     }
 
     /**
@@ -118,7 +112,7 @@ public class Configuration {
      * @throws InvalidConfigurationException If the configuration file is improperly configured.
      */
     private static void setShopConfigs() throws NullPointerException, IOException, InvalidConfigurationException {
-        File shopsDirectory = new File(Bukkit.getPluginManager().getPlugin("EndShop").getDataFolder().getPath(), "shops");
+        File shopsDirectory = new File(plugin.getDataFolder().getPath(), "shops");
         if (!shopsDirectory.exists()) {
             if (!shopsDirectory.mkdirs())
                 throw new IOException("Unable to create shops directory!");
@@ -172,7 +166,8 @@ public class Configuration {
      * @throws IOException If the resource stream data could not be loaded.
      */
     private static void loadExampleConfig(File file) throws IOException {
-        YamlConfiguration exampleConfig = new YamlConfiguration().loadConfiguration(new InputStreamReader(Configuration.class.getResourceAsStream("/example.yml")));
+        new YamlConfiguration();
+        YamlConfiguration exampleConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(Configuration.class.getResourceAsStream("/example.yml")));
         exampleConfig.save(file);
     }
 }
