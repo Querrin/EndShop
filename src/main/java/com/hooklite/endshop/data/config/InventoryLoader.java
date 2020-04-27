@@ -42,6 +42,18 @@ public class InventoryLoader {
         PREVIOUS_PAGE_ITEM = previousPageItem;
     }
 
+    public static ItemStack getBackItem() {
+        return BACK_ITEM;
+    }
+
+    public static ItemStack getNextPageItem() {
+        return NEXT_PAGE_ITEM;
+    }
+
+    public static ItemStack getPreviousPageItem() {
+        return PREVIOUS_PAGE_ITEM;
+    }
+
     /**
      * Creates a new inventory and loads all the registered shops into it.
      *
