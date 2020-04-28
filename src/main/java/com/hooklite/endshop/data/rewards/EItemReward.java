@@ -2,7 +2,7 @@ package com.hooklite.endshop.data.rewards;
 
 import com.hooklite.endshop.data.config.Transaction;
 import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.logging.MessageLogger;
+import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -21,26 +21,26 @@ public class EItemReward implements EReward {
             if (!playerInventory.containsAtLeast(item, 65 - amount)) {
                 if (Transaction.withdraw(player, price * amount)) {
                     addItems(player, item, amount);
-                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
                 } else {
-                    MessageLogger.toPlayer(player, "You do not have enough balance!");
+                    MessageSender.toPlayer(player, "You do not have enough balance!");
                 }
             } else if (hasEmptySlot(playerInventory)) {
                 if (Transaction.withdraw(player, price * amount)) {
                     addItems(player, item, amount);
-                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
                 } else {
-                    MessageLogger.toPlayer(player, "You do not have enough balance!");
+                    MessageSender.toPlayer(player, "You do not have enough balance!");
                 }
             } else if (getEmptySlots(playerInventory) >= amount) {
                 if (Transaction.withdraw(player, price * amount)) {
                     addItems(player, item, amount);
-                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
                 } else {
-                    MessageLogger.toPlayer(player, "You do not have enough balance!");
+                    MessageSender.toPlayer(player, "You do not have enough balance!");
                 }
             } else {
-                MessageLogger.toPlayer(player, "You do not have enough inventory space!");
+                MessageSender.toPlayer(player, "You do not have enough inventory space!");
             }
 
         } else {
@@ -49,9 +49,9 @@ public class EItemReward implements EReward {
                     player.getInventory().removeItem(item);
                     playerInventory.addItem(item);
                 }
-                MessageLogger.sendSellMessage(player, eItem.name, reward.name().replace("_", " ").toLowerCase(), amount);
+                MessageSender.sellMessage(player, eItem.name, reward.name().replace("_", " ").toLowerCase(), amount);
             } else {
-                MessageLogger.toPlayer(player, "You do not have enough items to sell!");
+                MessageSender.toPlayer(player, "You do not have enough items to sell!");
             }
         }
     }

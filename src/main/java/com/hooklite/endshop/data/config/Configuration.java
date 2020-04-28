@@ -5,7 +5,7 @@ import com.hooklite.endshop.data.rewards.types.EBalanceRewardType;
 import com.hooklite.endshop.data.rewards.types.ECommandRewardType;
 import com.hooklite.endshop.data.rewards.types.EItemRewardType;
 import com.hooklite.endshop.data.rewards.types.ERewardType;
-import com.hooklite.endshop.logging.MessageLogger;
+import com.hooklite.endshop.logging.MessageSender;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
@@ -82,7 +82,7 @@ public class Configuration {
 
             listRegisteredShops();
         } catch (Exception e) {
-            MessageLogger.toConsole(e.getMessage());
+            MessageSender.toConsole(e.getMessage());
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin(plugin);
         }
@@ -96,7 +96,7 @@ public class Configuration {
             shops = ShopLoader.getModels(shopConfigs);
             listRegisteredShops();
         } catch (Exception e) {
-            MessageLogger.toConsole(e.getMessage());
+            MessageSender.toConsole(e.getMessage());
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin(plugin);
         }
@@ -179,7 +179,7 @@ public class Configuration {
                 registeredShops.append(shopList.get(i)).append(", ");
         }
 
-        MessageLogger.toConsole("Loaded shops: " + registeredShops.toString());
+        MessageSender.toConsole("Loaded shops: " + registeredShops.toString());
     }
 
     /**

@@ -2,7 +2,7 @@ package com.hooklite.endshop.data.rewards;
 
 import com.hooklite.endshop.data.config.Transaction;
 import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.logging.MessageLogger;
+import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,9 +18,9 @@ public class EBalanceReward implements EReward {
         if (action == RewardAction.BUY) {
             if (Transaction.withdraw(player, price * amount)) {
                 Transaction.deposit(player, reward * amount);
-                MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                MessageSender.buyMessage(player, eItem.name, price * amount, amount);
             } else {
-                MessageLogger.toPlayer(player, "You do not have enough balance!");
+                MessageSender.toPlayer(player, "You do not have enough balance!");
             }
         } else {
             if (player.getInventory().containsAtLeast(item, amount)) {
@@ -30,9 +30,9 @@ public class EBalanceReward implements EReward {
                 }
 
                 Transaction.deposit(player, reward * amount);
-                MessageLogger.sendSellMessage(player, eItem.name, String.format("%s$%s", ChatColor.GREEN, reward * amount), amount);
+                MessageSender.sellMessage(player, eItem.name, String.format("%s$%s", ChatColor.GREEN, reward * amount), amount);
             } else {
-                MessageLogger.toPlayer(player, "You do not have enough items to sell!");
+                MessageSender.toPlayer(player, "You do not have enough items to sell!");
             }
         }
     }
