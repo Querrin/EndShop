@@ -19,6 +19,11 @@ public class ReloadCommand implements SubCommand {
     }
 
     @Override
+    public String getPermission() {
+        return "endshop.reload";
+    }
+
+    @Override
     public String getSyntax() {
         return "/endshop|es reload";
     }

@@ -16,4 +16,18 @@ commands:
     permission: endshop
   shop:
     description: Opens the shop menu
+    aliases: [shops]
     permission: endshop.shop
+permissions:
+  endshop:
+    default: op
+    description: Allows the use of /endshop command
+  endshop.*:
+    default: op
+    description: Allows the use of all commands that the plugin offers
+  endshop.reload:
+    default: op
+    description: Allows the use of /endshop reload command to reload the configurations
+  endshop.shop:
+    default: op
+    description: Allows the use of /shop command to open the shop menu

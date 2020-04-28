@@ -44,7 +44,6 @@ public class EItemReward implements EReward {
             }
 
         } else {
-            // FIXME: Possibly allows illegal item stacking ??
             if (playerInventory.containsAtLeast(item, amount)) {
                 for (int i = 0; i < amount; i++) {
                     player.getInventory().removeItem(item);

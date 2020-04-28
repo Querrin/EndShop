@@ -26,8 +26,6 @@ public class TransactionListener implements Listener {
         EItem item = getItem(event.getItem());
         EReward reward = item.sellReward;
 
-        // TODO: Remove sell price, the reward for selling is already set wtf was I thinking
-
         reward.executeReward(item, event.getWhoClicked(), RewardAction.SELL, event.getAmount());
     }
 

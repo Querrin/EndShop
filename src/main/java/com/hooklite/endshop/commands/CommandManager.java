@@ -2,10 +2,15 @@ package com.hooklite.endshop.commands;
 
 import com.hooklite.endshop.commands.subcommands.ReloadCommand;
 import com.hooklite.endshop.commands.subcommands.SubCommand;
+import com.hooklite.endshop.data.config.Configuration;
 import com.hooklite.endshop.events.ShopMenuOpenEvent;
+import com.hooklite.endshop.logging.MessageLogger;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
@@ -26,14 +31,36 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        Permission perms = Configuration.getPerms();
+
         if (command.getName().equalsIgnoreCase("shop")) {
-            if (sender instanceof Player) {
+            if (sender instanceof Player)
                 Bukkit.getServer().getPluginManager().callEvent(new ShopMenuOpenEvent(((Player) sender).getPlayer()));
+            else
+                return false;
+
+        } else if (command.getName().equalsIgnoreCase("endshop")) {
+            if (sender instanceof Player) {
+                MessageLogger.toPlayer((Player) sender, String.format("%sMade by %sQuerrin", ChatColor.LIGHT_PURPLE, ChatColor.RESET));
+                MessageLogger.toPlayer((Player) sender, String.format("%sGitHub: %shttps://github.com/Querrin/EndShop", ChatColor.LIGHT_PURPLE, ChatColor.RESET));
+                MessageLogger.toPlayer((Player) sender, String.format("%sDiscord: %shttp://discord.hooklite.com", ChatColor.LIGHT_PURPLE, ChatColor.RESET));
+            } else {
+                MessageLogger.toConsole(String.format("%sMade by %sQuerrin", ChatColor.LIGHT_PURPLE, ChatColor.RESET));
+                MessageLogger.toConsole(String.format("%sGitHub: %shttps://github.com/Querrin/EndShop", ChatColor.LIGHT_PURPLE, ChatColor.RESET));
+                MessageLogger.toConsole(String.format("%sDiscord: %shttp://discord.hooklite.com", ChatColor.LIGHT_PURPLE, ChatColor.RESET));
             }
         } else if (args.length > 0) {
             for (SubCommand subCommand : subCommands) {
                 if (subCommand.getName().equalsIgnoreCase(args[0])) {
-                    subCommand.execute(sender, args);
+                    if (sender instanceof Player && perms.has(sender, subCommand.getPermission())) {
+                        subCommand.execute(sender, args);
+                    } else if (sender instanceof ConsoleCommandSender) {
+                        subCommand.execute(sender, args);
+                    } else {
+                        MessageLogger.toPlayer((Player) sender, String.format("%sNo permission! %s(%s)", ChatColor.RED, ChatColor.RESET, subCommand.getPermission()));
+                    }
+                } else {
+                    return false;
                 }
             }
         }

@@ -10,6 +10,8 @@ public interface SubCommand {
 
     String getDescription();
 
+    String getPermission();
+
     String getSyntax();
 
     void execute(CommandSender sender, String[] args);

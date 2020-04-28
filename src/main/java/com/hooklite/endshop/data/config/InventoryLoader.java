@@ -134,8 +134,13 @@ public class InventoryLoader {
         ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
 
-        // TODO: Simplify display name
-        meta.setDisplayName(String.format("%s%s%s/%s%s", ChatColor.RED, number + 1, ChatColor.DARK_GRAY, ChatColor.RED, shop.pages.size()));
+        meta.setDisplayName(String.valueOf(ChatColor.RED) +
+                (number + 1) +
+                ChatColor.DARK_GRAY +
+                "/" +
+                ChatColor.RED +
+                shop.pages.size());
+
         item.setItemMeta(meta);
 
         return item;
@@ -148,11 +153,10 @@ public class InventoryLoader {
      * @return An item that displays the player's balance.
      */
     private static ItemStack getBalanceItem(Player player) {
-        // TODO: Properly display big numbers
         ItemStack item = new ItemStack(Material.GOLD_NUGGET, 1);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(String.format("%sBalance: %s$%s", ChatColor.GRAY, ChatColor.GREEN, Configuration.getEcon().getBalance(player)));
+        Objects.requireNonNull(meta).setDisplayName(String.format("%sBalance: %s$%.2f", ChatColor.GRAY, ChatColor.GREEN, Configuration.getEcon().getBalance(player)));
         item.setItemMeta(meta);
 
         return item;
