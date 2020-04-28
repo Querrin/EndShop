@@ -28,34 +28,6 @@ public class Configuration {
     private static Economy econ;
     private static Permission perms;
 
-    /**
-     * Loads all the required configurations for the plugin to function.
-     * <p>
-     * THIS METHOD SHOULD ONLY BE CALLED UPON THE START OF THE APPLICATION!
-     */
-    public static void configurePlugin(Plugin pl) {
-        try {
-            plugin = pl;
-
-            setDefaultConfig();
-            setShopConfigs();
-
-            addRewardType(new EBalanceRewardType());
-            addRewardType(new ECommandRewardType());
-            addRewardType(new EItemRewardType());
-
-            econ = VaultLoader.getEcon();
-            perms = VaultLoader.getPerms();
-            shops = ShopLoader.getModels(shopConfigs);
-
-            listRegisteredShops();
-        } catch (Exception e) {
-            MessageLogger.toConsole(e.getMessage());
-            e.printStackTrace();
-            Bukkit.getPluginManager().disablePlugin(plugin);
-        }
-    }
-
     public static YamlConfiguration getDefaultConfig() {
         return defaultConfig;
     }
@@ -86,6 +58,45 @@ public class Configuration {
 
     public static Plugin getPlugin() {
         return plugin;
+    }
+
+    /**
+     * Loads all the required configurations for the plugin to function.
+     * <p>
+     * THIS METHOD SHOULD ONLY BE CALLED UPON THE START OF THE APPLICATION!
+     */
+    public static void configurePlugin(Plugin pl) {
+        try {
+            plugin = pl;
+
+            setDefaultConfig();
+            setShopConfigs();
+
+            addRewardType(new EBalanceRewardType());
+            addRewardType(new ECommandRewardType());
+            addRewardType(new EItemRewardType());
+
+            econ = VaultLoader.getEcon();
+            perms = VaultLoader.getPerms();
+            shops = ShopLoader.getModels(shopConfigs);
+
+            listRegisteredShops();
+        } catch (Exception e) {
+            MessageLogger.toConsole(e.getMessage());
+            e.printStackTrace();
+            Bukkit.getPluginManager().disablePlugin(plugin);
+        }
+    }
+
+    public static void reloadPlugin() {
+        try {
+            shops = ShopLoader.getModels(shopConfigs);
+            listRegisteredShops();
+        } catch (Exception e) {
+            MessageLogger.toConsole(e.getMessage());
+            e.printStackTrace();
+            Bukkit.getPluginManager().disablePlugin(plugin);
+        }
     }
 
     /**

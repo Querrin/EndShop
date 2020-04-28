@@ -25,6 +25,7 @@ public class InventoryClickListener implements Listener {
             int clickedSlot = event.getSlot();
             Player player = (Player) event.getWhoClicked();
             Inventory clickedInventory = event.getInventory();
+            ItemStack item = event.getCurrentItem();
 
             if (clickedInventory.getHolder() instanceof ShopMenu) {
                 Bukkit.getPluginManager().callEvent(new ItemMenuOpenEvent(player, clickedSlot));
@@ -32,7 +33,6 @@ public class InventoryClickListener implements Listener {
             }
 
             if (clickedInventory.getHolder() instanceof ItemMenu) {
-                ItemStack item = event.getCurrentItem();
 
                 if (item.equals(InventoryLoader.getBackItem())) {
                     Bukkit.getPluginManager().callEvent(new ShopMenuOpenEvent(player));
@@ -40,7 +40,7 @@ public class InventoryClickListener implements Listener {
                     Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.NEXT_PAGE));
                 } else if (item.equals(InventoryLoader.getPreviousPageItem())) {
                     Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.PREVIOUS_PAGE));
-                } else {
+                } else if (!(item.getItemMeta().getDisplayName().contains("/")) && event.getClickedInventory() != player.getInventory()) {
                     Bukkit.getPluginManager().callEvent(new BuySellMenuOpenEvent((Player) event.getWhoClicked(), item, clickedSlot));
                 }
 
@@ -48,8 +48,6 @@ public class InventoryClickListener implements Listener {
             }
 
             if (clickedInventory.getHolder() instanceof BuySellMenu) {
-                ItemStack item = event.getCurrentItem();
-
                 if (item.equals(InventoryLoader.getBackItem())) {
                     for (EShop shop : Configuration.getShops()) {
                         for (EPage page : shop.pages) {
@@ -70,6 +68,5 @@ public class InventoryClickListener implements Listener {
                 event.setCancelled(true);
             }
         }
-
     }
 }

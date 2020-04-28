@@ -1,23 +1,22 @@
-title: '&lAn example shop'
+title: '&lExample'
 description:
-  - '&6Hello world'
-  - 'How are you?'
+  - '&6Hello there!'
+  - '&fThis is an example shop'
 display-item: 'oak_log'
 slot: 0
 items:
   example-item:
-    name: '&7MyLog'
+    name: '&7My oak log'
     description:
-      - 'Abc'
-      - 'Egf'
-    display-item: 'birch_log'
+      - '&fThis is my oak log'
+      - '&6Buy it now'
+    display-item: oak_log
     slot: 0
     buy-price: 10.0
-    sell-price: 5.0
     buy-reward:
-      type: 'balance'
-      reward: 10.0
+      type: 'item'
+      reward: oak_log
     sell-reward:
-      type: 'command'
-      reward: '(CONSOLE)  lp user %player% permission set idiot.yes'
+      type: 'balance'
+      reward: 5.0
 

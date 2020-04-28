@@ -1,6 +1,9 @@
 package com.hooklite.endshop.data.rewards;
 
+import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.logging.MessageLogger;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -10,32 +13,42 @@ public class EItemReward implements EReward {
     private Material reward;
 
     @Override
-    public void executeReward(Player player, RewardAction action, int amount) {
+    public void executeReward(EItem eItem, Player player, RewardAction action, int amount) {
+        double price = eItem.buyPrice;
         Inventory playerInventory = player.getInventory();
         ItemStack item = new ItemStack(reward, amount);
+        Economy econ = Configuration.getEcon();
 
         if (action == RewardAction.BUY) {
-
             if (item.getMaxStackSize() > 1) {
-                if (!playerInventory.containsAtLeast(item, 65 - amount))
+                if (!playerInventory.containsAtLeast(item, 65 - amount)) {
                     playerInventory.addItem(item);
-                else if (hasEmptySlot(playerInventory))
+                    econ.withdrawPlayer(player, price * amount);
+                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                } else if (hasEmptySlot(playerInventory)) {
                     playerInventory.addItem(item);
-                else
+                    econ.withdrawPlayer(player, price * amount);
+                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                } else
                     MessageLogger.toPlayer(player, "You do not have enough inventory space!");
 
             } else {
-                if (getEmptySlots(playerInventory) >= amount)
+                if (getEmptySlots(playerInventory) >= amount) {
                     playerInventory.addItem(item);
-                else
+                    econ.withdrawPlayer(player, price * amount);
+                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                } else
                     MessageLogger.toPlayer(player, "You do not have enough inventory space!");
             }
 
         } else {
-            // TODO: Possibly allows illegal item stacking ??
+            // FIXME: Possibly allows illegal item stacking ??
             if (playerInventory.containsAtLeast(item, amount)) {
-                playerInventory.removeItem(item);
-                MessageLogger.toPlayer(player, String.format("Successfully sold x%s %s.", amount, item.getType().toString().replace("_", " ").toLowerCase()));
+                for (int i = 0; i < amount; i++) {
+                    player.getInventory().removeItem(item);
+                    playerInventory.addItem(item);
+                }
+                MessageLogger.sendSellMessage(player, eItem.name, reward.name().replace("_", " ").toLowerCase(), amount);
             } else {
                 MessageLogger.toPlayer(player, "You do not have enough items to sell!");
             }
@@ -54,6 +67,11 @@ public class EItemReward implements EReward {
         }
 
         return false;
+    }
+
+    @Override
+    public String getReward() {
+        return reward.name();
     }
 
     private int getEmptySlots(Inventory inventory) {

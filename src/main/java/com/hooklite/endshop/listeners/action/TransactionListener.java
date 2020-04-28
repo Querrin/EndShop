@@ -18,9 +18,7 @@ public class TransactionListener implements Listener {
         EItem item = getItem(event.getItem());
         EReward reward = item.buyReward;
 
-        Configuration.getEcon().withdrawPlayer(event.getWhoClicked(), item.buyPrice * event.getAmount());
-
-        reward.executeReward(event.getWhoClicked(), RewardAction.BUY, event.getAmount());
+        reward.executeReward(item, event.getWhoClicked(), RewardAction.BUY, event.getAmount());
     }
 
     @EventHandler
@@ -29,9 +27,8 @@ public class TransactionListener implements Listener {
         EReward reward = item.sellReward;
 
         // TODO: Remove sell price, the reward for selling is already set wtf was I thinking
-        Configuration.getEcon().depositPlayer(event.getWhoClicked(), item.buyPrice * event.getAmount());
 
-        reward.executeReward(event.getWhoClicked(), RewardAction.SELL, event.getAmount());
+        reward.executeReward(item, event.getWhoClicked(), RewardAction.SELL, event.getAmount());
     }
 
     private EItem getItem(ItemStack item) {

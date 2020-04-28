@@ -31,48 +31,49 @@ class ItemLoader {
         Set<String> itemKeys = null;
 
         try {
-            itemKeys = config.getConfigurationSection("items").getKeys(false);
+            itemKeys = config.getConfigurationSection("items").getKeys(true);
         } catch (NullPointerException e) {
             MessageLogger.toConsole(String.format("The shop \"%s%s\" has no items.", Colors.loadColors(config.getString("title")), ChatColor.RESET));
         }
 
         if (itemKeys != null) {
             for (String item : itemKeys) {
-                EItem eItem = new EItem();
+                if (!item.contains(".")) {
+                    EItem eItem = new EItem();
 
-                Material displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString(String.format("items.%s.display-item", item))));
-                List<String> description = new ArrayList<>();
+                    Material displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString(String.format("items.%s.display-item", item))));
+                    List<String> description = new ArrayList<>();
 
-                if (displayItemMaterial == null)
-                    throw new InvalidConfigurationException(String.format("display-item in item \"%s\" is improperly configured!", item));
+                    if (displayItemMaterial == null)
+                        throw new InvalidConfigurationException(String.format("display-item in item \"%s\" is improperly configured!", item));
 
-                // Translates minecraft color codes into compatible ChatColor types
-                if (!config.getStringList(String.format("items.%s.description", item)).isEmpty()) {
-                    description = config.getStringList(String.format("items.%s.description", item));
+                    // Translates minecraft color codes into compatible ChatColor types
+                    if (!config.getStringList(String.format("items.%s.description", item)).isEmpty()) {
+                        description = config.getStringList(String.format("items.%s.description", item));
 
-                    for (int i = 0; i < description.size(); i++) {
-                        description.set(i, Colors.loadColors(description.get(i)));
+                        for (int i = 0; i < description.size(); i++) {
+                            description.set(i, Colors.loadColors(description.get(i)));
+                        }
                     }
+
+                    // Gets and sets all needed values from the config into a new instance of EItem
+                    eItem.name = Colors.loadColors(config.getString(String.format("items.%s.name", item)));
+                    eItem.description = description;
+                    eItem.slot = config.getInt(String.format("items.%s.slot", item));
+                    eItem.buyPrice = config.getDouble(String.format("items.%s.buy-price", item));
+                    eItem.buyReward = RewardLoader.getModel(config, item, RewardAction.BUY);
+                    eItem.sellReward = RewardLoader.getModel(config, item, RewardAction.SELL);
+
+                    ItemStack displayItem = new ItemStack(displayItemMaterial, 1);
+                    ItemMeta meta = displayItem.getItemMeta();
+                    meta.setDisplayName(eItem.name);
+                    meta.setLore(eItem.description);
+                    displayItem.setItemMeta(meta);
+
+                    eItem.displayItem = displayItem;
+
+                    items.add(eItem);
                 }
-
-                // Gets and sets all needed values from the config into a new instance of EItem
-                eItem.name = Colors.loadColors(config.getString(String.format("items.%s.name", item)));
-                eItem.description = description;
-                eItem.slot = config.getInt(String.format("items.%s.slot", item));
-                eItem.buyPrice = config.getDouble(String.format("items.%s.buy-price", item));
-                eItem.sellPrice = config.getDouble(String.format("items.%s.sell-price", item));
-                eItem.buyReward = RewardLoader.getModel(config, item, RewardAction.BUY);
-                eItem.sellReward = RewardLoader.getModel(config, item, RewardAction.SELL);
-
-                ItemStack displayItem = new ItemStack(displayItemMaterial, 1);
-                ItemMeta meta = displayItem.getItemMeta();
-                meta.setDisplayName(eItem.name);
-                meta.setLore(eItem.description);
-                displayItem.setItemMeta(meta);
-
-                eItem.displayItem = displayItem;
-
-                items.add(eItem);
             }
         }
 

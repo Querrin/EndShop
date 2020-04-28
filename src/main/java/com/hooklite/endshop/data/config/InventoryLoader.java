@@ -2,6 +2,7 @@ package com.hooklite.endshop.data.config;
 
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.data.rewards.EBalanceReward;
 import com.hooklite.endshop.shop.BuySellMenu;
 import com.hooklite.endshop.shop.ItemMenu;
 import com.hooklite.endshop.shop.ShopMenu;
@@ -107,15 +108,15 @@ public class InventoryLoader {
     public static Inventory getBuySellMenu(EItem item) {
         Inventory inventory = Bukkit.createInventory(new BuySellMenu(), 36, item.name);
 
-        inventory.setItem(9, getSellItem(item.sellPrice * 64, 64));
-        inventory.setItem(10, getSellItem(item.sellPrice * 32, 32));
-        inventory.setItem(11, getSellItem(item.sellPrice * 16, 16));
-        inventory.setItem(12, getSellItem(item.sellPrice, 1));
+        inventory.setItem(9, getSellItem(item, 64));
+        inventory.setItem(10, getSellItem(item, 32));
+        inventory.setItem(11, getSellItem(item, 16));
+        inventory.setItem(12, getSellItem(item, 1));
         inventory.setItem(13, item.displayItem);
-        inventory.setItem(14, getBuyItem(item.buyPrice, 1));
-        inventory.setItem(15, getBuyItem(item.buyPrice * 16, 16));
-        inventory.setItem(16, getBuyItem(item.buyPrice * 32, 32));
-        inventory.setItem(17, getBuyItem(item.buyPrice * 64, 64));
+        inventory.setItem(14, getBuyItem(item, item.buyPrice, 1));
+        inventory.setItem(15, getBuyItem(item, item.buyPrice * 16, 16));
+        inventory.setItem(16, getBuyItem(item, item.buyPrice * 32, 32));
+        inventory.setItem(17, getBuyItem(item, item.buyPrice * 64, 64));
 
         inventory.setItem(31, BACK_ITEM);
 
@@ -157,26 +158,32 @@ public class InventoryLoader {
         return item;
     }
 
-    private static ItemStack getBuyItem(double price, int amount) {
+    private static ItemStack getBuyItem(EItem eItem, double price, int amount) {
         ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, amount);
         ItemMeta meta = item.getItemMeta();
-        Objects.requireNonNull(meta).setDisplayName(String.format("%sBuy %sx%s%s", ChatColor.GREEN, ChatColor.GRAY, ChatColor.GOLD, amount));
+        Objects.requireNonNull(meta).setDisplayName(String.format("%s%sBuy %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
         List<String> lore = new ArrayList<>();
         lore.add(String.format("%sPrice: %s$%s", ChatColor.GRAY, ChatColor.GREEN, price));
+        lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, eItem.buyReward.getReward()));
         meta.setLore(lore);
         item.setItemMeta(meta);
 
         return item;
     }
 
-    private static ItemStack getSellItem(double price, int amount) {
+    private static ItemStack getSellItem(EItem eItem, int amount) {
         ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, amount);
         ItemMeta meta = item.getItemMeta();
-        Objects.requireNonNull(meta).setDisplayName(String.format("%sSell %sx%s%s", ChatColor.RED, ChatColor.GRAY, ChatColor.GOLD, amount));
+        Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell %sx%s%s", ChatColor.RED, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
         List<String> lore = new ArrayList<>();
-        lore.add(String.format("%sPrice: %s$%s", ChatColor.GRAY, ChatColor.RED, price));
+
+        if (eItem.sellReward instanceof EBalanceReward) {
+            lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, Double.parseDouble(eItem.sellReward.getReward()) * amount));
+        } else {
+            lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, eItem.sellReward.getReward()));
+        }
         meta.setLore(lore);
         item.setItemMeta(meta);
 

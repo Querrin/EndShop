@@ -12,7 +12,6 @@ public class EItem extends DataModel {
     public int slot;
     public ItemStack displayItem;
     public double buyPrice;
-    public double sellPrice;
     public EReward buyReward;
     public EReward sellReward;
 }
