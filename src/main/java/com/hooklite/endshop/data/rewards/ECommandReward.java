@@ -19,6 +19,8 @@ public class ECommandReward implements EReward {
 
         if (action == RewardAction.BUY) {
             if (command.contains("(CONSOLE)")) {
+                command = command.replace("(CONSOLE)", "").trim();
+
                 if (Transaction.withdraw(player, price * amount)) {
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
                     MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
@@ -26,6 +28,8 @@ public class ECommandReward implements EReward {
                     MessageLogger.toPlayer(player, "You do not have enough balance!");
                 }
             } else if (command.contains("(PLAYER)")) {
+                command = command.replace("(PLAYER)", "").trim();
+
                 if (Transaction.withdraw(player, price * amount)) {
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
                     MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
