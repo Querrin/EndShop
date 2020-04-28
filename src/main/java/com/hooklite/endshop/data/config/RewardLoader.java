@@ -22,15 +22,16 @@ class RewardLoader {
         String rewardString;
 
         // Gets the reward depending on the RewardAction type
-        if (action == RewardAction.BUY) {
+        if(action == RewardAction.BUY) {
             rewardType = getRewardType(config.getString("items." + item + ".buy-reward.type"));
             rewardString = config.getString("items." + item + ".buy-reward.reward");
-        } else {
+        }
+        else {
             rewardType = getRewardType(config.getString("items." + item + ".sell-reward.type"));
             rewardString = config.getString("items." + item + ".sell-reward.reward");
         }
 
-        if (rewardType == null || rewardString == null)
+        if(rewardType == null || rewardString == null)
             throw new InvalidConfigurationException(String.format("Rewards of %s are improperly configured!", item));
 
         return getReward(rewardType, rewardString);
@@ -46,8 +47,8 @@ class RewardLoader {
     private static EReward getReward(ERewardType rewardType, String rewardString) {
         EReward reward = null;
 
-        for (ERewardType type : Configuration.getRewardTypes()) {
-            if (rewardType.equals(type)) {
+        for(ERewardType type : Configuration.getRewardTypes()) {
+            if(rewardType.equals(type)) {
                 reward = type.getRewardObject();
                 reward.setReward(rewardString);
                 break;
@@ -66,8 +67,8 @@ class RewardLoader {
     private static ERewardType getRewardType(String type) throws NullPointerException {
         ERewardType eRewardType = null;
 
-        for (ERewardType rewardType : Configuration.getRewardTypes()) {
-            if (rewardType.getType().equals(type.toLowerCase())) {
+        for(ERewardType rewardType : Configuration.getRewardTypes()) {
+            if(rewardType.getType().equals(type.toLowerCase())) {
                 eRewardType = rewardType;
             }
         }

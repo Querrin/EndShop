@@ -16,32 +16,37 @@ public class ECommandReward implements EReward {
         String command = reward;
         command = command.replace("%player%", player.getName());
 
-        if (action == RewardAction.BUY) {
-            if (command.contains("(CONSOLE)")) {
+        if(action == RewardAction.BUY) {
+            if(command.contains("(CONSOLE)")) {
                 command = command.replace("(CONSOLE)", "").trim();
 
-                if (Transaction.withdraw(player, price * amount)) {
+                if(Transaction.withdraw(player, price * amount)) {
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
                     MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-                } else {
+                }
+                else {
                     MessageSender.toPlayer(player, "You do not have enough balance!");
                 }
-            } else if (command.contains("(PLAYER)")) {
+            }
+            else if(command.contains("(PLAYER)")) {
                 command = command.replace("(PLAYER)", "").trim();
 
-                if (Transaction.withdraw(player, price * amount)) {
+                if(Transaction.withdraw(player, price * amount)) {
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
                     MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-                } else {
+                }
+                else {
                     MessageSender.toPlayer(player, "You do not have enough balance!");
                 }
-            } else {
+            }
+            else {
                 // TODO: Better improperly configured command system (Possibly logging)
                 MessageSender.toConsole(String.format("%sCommand executor of \"%s\" is improperly configured!", ChatColor.RED, command));
                 MessageSender.toPlayer(player, String.format("%sCommand executor of \"%s\" is improperly configured!", ChatColor.RED, command));
                 MessageSender.toPlayer(player, "Message the admins to fix the error and get your reward!");
             }
-        } else {
+        }
+        else {
             MessageSender.toConsole(ChatColor.RED + "Commands cannot be sold!");
         }
     }

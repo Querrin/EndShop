@@ -81,7 +81,8 @@ public class Configuration {
             shops = ShopLoader.getModels(shopConfigs);
 
             listRegisteredShops();
-        } catch (Exception e) {
+        }
+        catch(Exception e) {
             MessageSender.toConsole(e.getMessage());
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin(plugin);
@@ -95,7 +96,8 @@ public class Configuration {
 
             shops = ShopLoader.getModels(shopConfigs);
             listRegisteredShops();
-        } catch (Exception e) {
+        }
+        catch(Exception e) {
             MessageSender.toConsole(e.getMessage());
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin(plugin);
@@ -108,7 +110,7 @@ public class Configuration {
      * @param type An ERewardType object.
      */
     public static void addRewardType(ERewardType type) {
-        if (!rewardTypes.contains(type))
+        if(!rewardTypes.contains(type))
             rewardTypes.add(type);
     }
 
@@ -137,16 +139,16 @@ public class Configuration {
 
         // Creates the shops directory
         File shopsDirectory = new File(plugin.getDataFolder().getPath(), "shops");
-        if (!shopsDirectory.exists()) {
-            if (!shopsDirectory.mkdirs())
+        if(!shopsDirectory.exists()) {
+            if(!shopsDirectory.mkdirs())
                 throw new IOException("Unable to create shops directory!");
         }
 
         // Creates a new file for the registered shop if it doesn't exist, then loads the example into it
-        for (String shop : defaultConfig.getStringList("shops")) {
+        for(String shop : defaultConfig.getStringList("shops")) {
             File file = new File(shopsDirectory.getPath(), shop + ".yml");
-            if (!file.exists()) {
-                if (file.createNewFile())
+            if(!file.exists()) {
+                if(file.createNewFile())
                     loadExampleConfig(file);
                 else
                     throw new IOException("Unable to create shop file!");
@@ -155,7 +157,8 @@ public class Configuration {
             YamlConfiguration configuration = new YamlConfiguration();
             try {
                 configuration.load(file);
-            } catch (InvalidConfigurationException e) {
+            }
+            catch(InvalidConfigurationException e) {
                 throw new InvalidConfigurationException(String.format("File \"%s\" is improperly configured!", file));
             }
 
@@ -171,10 +174,10 @@ public class Configuration {
         StringBuilder registeredShops = new StringBuilder();
 
         // Creates a string of registered shops then outputs it into console.
-        for (int i = 0; i < shopList.size(); i++) {
-            if (shopList.size() == 1)
+        for(int i = 0; i < shopList.size(); i++) {
+            if(shopList.size() == 1)
                 registeredShops.append(shopList.get(i));
-            else if (i == shopList.size() - 1)
+            else if(i == shopList.size() - 1)
                 registeredShops.append(shopList.get(i));
             else
                 registeredShops.append(shopList.get(i)).append(", ");

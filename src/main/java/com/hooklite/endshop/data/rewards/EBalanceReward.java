@@ -15,23 +15,26 @@ public class EBalanceReward implements EReward {
         double price = eItem.buyPrice;
         ItemStack item = new ItemStack(eItem.displayItem.getType(), 1);
 
-        if (action == RewardAction.BUY) {
-            if (Transaction.withdraw(player, price * amount)) {
+        if(action == RewardAction.BUY) {
+            if(Transaction.withdraw(player, price * amount)) {
                 Transaction.deposit(player, reward * amount);
                 MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-            } else {
+            }
+            else {
                 MessageSender.toPlayer(player, "You do not have enough balance!");
             }
-        } else {
-            if (player.getInventory().containsAtLeast(item, amount)) {
+        }
+        else {
+            if(player.getInventory().containsAtLeast(item, amount)) {
 
-                for (int i = 0; i < amount; i++) {
+                for(int i = 0; i < amount; i++) {
                     player.getInventory().removeItem(item);
                 }
 
                 Transaction.deposit(player, reward * amount);
                 MessageSender.sellMessage(player, eItem.name, String.format("%s$%s", ChatColor.GREEN, reward * amount), amount);
-            } else {
+            }
+            else {
                 MessageSender.toPlayer(player, "You do not have enough items to sell!");
             }
         }
