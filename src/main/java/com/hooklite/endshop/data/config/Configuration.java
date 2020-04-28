@@ -122,6 +122,7 @@ public class Configuration {
 
     private static void reloadDefaultConfig() {
         plugin.reloadConfig();
+        defaultConfig = (YamlConfiguration) plugin.getConfig();
     }
 
     /**

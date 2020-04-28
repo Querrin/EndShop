@@ -23,4 +23,8 @@ public class MessageSender {
     public static void noPermission(Player player, String permission) {
         player.sendMessage(String.format("%sYou do not have permission! %s(%s)", ChatColor.RED, ChatColor.RESET, permission));
     }
+
+    public static void noConsoleExecution() {
+        System.out.println(ChatColor.AQUA + "You cannot execute this command from console!");
+    }
 }
