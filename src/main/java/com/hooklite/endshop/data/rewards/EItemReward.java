@@ -1,9 +1,8 @@
 package com.hooklite.endshop.data.rewards;
 
-import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.data.config.Transaction;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.logging.MessageLogger;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -16,29 +15,32 @@ public class EItemReward implements EReward {
     public void executeReward(EItem eItem, Player player, RewardAction action, int amount) {
         double price = eItem.buyPrice;
         Inventory playerInventory = player.getInventory();
-        ItemStack item = new ItemStack(reward, amount);
-        Economy econ = Configuration.getEcon();
+        ItemStack item = new ItemStack(reward, 1);
 
         if (action == RewardAction.BUY) {
-            if (item.getMaxStackSize() > 1) {
-                if (!playerInventory.containsAtLeast(item, 65 - amount)) {
-                    playerInventory.addItem(item);
-                    econ.withdrawPlayer(player, price * amount);
+            if (!playerInventory.containsAtLeast(item, 65 - amount)) {
+                if (Transaction.withdraw(player, price * amount)) {
+                    addItems(player, item, amount);
                     MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
-                } else if (hasEmptySlot(playerInventory)) {
-                    playerInventory.addItem(item);
-                    econ.withdrawPlayer(player, price * amount);
+                } else {
+                    MessageLogger.toPlayer(player, "You do not have enough balance!");
+                }
+            } else if (hasEmptySlot(playerInventory)) {
+                if (Transaction.withdraw(player, price * amount)) {
+                    addItems(player, item, amount);
                     MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
-                } else
-                    MessageLogger.toPlayer(player, "You do not have enough inventory space!");
-
+                } else {
+                    MessageLogger.toPlayer(player, "You do not have enough balance!");
+                }
+            } else if (getEmptySlots(playerInventory) >= amount) {
+                if (Transaction.withdraw(player, price * amount)) {
+                    addItems(player, item, amount);
+                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                } else {
+                    MessageLogger.toPlayer(player, "You do not have enough balance!");
+                }
             } else {
-                if (getEmptySlots(playerInventory) >= amount) {
-                    playerInventory.addItem(item);
-                    econ.withdrawPlayer(player, price * amount);
-                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
-                } else
-                    MessageLogger.toPlayer(player, "You do not have enough inventory space!");
+                MessageLogger.toPlayer(player, "You do not have enough inventory space!");
             }
 
         } else {
@@ -58,6 +60,12 @@ public class EItemReward implements EReward {
     @Override
     public void setReward(String reward) {
         this.reward = Material.matchMaterial(reward);
+    }
+
+    private void addItems(Player player, ItemStack item, int amount) {
+        for (int i = 0; i < amount; i++) {
+            player.getInventory().addItem(item);
+        }
     }
 
     private boolean hasEmptySlot(Inventory inventory) {

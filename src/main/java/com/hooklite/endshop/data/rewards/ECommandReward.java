@@ -1,9 +1,8 @@
 package com.hooklite.endshop.data.rewards;
 
-import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.data.config.Transaction;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.logging.MessageLogger;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -17,17 +16,22 @@ public class ECommandReward implements EReward {
         double price = eItem.buyPrice;
         String command = reward;
         command = command.replace("%player%", player.getName());
-        Economy econ = Configuration.getEcon();
 
         if (action == RewardAction.BUY) {
             if (command.contains("(CONSOLE)")) {
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
-                econ.withdrawPlayer(player, price * amount);
-                MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                if (Transaction.withdraw(player, price * amount)) {
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                } else {
+                    MessageLogger.toPlayer(player, "You do not have enough balance!");
+                }
             } else if (command.contains("(PLAYER)")) {
-                Bukkit.getServer().dispatchCommand(player, reward);
-                econ.withdrawPlayer(player, price * amount);
-                MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                if (Transaction.withdraw(player, price * amount)) {
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+                    MessageLogger.sendBuyMessage(player, eItem.name, price * amount, amount);
+                } else {
+                    MessageLogger.toPlayer(player, "You do not have enough balance!");
+                }
             } else {
                 // TODO: Better improperly configured command system (Possibly logging)
                 MessageLogger.toConsole(String.format("%sCommand executor of \"%s\" is improperly configured!", ChatColor.RED, command));

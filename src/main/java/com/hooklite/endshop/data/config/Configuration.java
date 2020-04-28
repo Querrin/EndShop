@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Configuration {
     private static YamlConfiguration defaultConfig;
-    private static final List<YamlConfiguration> shopConfigs = new ArrayList<>();
+    private static List<YamlConfiguration> shopConfigs;
     private static List<EShop> shops = new ArrayList<>();
     private static final List<ERewardType> rewardTypes = new ArrayList<>();
     private static Plugin plugin;
@@ -90,6 +90,9 @@ public class Configuration {
 
     public static void reloadPlugin() {
         try {
+            reloadDefaultConfig();
+            setShopConfigs();
+
             shops = ShopLoader.getModels(shopConfigs);
             listRegisteredShops();
         } catch (Exception e) {
@@ -117,6 +120,10 @@ public class Configuration {
         plugin.saveDefaultConfig();
     }
 
+    private static void reloadDefaultConfig() {
+        plugin.reloadConfig();
+    }
+
     /**
      * Creates the shops directory and loads the configuration files if they don't exist.
      *
@@ -125,6 +132,7 @@ public class Configuration {
      * @throws InvalidConfigurationException If the configuration file is improperly configured.
      */
     private static void setShopConfigs() throws IOException, InvalidConfigurationException {
+        shopConfigs = new ArrayList<>();
 
         // Creates the shops directory
         File shopsDirectory = new File(plugin.getDataFolder().getPath(), "shops");
