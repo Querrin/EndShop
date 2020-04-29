@@ -1,10 +1,10 @@
 package com.hooklite.endshop.data.config;
 
 import com.hooklite.endshop.data.models.EShop;
-import com.hooklite.endshop.data.rewards.types.EBalanceRewardType;
-import com.hooklite.endshop.data.rewards.types.ECommandRewardType;
-import com.hooklite.endshop.data.rewards.types.EItemRewardType;
-import com.hooklite.endshop.data.rewards.types.ERewardType;
+import com.hooklite.endshop.data.rewards.EBalanceReward;
+import com.hooklite.endshop.data.rewards.ECommandReward;
+import com.hooklite.endshop.data.rewards.EItemReward;
+import com.hooklite.endshop.data.rewards.EReward;
 import com.hooklite.endshop.logging.MessageSender;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -23,7 +23,7 @@ public class Configuration {
     private static YamlConfiguration defaultConfig;
     private static List<YamlConfiguration> shopConfigs;
     private static List<EShop> shops = new ArrayList<>();
-    private static final List<ERewardType> rewardTypes = new ArrayList<>();
+    private static final List<EReward> rewards = new ArrayList<>();
     private static Plugin plugin;
     private static Economy econ;
     private static Permission perms;
@@ -40,12 +40,18 @@ public class Configuration {
         return shops;
     }
 
-    public static List<ERewardType> getRewardTypes() {
-        return rewardTypes;
+    public static List<EReward> getRewards() {
+        return rewards;
     }
 
-    public static void addReward(ERewardType type) {
-        rewardTypes.add(type);
+    /**
+     * Registers a new reward type if it isn't already registered.
+     *
+     * @param reward An instance of EReward.
+     */
+    public static void addReward(EReward reward) {
+        if(!rewards.contains(reward))
+            rewards.add(reward);
     }
 
     public static Permission getPerms() {
@@ -72,9 +78,9 @@ public class Configuration {
             setDefaultConfig();
             setShopConfigs();
 
-            addRewardType(new EBalanceRewardType());
-            addRewardType(new ECommandRewardType());
-            addRewardType(new EItemRewardType());
+            addReward(new ECommandReward());
+            addReward(new EBalanceReward());
+            addReward(new EItemReward());
 
             econ = VaultLoader.getEcon();
             perms = VaultLoader.getPerms();
@@ -102,16 +108,6 @@ public class Configuration {
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin(plugin);
         }
-    }
-
-    /**
-     * Registers a new reward type if it isn't already registered.
-     *
-     * @param type An ERewardType object.
-     */
-    public static void addRewardType(ERewardType type) {
-        if(!rewardTypes.contains(type))
-            rewardTypes.add(type);
     }
 
     /**

@@ -2,7 +2,6 @@ package com.hooklite.endshop.data.config;
 
 import com.hooklite.endshop.data.rewards.EReward;
 import com.hooklite.endshop.data.rewards.RewardAction;
-import com.hooklite.endshop.data.rewards.types.ERewardType;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -18,61 +17,44 @@ class RewardLoader {
      * @throws InvalidConfigurationException If the configuration file is improperly configured.
      */
     static EReward getModel(YamlConfiguration config, String item, RewardAction action) throws InvalidConfigurationException {
-        ERewardType rewardType;
-        String rewardString;
+        String type;
+        String reward;
 
         // Gets the reward depending on the RewardAction type
         if(action == RewardAction.BUY) {
-            rewardType = getRewardType(config.getString("items." + item + ".buy-reward.type"));
-            rewardString = config.getString("items." + item + ".buy-reward.reward");
+            type = config.getString("items." + item + ".buy-reward.type");
+            reward = config.getString("items." + item + ".buy-reward.reward");
         }
         else {
-            rewardType = getRewardType(config.getString("items." + item + ".sell-reward.type"));
-            rewardString = config.getString("items." + item + ".sell-reward.reward");
+            type = config.getString("items." + item + ".sell-reward.type");
+            reward = config.getString("items." + item + ".sell-reward.reward");
         }
 
-        if(rewardType == null || rewardString == null)
+        if(type == null || reward == null)
             throw new InvalidConfigurationException(String.format("Rewards of %s are improperly configured!", item));
 
-        return getReward(rewardType, rewardString);
+        return getReward(type, reward);
     }
 
     /**
      * Gets an reward object from a reward type.
      *
-     * @param rewardType   The reward type.
-     * @param rewardString The reward string from the configuration file.
+     * @param type         The type of reward.
+     * @param rewardString The reward that will be given upon execution
      * @return An EReward object corresponding to the type.
      */
-    private static EReward getReward(ERewardType rewardType, String rewardString) {
+    private static EReward getReward(String type, String rewardString) {
         EReward reward = null;
 
-        for(ERewardType type : Configuration.getRewardTypes()) {
-            if(rewardType.equals(type)) {
-                reward = type.getRewardObject();
+        for(EReward eReward : Configuration.getRewards()) {
+            if(eReward.getType().equals(type)) {
+                reward = eReward.getInstance();
                 reward.setReward(rewardString);
+
                 break;
             }
         }
 
         return reward;
-    }
-
-    /**
-     * Gets the type of the reward from a given string.
-     *
-     * @param type The reward string
-     * @return An object of ERewardType that corresponds with the reward type string.
-     */
-    private static ERewardType getRewardType(String type) throws NullPointerException {
-        ERewardType eRewardType = null;
-
-        for(ERewardType rewardType : Configuration.getRewardTypes()) {
-            if(rewardType.getType().equals(type.toLowerCase())) {
-                eRewardType = rewardType;
-            }
-        }
-
-        return eRewardType;
     }
 }
