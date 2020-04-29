@@ -12,43 +12,36 @@ public class EItemReward implements EReward {
     private Material reward;
     private RewardAction action;
 
+    private EItem eItem;
+    private ItemStack item;
+    private int amount;
+
     @Override
     public void executeReward(EItem eItem, Player player, int amount) {
         double price = eItem.buyPrice;
         Inventory playerInventory = player.getInventory();
-        ItemStack item = new ItemStack(reward, 1);
 
-        // FIXME: Buying items that cannot be stacked
+        this.eItem = eItem;
+        this.item = new ItemStack(reward, 1);
+        this.amount = amount;
+
         if(action == RewardAction.BUY) {
-            if(!playerInventory.containsAtLeast(item, 65 - amount)) {
-                if(Transaction.withdraw(player, price * amount)) {
-                    addItems(player, item, amount);
-                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-                }
-                else {
-                    MessageSender.toPlayer(player, "You do not have enough balance!");
-                }
-            }
-            else if(hasEmptySlot(playerInventory)) {
-                if(Transaction.withdraw(player, price * amount)) {
-                    addItems(player, item, amount);
-                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-                }
-                else {
-                    MessageSender.toPlayer(player, "You do not have enough balance!");
-                }
-            }
-            else if(getEmptySlots(playerInventory) >= amount) {
-                if(Transaction.withdraw(player, price * amount)) {
-                    addItems(player, item, amount);
-                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-                }
-                else {
-                    MessageSender.toPlayer(player, "You do not have enough balance!");
-                }
+            if(item.getMaxStackSize() > 1) {
+                if(!playerInventory.containsAtLeast(item, item.getMaxStackSize() - amount + 1))
+                    buyTransaction(player, price * amount);
+                else if(getEmptySlots(playerInventory) >= amount / item.getMaxStackSize())
+                    buyTransaction(player, price * amount);
+                else
+                    MessageSender.toPlayer(player, "You do not have enough inventory space!");
             }
             else {
-                MessageSender.toPlayer(player, "You do not have enough inventory space!");
+                if(getEmptySlots(playerInventory) >= amount) {
+                    buyTransaction(player, price * amount);
+                    MessageSender.toPlayer(player, String.valueOf(getEmptySlots(playerInventory)));
+                }
+                else {
+                    MessageSender.toPlayer(player, "You do not have enough inventory space!");
+                }
             }
 
         }
@@ -77,13 +70,14 @@ public class EItemReward implements EReward {
         }
     }
 
-    private boolean hasEmptySlot(Inventory inventory) {
-        for(ItemStack item : inventory.getContents()) {
-            if(item == null)
-                return true;
+    private void buyTransaction(Player player, double price) {
+        if(Transaction.withdraw(player, price)) {
+            addItems(player, item, amount);
+            MessageSender.buyMessage(player, eItem.name, price, amount);
         }
-
-        return false;
+        else {
+            MessageSender.toPlayer(player, "You do not have enough balance!");
+        }
     }
 
     @Override
