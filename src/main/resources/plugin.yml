@@ -14,7 +14,6 @@ commands:
     aliases: [es]
   shop:
     description: Opens the shop menu
-    aliases: [shops]
 permissions:
   endshop:
     default: op
