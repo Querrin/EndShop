@@ -10,13 +10,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class EItemReward implements EReward {
     private Material reward;
+    private RewardAction action;
 
     @Override
-    public void executeReward(EItem eItem, Player player, RewardAction action, int amount) {
+    public void executeReward(EItem eItem, Player player, int amount) {
         double price = eItem.buyPrice;
         Inventory playerInventory = player.getInventory();
         ItemStack item = new ItemStack(reward, 1);
 
+        // FIXME: Buying items that cannot be stacked
         if(action == RewardAction.BUY) {
             if(!playerInventory.containsAtLeast(item, 65 - amount)) {
                 if(Transaction.withdraw(player, price * amount)) {
@@ -108,5 +110,10 @@ public class EItemReward implements EReward {
     @Override
     public EReward getInstance() {
         return new EItemReward();
+    }
+
+    @Override
+    public void setAction(RewardAction action) {
+        this.action = action;
     }
 }

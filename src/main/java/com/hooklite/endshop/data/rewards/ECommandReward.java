@@ -9,9 +9,10 @@ import org.bukkit.entity.Player;
 
 public class ECommandReward implements EReward {
     private String reward;
+    private RewardAction action;
 
     @Override
-    public void executeReward(EItem eItem, Player player, RewardAction action, int amount) {
+    public void executeReward(EItem eItem, Player player, int amount) {
         double price = eItem.buyPrice;
         String command = reward;
         command = command.replace("%player%", player.getName());
@@ -69,5 +70,10 @@ public class ECommandReward implements EReward {
     @Override
     public EReward getInstance() {
         return new ECommandReward();
+    }
+
+    @Override
+    public void setAction(RewardAction action) {
+        this.action = action;
     }
 }
