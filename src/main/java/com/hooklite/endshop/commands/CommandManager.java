@@ -50,23 +50,25 @@ public class CommandManager implements TabExecutor {
             }
         }
         else if(args.length > 0 && command.getName().equals("endshop")) {
-            for(SubCommand subCommand : subCommands) {
-                if(subCommand.getName().equalsIgnoreCase(args[0])) {
+            for(int i = 0; i < subCommands.size(); i++) {
+                if(subCommands.get(i).getName().equalsIgnoreCase(args[0])) {
                     if(sender instanceof Player) {
-                        if(perms.has(player, subCommand.getPermission())) {
-                            subCommand.execute(sender, args);
+                        if(perms.has(player, subCommands.get(i).getPermission())) {
+                            subCommands.get(i).execute(sender, args);
                         }
                         else {
-                            MessageSender.noPermission(player, subCommand.getPermission());
+                            MessageSender.noPermission(player, subCommands.get(i).getPermission());
                         }
+
+                        break;
                     }
                     else if(sender instanceof ConsoleCommandSender) {
-                        subCommand.execute(sender, args);
+                        subCommands.get(i).execute(sender, args);
                     }
                 }
-                else {
-                    if(subCommand.getName().startsWith(args[0].toLowerCase()) || subCommand.getName().equalsIgnoreCase(args[0])) {
-                        String message = String.format("%s\n%sUsage: %s%s", subCommand.getDescription(), ChatColor.LIGHT_PURPLE, ChatColor.RESET, subCommand.getSyntax());
+                else if(i == subCommands.size() - 1) {
+                    if(subCommands.get(i).getName().startsWith(args[0].toLowerCase()) || subCommands.get(i).getName().equalsIgnoreCase(args[0])) {
+                        String message = String.format("%s\n%sUsage: %s%s", subCommands.get(i).getDescription(), ChatColor.LIGHT_PURPLE, ChatColor.RESET, subCommands.get(i).getSyntax());
 
                         if(sender instanceof Player)
                             MessageSender.toPlayer((Player) sender, message);
