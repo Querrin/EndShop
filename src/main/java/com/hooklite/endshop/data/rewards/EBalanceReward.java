@@ -9,9 +9,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class EBalanceReward implements EReward {
     private double reward;
+    private RewardAction action;
 
     @Override
-    public void executeReward(EItem eItem, Player player, RewardAction action, int amount) {
+    public void executeReward(EItem eItem, Player player, int amount) {
         double price = eItem.buyPrice;
         ItemStack item = new ItemStack(eItem.displayItem.getType(), 1);
 
@@ -58,5 +59,10 @@ public class EBalanceReward implements EReward {
     @Override
     public EReward getInstance() {
         return new EBalanceReward();
+    }
+
+    @Override
+    public void setAction(RewardAction action) {
+        this.action = action;
     }
 }

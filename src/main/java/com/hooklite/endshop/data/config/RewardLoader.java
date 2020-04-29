@@ -19,21 +19,24 @@ class RewardLoader {
     static EReward getModel(YamlConfiguration config, String item, RewardAction action) throws InvalidConfigurationException {
         String type;
         String reward;
+        EReward eReward;
 
         // Gets the reward depending on the RewardAction type
         if(action == RewardAction.BUY) {
             type = config.getString("items." + item + ".buy-reward.type");
             reward = config.getString("items." + item + ".buy-reward.reward");
+            eReward = getReward(type, reward, action);
         }
         else {
             type = config.getString("items." + item + ".sell-reward.type");
             reward = config.getString("items." + item + ".sell-reward.reward");
+            eReward = getReward(type, reward, action);
         }
 
-        if(type == null || reward == null)
+        if(eReward == null)
             throw new InvalidConfigurationException(String.format("Rewards of %s are improperly configured!", item));
 
-        return getReward(type, reward);
+        return eReward;
     }
 
     /**
@@ -43,14 +46,14 @@ class RewardLoader {
      * @param rewardString The reward that will be given upon execution
      * @return An EReward object corresponding to the type.
      */
-    private static EReward getReward(String type, String rewardString) {
+    private static EReward getReward(String type, String rewardString, RewardAction action) {
         EReward reward = null;
 
         for(EReward eReward : Configuration.getRewards()) {
             if(eReward.getType().equals(type)) {
                 reward = eReward.getInstance();
                 reward.setReward(rewardString);
-
+                reward.setAction(action);
                 break;
             }
         }

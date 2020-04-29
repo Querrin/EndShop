@@ -106,27 +106,31 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if(args.length == 1) {
-            if(args[0].isEmpty()) {
-                return subCommandNames;
+        if(command.getName().equals("endshop")) {
+            if(args.length == 1) {
+                if(args[0].isEmpty()) {
+                    return subCommandNames;
+                }
+                else {
+                    ArrayList<String> typeCommands = new ArrayList<>();
+                    for(String s : subCommandNames) {
+                        if(s.startsWith(args[0])) {
+                            typeCommands.add(s);
+                        }
+                    }
+                    return typeCommands;
+                }
             }
-            else {
-                ArrayList<String> typeCommands = new ArrayList<>();
-                for(String s : subCommandNames) {
-                    if(s.startsWith(args[0])) {
-                        typeCommands.add(s);
+            else if(args.length > 1) {
+                for(SubCommand subCommand : subCommands) {
+                    if(subCommand.getName().equalsIgnoreCase(args[1])) {
+                        return subCommand.getArguments((Player) sender, args);
                     }
                 }
-                return typeCommands;
             }
         }
-        else if(args.length > 1) {
-            for(SubCommand subCommand : subCommands) {
-                if(subCommand.getName().equalsIgnoreCase(args[1])) {
-                    return subCommand.getArguments((Player) sender, args);
-                }
-            }
-        }
+
         return null;
     }
+
 }

@@ -5,7 +5,6 @@ import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EPage;
 import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.data.rewards.EReward;
-import com.hooklite.endshop.data.rewards.RewardAction;
 import com.hooklite.endshop.events.BuyEvent;
 import com.hooklite.endshop.events.SellEvent;
 import org.bukkit.event.EventHandler;
@@ -18,7 +17,7 @@ public class TransactionListener implements Listener {
         EItem item = getItem(event.getItem());
         EReward reward = item.buyReward;
 
-        reward.executeReward(item, event.getWhoClicked(), RewardAction.BUY, event.getAmount());
+        reward.executeReward(item, event.getWhoClicked(), event.getAmount());
     }
 
     @EventHandler
@@ -26,7 +25,7 @@ public class TransactionListener implements Listener {
         EItem item = getItem(event.getItem());
         EReward reward = item.sellReward;
 
-        reward.executeReward(item, event.getWhoClicked(), RewardAction.SELL, event.getAmount());
+        reward.executeReward(item, event.getWhoClicked(), event.getAmount());
     }
 
     private EItem getItem(ItemStack item) {

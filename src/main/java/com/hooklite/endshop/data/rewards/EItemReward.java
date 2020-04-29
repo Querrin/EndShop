@@ -10,50 +10,55 @@ import org.bukkit.inventory.ItemStack;
 
 public class EItemReward implements EReward {
     private Material reward;
+    private RewardAction action;
+
+    private EItem eItem;
+    private ItemStack item;
+    private int amount;
 
     @Override
-    public void executeReward(EItem eItem, Player player, RewardAction action, int amount) {
-        double price = eItem.buyPrice;
+    public void executeReward(EItem eItem, Player player, int amount) {
+        double price = eItem.buyPrice * amount;
         Inventory playerInventory = player.getInventory();
-        ItemStack item = new ItemStack(reward, 1);
+
+        this.eItem = eItem;
+        this.item = new ItemStack(reward, 1);
+        this.amount = amount;
 
         if(action == RewardAction.BUY) {
-            if(!playerInventory.containsAtLeast(item, 65 - amount)) {
-                if(Transaction.withdraw(player, price * amount)) {
-                    addItems(player, item, amount);
-                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
+            if(item.getMaxStackSize() > 1) {
+                boolean match = false;
+
+                for(ItemStack buyItem : playerInventory) {
+                    if(buyItem != null && buyItem.getAmount() != buyItem.getMaxStackSize() && buyItem.getType() == item.getType()) {
+                        if(buyItem.getAmount() < item.getMaxStackSize() - amount + 1) {
+                            buyTransaction(player, price);
+
+                            match = true;
+                            break;
+                        }
+                    }
                 }
-                else {
-                    MessageSender.toPlayer(player, "You do not have enough balance!");
-                }
-            }
-            else if(hasEmptySlot(playerInventory)) {
-                if(Transaction.withdraw(player, price * amount)) {
-                    addItems(player, item, amount);
-                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-                }
-                else {
-                    MessageSender.toPlayer(player, "You do not have enough balance!");
-                }
-            }
-            else if(getEmptySlots(playerInventory) >= amount) {
-                if(Transaction.withdraw(player, price * amount)) {
-                    addItems(player, item, amount);
-                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-                }
-                else {
-                    MessageSender.toPlayer(player, "You do not have enough balance!");
-                }
+
+                if(match && getEmptySlots(player) >= Math.ceil((double) amount / item.getMaxStackSize()))
+                    buyTransaction(player, price);
+                else if(!match)
+                    MessageSender.toPlayer(player, "You do not have enough inventory space!");
             }
             else {
-                MessageSender.toPlayer(player, "You do not have enough inventory space!");
+                if(getEmptySlots(player) >= amount) {
+                    buyTransaction(player, price);
+                }
+                else {
+                    MessageSender.toPlayer(player, "You do not have enough inventory space!");
+                }
             }
 
         }
         else {
             if(playerInventory.containsAtLeast(item, amount)) {
                 for(int i = 0; i < amount; i++) {
-                    player.getInventory().removeItem(item);
+                    playerInventory.removeItem(item);
                     playerInventory.addItem(item);
                 }
                 MessageSender.sellMessage(player, eItem.name, reward.name().replace("_", " ").toLowerCase(), amount);
@@ -75,13 +80,14 @@ public class EItemReward implements EReward {
         }
     }
 
-    private boolean hasEmptySlot(Inventory inventory) {
-        for(ItemStack item : inventory.getContents()) {
-            if(item == null)
-                return true;
+    private void buyTransaction(Player player, double price) {
+        if(Transaction.withdraw(player, price)) {
+            addItems(player, item, amount);
+            MessageSender.buyMessage(player, eItem.name, price, amount);
         }
-
-        return false;
+        else {
+            MessageSender.toPlayer(player, "You do not have enough balance!");
+        }
     }
 
     @Override
@@ -89,13 +95,40 @@ public class EItemReward implements EReward {
         return reward.name();
     }
 
-    private int getEmptySlots(Inventory inventory) {
-        int amount = 0;
 
-        for(ItemStack item : inventory.getContents()) {
-            if(item == null)
+    private int getEmptySlots(Player player) {
+        int amount = 0;
+        Inventory inventory = player.getInventory();
+
+        ItemStack helmet = player.getInventory().getHelmet();
+        ItemStack chestplate = player.getInventory().getChestplate();
+        ItemStack leggings = player.getInventory().getLeggings();
+        ItemStack boots = player.getInventory().getBoots();
+
+        for(int i = 0; i < inventory.getContents().length; i++) {
+            ItemStack currentItem = inventory.getContents()[i];
+
+            if(currentItem == null)
                 amount++;
+            else {
+                if(currentItem == helmet || currentItem == chestplate || currentItem == leggings || currentItem == boots)
+                    amount--;
+            }
         }
+
+        for(ItemStack item : player.getInventory().getExtraContents()) {
+            if(item == null)
+                amount--;
+        }
+
+        if(helmet == null)
+            amount--;
+        if(chestplate == null)
+            amount--;
+        if(leggings == null)
+            amount--;
+        if(boots == null)
+            amount--;
 
         return amount;
     }
@@ -108,5 +141,10 @@ public class EItemReward implements EReward {
     @Override
     public EReward getInstance() {
         return new EItemReward();
+    }
+
+    @Override
+    public void setAction(RewardAction action) {
+        this.action = action;
     }
 }
