@@ -15,11 +15,11 @@ class VaultLoader {
      * @throws Exception If Vault or a registered economy service provider is not found.
      */
     public static Economy getEcon() throws Exception {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+        if(getServer().getPluginManager().getPlugin("Vault") == null) {
             throw new Exception("Vault could not be found!");
         }
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
+        if(rsp == null) {
             throw new Exception("No economy service provider found!");
         }
         return rsp.getProvider();
