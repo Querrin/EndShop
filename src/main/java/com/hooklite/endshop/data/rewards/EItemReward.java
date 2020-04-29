@@ -26,21 +26,23 @@ public class EItemReward implements EReward {
         this.amount = amount;
 
         if(action == RewardAction.BUY) {
+
             if(item.getMaxStackSize() > 1) {
                 boolean match = false;
 
-                for(ItemStack buyItem : playerInventory) {
-                    if(buyItem != null && buyItem.getAmount() != buyItem.getMaxStackSize() && buyItem.getType() == item.getType()) {
-                        if(buyItem.getAmount() < item.getMaxStackSize() - amount + 1) {
-                            buyTransaction(player, price);
+                if(playerInventory.containsAtLeast(item, 1)) {
+                    for(ItemStack buyItem : playerInventory) {
+                        if(buyItem != null && buyItem.getAmount() < buyItem.getMaxStackSize() && item.isSimilar(buyItem)) {
+                            if(buyItem.getAmount() < item.getMaxStackSize() - amount + 1) {
+                                buyTransaction(player, price);
+                                match = true;
 
-                            match = true;
-                            break;
+                                break;
+                            }
                         }
                     }
                 }
-
-                if(match && getEmptySlots(player) >= Math.ceil((double) amount / item.getMaxStackSize()))
+                if(!match && getEmptySlots(player) >= Math.ceil((double) amount / item.getMaxStackSize()))
                     buyTransaction(player, price);
                 else if(!match)
                     MessageSender.toPlayer(player, "You do not have enough inventory space!");

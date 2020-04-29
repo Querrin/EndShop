@@ -1,8 +1,8 @@
 # VALUES THAT CONTAIN COLOR CODES SHOULD ALWAYS BE IN QUOTES!
 #
-# =================
 # bad-example: &6Blocks
 # good-example: '&6Blocks'
+#
 
 title: '&lExample'                   # Title of the shop
 description:                         # Description or lore that will be set to the display item
