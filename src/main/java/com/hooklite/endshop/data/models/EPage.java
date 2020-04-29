@@ -31,7 +31,7 @@ public class EPage extends DataModel {
     }
 
     public void setItems(List<EItem> items) {
-        if (items.size() > 45)
+        if(items.size() > 45)
             throw new IllegalArgumentException("A page should not contain more than 45 items!");
 
         this.items = items;

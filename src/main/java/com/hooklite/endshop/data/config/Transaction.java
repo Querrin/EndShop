@@ -7,7 +7,7 @@ public class Transaction {
     public static boolean withdraw(Player player, double amount) {
         // FIXME: Figure out how to get minimal balance on a server
         Economy econ = Configuration.getEcon();
-        if (econ.getBalance(player) >= amount) {
+        if(econ.getBalance(player) >= amount) {
             econ.withdrawPlayer(player, amount);
             return true;
         }

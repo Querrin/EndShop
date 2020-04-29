@@ -20,16 +20,16 @@ class PageLoader {
         int pageAmount = (int) Math.ceil(items.size() / 45.0) == 0 ? 1 : (int) Math.ceil(items.size() / 45.0);
 
         int j = 0;
-        for (int i = 0; i < pageAmount; i++) {
+        for(int i = 0; i < pageAmount; i++) {
             EPage page = new EPage();
             page.setNumber(i);
 
             // Loads the items into this current page
             ArrayList<EItem> eItems = new ArrayList<>();
-            while (j < items.size()) {
+            while(j < items.size()) {
                 eItems.add(items.get(j));
 
-                if (j % 44 == 0 && j != 0) {
+                if(j % 44 == 0 && j != 0) {
                     j++;
                     break;
                 }

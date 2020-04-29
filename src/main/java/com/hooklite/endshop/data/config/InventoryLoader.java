@@ -69,7 +69,7 @@ public class InventoryLoader {
         Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
 
         // Sets the shop display items
-        for (EShop shop : shops) {
+        for(EShop shop : shops) {
             inventory.setItem(shop.slot, shop.displayItem);
         }
 
@@ -90,12 +90,12 @@ public class InventoryLoader {
         Inventory inventory = Bukkit.createInventory(new ItemMenu(), inventorySize, shop.title);
 
         // Sets the inventory items
-        for (EItem item : shop.pages.get(pageNumber).getItems()) {
+        for(EItem item : shop.pages.get(pageNumber).getItems()) {
             inventory.setItem(item.slot, item.displayItem);
         }
 
         // Adds navigation elements to the inventory
-        if (shop.pages.size() > 1) {
+        if(shop.pages.size() > 1) {
             inventory.setItem(inventorySize - 6, PREVIOUS_PAGE_ITEM);
             inventory.setItem(inventorySize - 4, NEXT_PAGE_ITEM);
         }
@@ -183,9 +183,10 @@ public class InventoryLoader {
 
         List<String> lore = new ArrayList<>();
 
-        if (eItem.sellReward instanceof EBalanceReward) {
+        if(eItem.sellReward instanceof EBalanceReward) {
             lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, Double.parseDouble(eItem.sellReward.getReward()) * amount));
-        } else {
+        }
+        else {
             lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, eItem.sellReward.getReward()));
         }
         meta.setLore(lore);
@@ -203,15 +204,15 @@ public class InventoryLoader {
     private static int getSize(int itemAmount) {
         int size;
 
-        if (itemAmount <= 9)
+        if(itemAmount <= 9)
             size = 18;
-        else if (itemAmount <= 18)
+        else if(itemAmount <= 18)
             size = 27;
-        else if (itemAmount <= 27)
+        else if(itemAmount <= 27)
             size = 36;
-        else if (itemAmount <= 36)
+        else if(itemAmount <= 36)
             size = 45;
-        else if (itemAmount <= 45)
+        else if(itemAmount <= 45)
             size = 54;
         else
             throw new IllegalArgumentException("An inventory cannot contain more that 45 items!");

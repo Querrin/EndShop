@@ -4,7 +4,7 @@ main: com.hooklite.endshop.EndShop
 load: POSTWORLD
 api-version: 1.13
 prefix: EndShop
-authors: [Querrin]
+author: Querrin
 loadbefore: [QuantumShop]
 description: An advanced shop for survival servers.
 website: hooklite.com
@@ -13,21 +13,22 @@ commands:
   endshop:
     description: Commands for endshop
     aliases: [es]
-    permission: endshop
   shop:
     description: Opens the shop menu
     aliases: [shops]
-    permission: endshop.shop
 permissions:
   endshop:
     default: op
-    description: Allows the use of /endshop command
+    description: Allows the use of "/endshop" command
   endshop.*:
     default: op
     description: Allows the use of all commands that the plugin offers
   endshop.reload:
     default: op
-    description: Allows the use of /endshop reload command to reload the configurations
+    description: Allows the use of "/endshop reload" command to reload the configurations
   endshop.shop:
     default: op
-    description: Allows the use of /shop command to open the shop menu
+    description: Allows the use of "/shop" command to open the shop menu
+  endshop.add:
+    default: op
+    description: Allows the use of "/endshop add <shop>" command to register a new shop

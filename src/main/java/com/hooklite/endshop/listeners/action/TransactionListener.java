@@ -30,10 +30,10 @@ public class TransactionListener implements Listener {
     }
 
     private EItem getItem(ItemStack item) {
-        for (EShop shop : Configuration.getShops()) {
-            for (EPage page : shop.pages) {
-                for (EItem eItem : page.getItems()) {
-                    if (item.equals(eItem.displayItem)) {
+        for(EShop shop : Configuration.getShops()) {
+            for(EPage page : shop.pages) {
+                for(EItem eItem : page.getItems()) {
+                    if(item.equals(eItem.displayItem)) {
                         return eItem;
                     }
                 }

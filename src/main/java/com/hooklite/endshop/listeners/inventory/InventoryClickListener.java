@@ -21,47 +21,52 @@ import org.bukkit.inventory.ItemStack;
 public class InventoryClickListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getClickedInventory() != null && event.getCurrentItem() != null) {
+        if(event.getClickedInventory() != null && event.getCurrentItem() != null) {
             int clickedSlot = event.getSlot();
             Player player = (Player) event.getWhoClicked();
             Inventory clickedInventory = event.getInventory();
             ItemStack item = event.getCurrentItem();
 
-            if (clickedInventory.getHolder() instanceof ShopMenu) {
+            if(clickedInventory.getHolder() instanceof ShopMenu) {
                 Bukkit.getPluginManager().callEvent(new ItemMenuOpenEvent(player, clickedSlot));
                 event.setCancelled(true);
             }
 
-            if (clickedInventory.getHolder() instanceof ItemMenu) {
+            if(clickedInventory.getHolder() instanceof ItemMenu) {
 
-                if (item.equals(InventoryLoader.getBackItem())) {
+                if(item.equals(InventoryLoader.getBackItem())) {
                     Bukkit.getPluginManager().callEvent(new ShopMenuOpenEvent(player));
-                } else if (item.equals(InventoryLoader.getNextPageItem())) {
+                }
+                else if(item.equals(InventoryLoader.getNextPageItem())) {
                     Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.NEXT_PAGE));
-                } else if (item.equals(InventoryLoader.getPreviousPageItem())) {
+                }
+                else if(item.equals(InventoryLoader.getPreviousPageItem())) {
                     Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.PREVIOUS_PAGE));
-                } else if (!(item.getItemMeta().getDisplayName().contains("/")) && event.getClickedInventory() != player.getInventory()) {
+                }
+                else if(!(item.getItemMeta().getDisplayName().contains("/")) && event.getClickedInventory() != player.getInventory()) {
                     Bukkit.getPluginManager().callEvent(new BuySellMenuOpenEvent((Player) event.getWhoClicked(), item, clickedSlot));
                 }
 
                 event.setCancelled(true);
             }
 
-            if (clickedInventory.getHolder() instanceof BuySellMenu) {
-                if (item.equals(InventoryLoader.getBackItem())) {
-                    for (EShop shop : Configuration.getShops()) {
-                        for (EPage page : shop.pages) {
-                            for (EItem eItem : page.getItems()) {
-                                if (eItem.displayItem.equals(clickedInventory.getStorageContents()[13])) {
+            if(clickedInventory.getHolder() instanceof BuySellMenu) {
+                if(item.equals(InventoryLoader.getBackItem())) {
+                    for(EShop shop : Configuration.getShops()) {
+                        for(EPage page : shop.pages) {
+                            for(EItem eItem : page.getItems()) {
+                                if(eItem.displayItem.equals(clickedInventory.getStorageContents()[13])) {
                                     player.openInventory(page.getInventory());
                                     event.setCancelled(true);
                                 }
                             }
                         }
                     }
-                } else if (item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
+                }
+                else if(item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
                     Bukkit.getPluginManager().callEvent(new BuyEvent(clickedInventory.getStorageContents()[13], player, item.getAmount()));
-                } else if (item.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
+                }
+                else if(item.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
                     Bukkit.getPluginManager().callEvent(new SellEvent(clickedInventory.getStorageContents()[13], player, item.getAmount()));
                 }
 

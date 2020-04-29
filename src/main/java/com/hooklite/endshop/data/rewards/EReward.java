@@ -9,4 +9,8 @@ public interface EReward {
     void setReward(String reward);
 
     String getReward();
+
+    String getType();
+
+    EReward getInstance();
 }
