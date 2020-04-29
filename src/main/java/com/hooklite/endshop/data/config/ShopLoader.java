@@ -23,20 +23,20 @@ class ShopLoader {
      */
     static List<EShop> getModels(List<YamlConfiguration> shopConfigs) throws InvalidConfigurationException {
         List<EShop> shops = new ArrayList<>();
-        for (YamlConfiguration config : shopConfigs) {
+        for(YamlConfiguration config : shopConfigs) {
             EShop shop = new EShop();
 
             // Gets the display item material
             Material displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString("display-item")));
             List<String> description = new ArrayList<>();
 
-            if (displayItemMaterial == null)
+            if(displayItemMaterial == null)
                 throw new InvalidConfigurationException(String.format("display-item of shop \"%s\" is improperly configured!", config.getName()));
 
-            if (!config.getStringList("description").isEmpty()) {
+            if(!config.getStringList("description").isEmpty()) {
                 description = config.getStringList("description");
 
-                for (int i = 0; i < description.size(); i++) {
+                for(int i = 0; i < description.size(); i++) {
                     description.set(i, Colors.loadColors(description.get(i)));
                 }
             }
@@ -48,7 +48,7 @@ class ShopLoader {
             shop.config = config;
             shop.pages = PageLoader.getModels(ItemLoader.getModels(config), shop);
 
-            for (int i = 0; i < shop.pages.size(); i++) {
+            for(int i = 0; i < shop.pages.size(); i++) {
                 PageLoader.setInventory(shop, i);
             }
 

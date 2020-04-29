@@ -9,10 +9,9 @@ import org.bukkit.event.Listener;
 public class ItemMenuOpenListener implements Listener {
     @EventHandler
     public void onItemMenuOpen(ItemMenuOpenEvent event) {
-        for (EShop shop : Configuration.getShops()) {
-            if (shop.slot == event.getSlot()) {
+        for(EShop shop : Configuration.getShops()) {
+            if(shop.slot == event.getSlot()) {
                 event.getWhoOpened().openInventory(shop.pages.get(0).getInventory());
-
                 break;
             }
         }

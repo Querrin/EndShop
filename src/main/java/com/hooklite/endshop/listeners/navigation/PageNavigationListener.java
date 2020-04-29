@@ -15,12 +15,12 @@ public class PageNavigationListener implements Listener {
         EPage page = null;
         boolean matchFound = false;
 
-        for (EShop eShop : Configuration.getShops()) {
-            if (matchFound)
+        for(EShop eShop : Configuration.getShops()) {
+            if(matchFound)
                 break;
 
-            for (EPage ePage : eShop.pages) {
-                if (event.getInventory().equals(ePage.getInventory())) {
+            for(EPage ePage : eShop.pages) {
+                if(event.getInventory().equals(ePage.getInventory())) {
                     shop = eShop;
                     page = ePage;
                     matchFound = true;
@@ -29,16 +29,17 @@ public class PageNavigationListener implements Listener {
             }
         }
 
-        if (event.getDirection() == PageNavigation.NEXT_PAGE) {
+        if(event.getDirection() == PageNavigation.NEXT_PAGE) {
             int nextPage = page.getNumber() + 1;
 
-            if (!(nextPage > shop.pages.size() - 1)) {
+            if(!(nextPage > shop.pages.size() - 1)) {
                 event.getWhoClicked().openInventory(shop.pages.get(nextPage).getInventory());
             }
-        } else {
+        }
+        else {
             int previousPage = page.getNumber() - 1;
 
-            if (!(previousPage < 0)) {
+            if(!(previousPage < 0)) {
                 event.getWhoClicked().openInventory(shop.pages.get(previousPage).getInventory());
             }
         }

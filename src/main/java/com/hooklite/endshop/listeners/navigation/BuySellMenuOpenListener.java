@@ -19,10 +19,10 @@ public class BuySellMenuOpenListener implements Listener {
     }
 
     private EItem getItemMatch(ItemStack eventItem) {
-        for (EShop shop : Configuration.getShops()) {
-            for (EPage page : shop.pages) {
-                for (EItem eItem : page.getItems()) {
-                    if (eItem.displayItem.equals(eventItem)) {
+        for(EShop shop : Configuration.getShops()) {
+            for(EPage page : shop.pages) {
+                for(EItem eItem : page.getItems()) {
+                    if(eItem.displayItem.equals(eventItem)) {
                         return eItem;
                     }
                 }
