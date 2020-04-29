@@ -49,4 +49,14 @@ public class EBalanceReward implements EReward {
     public String getReward() {
         return Double.toString(reward);
     }
+
+    @Override
+    public String getType() {
+        return "balance";
+    }
+
+    @Override
+    public EReward getInstance() {
+        return new EBalanceReward();
+    }
 }

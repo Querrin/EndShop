@@ -60,4 +60,14 @@ public class ECommandReward implements EReward {
     public String getReward() {
         return reward;
     }
+
+    @Override
+    public String getType() {
+        return "command";
+    }
+
+    @Override
+    public EReward getInstance() {
+        return new ECommandReward();
+    }
 }

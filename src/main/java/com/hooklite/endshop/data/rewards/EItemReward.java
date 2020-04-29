@@ -99,4 +99,14 @@ public class EItemReward implements EReward {
 
         return amount;
     }
+
+    @Override
+    public String getType() {
+        return "item";
+    }
+
+    @Override
+    public EReward getInstance() {
+        return new EItemReward();
+    }
 }
