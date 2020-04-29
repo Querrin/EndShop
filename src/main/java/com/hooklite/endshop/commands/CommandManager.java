@@ -74,7 +74,6 @@ public class CommandManager implements TabExecutor {
                             MessageSender.toConsole(message);
                     }
                     else {
-                        // FIXME: This executes even if the command executes ???
                         String message = "Unknown command.";
 
                         if(sender instanceof Player)
