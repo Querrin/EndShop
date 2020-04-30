@@ -14,11 +14,11 @@ public class ItemMenuOpenEvent extends Event {
         SLOT = slot;
     }
 
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers() {
         return HANDLERS;
     }
 

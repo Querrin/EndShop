@@ -22,18 +22,15 @@ public final class EndShop extends JavaPlugin {
         getCommand("endshop").setExecutor(new CommandManager());
 
         getPluginManager().registerEvents(new InventoryClickListener(), this);
-
         getPluginManager().registerEvents(new ShopMenuOpenListener(), this);
         getPluginManager().registerEvents(new ItemMenuOpenListener(), this);
         getPluginManager().registerEvents(new BuySellMenuOpenListener(), this);
-
         getPluginManager().registerEvents(new PageNavigationListener(), this);
-
         getPluginManager().registerEvents(new TransactionListener(), this);
     }
 
     @Override
     public void onDisable() {
-        // TODO: Implement inventory safety on plugin disable
+        Configuration.closeShopMenus(this.getServer().getOnlinePlayers());
     }
 }

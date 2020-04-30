@@ -53,13 +53,13 @@ public class ECommandReward implements EReward {
     }
 
     @Override
-    public void setReward(String reward) {
-        this.reward = reward;
+    public String getReward() {
+        return reward;
     }
 
     @Override
-    public String getReward() {
-        return reward;
+    public void setReward(String reward) {
+        this.reward = reward;
     }
 
     @Override

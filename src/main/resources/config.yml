@@ -1,2 +1,4 @@
+# The shop names should be unique, otherwise the plugin will not load them properly!
+
 shops:
   - example-shop

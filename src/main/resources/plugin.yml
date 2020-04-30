@@ -5,7 +5,6 @@ load: POSTWORLD
 api-version: 1.13
 prefix: EndShop
 author: Querrin
-loadbefore: [QuantumShop]
 description: An advanced shop for survival servers.
 website: hooklite.com
 depend: [Vault]
@@ -15,7 +14,6 @@ commands:
     aliases: [es]
   shop:
     description: Opens the shop menu
-    aliases: [shops]
 permissions:
   endshop:
     default: op

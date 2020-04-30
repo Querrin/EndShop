@@ -17,11 +17,11 @@ public class BuyEvent extends Event {
         AMOUNT = amount;
     }
 
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers() {
         return HANDLERS;
     }
 

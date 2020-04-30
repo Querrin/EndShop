@@ -1,27 +1,23 @@
-# VALUES THAT CONTAIN COLOR CODES SHOULD ALWAYS BE IN QUOTES!
-#
-# =================
-# bad-example: &6Blocks
-# good-example: '&6Blocks'
+# Values containing minecraft color codes should always be inside quotes!
 
-title: '&lExample'                   # Title of the shop
-description:                         # Description or lore that will be set to the display item
+title: '&lExample'
+description:
   - '&6Hello there!'
   - '&fThis is an example shop'
-display-item: 'oak_log'              # The shop display item
-slot: 0                              # The slot in shop menu where the item should be located (STARTS AT 0)
-items:                               # The items section, make sure each item is named differently
+display-item: oak_log
+slot: 0
+items:
   example-item:
-    name: '&7My oak log'             # The item name that will be displayed
-    description:                     # Item description or lore
+    name: '&7My oak log'
+    description:
       - '&fThis is my oak log'
       - '&6Buy it now'
-    display-item: oak_log            # The display item
-    slot: 0                          # The slot where the item should be located in the menu (STARTS AT 0)
-    buy-price: 10.0                  # The cost of buying 1x of the item
-    buy-reward:                      # The reward that will be given upon a purchase of the item
-      type: 'item'                   # The reward type | Valid values: item, balance, command
-      reward: oak_log                # The reward that will be given
-    sell-reward:                     # The reward that will be given upon selling of the item
+    display-item: oak_log
+    slot: 0
+    buy-price: 10.0
+    buy-reward:
+      type: 'item'
+      reward: oak_log
+    sell-reward:
       type: 'balance'
       reward: 5.0

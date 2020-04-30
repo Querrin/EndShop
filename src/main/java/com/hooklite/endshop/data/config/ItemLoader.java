@@ -58,7 +58,14 @@ class ItemLoader {
                     }
 
                     // Gets and sets all needed values from the config into a new instance of EItem
-                    eItem.name = Colors.loadColors(config.getString(String.format("items.%s.name", item)));
+                    if(config.getString(String.format("items.%s.name", item)) != null) {
+                        eItem.name = Colors.loadColors(config.getString(String.format("items.%s.name", item)));
+                    }
+                    else {
+                        String name = displayItemMaterial.name().replace("_", " ").toLowerCase();
+                        eItem.name = name.replace(name.charAt(0), Character.toUpperCase(name.charAt(0)));
+                    }
+
                     eItem.description = description;
                     eItem.slot = config.getInt(String.format("items.%s.slot", item));
                     eItem.buyPrice = config.getDouble(String.format("items.%s.buy-price", item));
