@@ -34,6 +34,6 @@ public final class EndShop extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // TODO: Implement inventory safety on plugin disable
+        Configuration.closeShopMenus(this.getServer().getOnlinePlayers());
     }
 }

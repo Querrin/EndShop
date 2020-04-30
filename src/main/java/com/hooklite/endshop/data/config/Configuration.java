@@ -6,17 +6,23 @@ import com.hooklite.endshop.data.rewards.ECommandReward;
 import com.hooklite.endshop.data.rewards.EItemReward;
 import com.hooklite.endshop.data.rewards.EReward;
 import com.hooklite.endshop.logging.MessageSender;
+import com.hooklite.endshop.shop.BuySellMenu;
+import com.hooklite.endshop.shop.ItemMenu;
+import com.hooklite.endshop.shop.ShopMenu;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Configuration {
@@ -95,8 +101,19 @@ public class Configuration {
         }
     }
 
+    public static void closeShopMenus(Collection<? extends Player> players) {
+        for(Player player : players) {
+            Inventory topInventory = player.getOpenInventory().getTopInventory();
+
+            if(topInventory.getHolder() instanceof ShopMenu || topInventory.getHolder() instanceof ItemMenu || topInventory.getHolder() instanceof BuySellMenu)
+                player.closeInventory();
+        }
+    }
+
     public static void reloadPlugin() {
         try {
+            closeShopMenus(plugin.getServer().getOnlinePlayers());
+
             reloadDefaultConfig();
             setShopConfigs();
 
