@@ -17,8 +17,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Objects;
 
 public class TransactionListener implements Listener {
-    // TODO: Message after buying/selling
-
     @EventHandler
     public void onBuy(BuyEvent event) {
         EItem item = getItem(event.getItem());
