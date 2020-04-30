@@ -10,7 +10,6 @@ public class Balance {
         // FIXME: Figure out how to get minimal balance on a server
         return ECON.getBalance(player) >= amount;
     }
-
     public static boolean withdraw(Player player, double amount) {
         if(hasEnough(player, amount)) {
             ECON.withdrawPlayer(player, amount);
