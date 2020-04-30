@@ -99,11 +99,6 @@ public class EItemReward implements EReward {
         }
     }
 
-    @Override
-    public void setReward(String reward) {
-        this.rewardMaterial = Material.matchMaterial(reward);
-    }
-
     private void addItems(Player player, ItemStack rewardItem, int amount) {
         for(int i = 0; i < amount; i++) {
             player.getInventory().addItem(rewardItem);
@@ -132,6 +127,10 @@ public class EItemReward implements EReward {
         return rewardMaterial.name();
     }
 
+    @Override
+    public void setReward(String reward) {
+        this.rewardMaterial = Material.matchMaterial(reward);
+    }
 
     private int getEmptySlots(Player player) {
         int amount = 0;

@@ -42,13 +42,13 @@ public class EBalanceReward implements EReward {
     }
 
     @Override
-    public void setReward(String reward) {
-        this.reward = Double.parseDouble(reward);
+    public String getReward() {
+        return Double.toString(reward);
     }
 
     @Override
-    public String getReward() {
-        return Double.toString(reward);
+    public void setReward(String reward) {
+        this.reward = Double.parseDouble(reward);
     }
 
     @Override

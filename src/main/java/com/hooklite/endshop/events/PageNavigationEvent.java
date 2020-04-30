@@ -17,11 +17,11 @@ public class PageNavigationEvent extends Event {
         DIRECTION = direction;
     }
 
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return HANDLERS;
     }
 
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers() {
         return HANDLERS;
     }
 

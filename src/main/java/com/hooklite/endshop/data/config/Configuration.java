@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Configuration {
+    private static final List<EReward> rewards = new ArrayList<>();
     private static YamlConfiguration defaultConfig;
     private static List<YamlConfiguration> shopConfigs;
     private static List<EShop> shops = new ArrayList<>();
-    private static final List<EReward> rewards = new ArrayList<>();
     private static Plugin plugin;
     private static Economy econ;
     private static Permission perms;
