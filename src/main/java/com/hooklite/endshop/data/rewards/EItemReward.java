@@ -9,11 +9,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class EItemReward implements EReward {
-    private Material reward;
+    private Material rewardMaterial;
     private RewardAction action;
 
     private EItem eItem;
-    private ItemStack item;
+    private ItemStack rewardItem;
     private int amount;
 
     @Override
@@ -22,18 +22,18 @@ public class EItemReward implements EReward {
         Inventory playerInventory = player.getInventory();
 
         this.eItem = eItem;
-        this.item = new ItemStack(reward, 1);
+        this.rewardItem = new ItemStack(rewardMaterial, 1);
         this.amount = amount;
 
         if(action == RewardAction.BUY) {
 
-            if(item.getMaxStackSize() > 1) {
+            if(rewardItem.getMaxStackSize() > 1) {
                 boolean match = false;
 
-                if(playerInventory.containsAtLeast(item, 1)) {
+                if(playerInventory.containsAtLeast(rewardItem, 1)) {
                     for(ItemStack buyItem : playerInventory) {
-                        if(buyItem != null && buyItem.getAmount() < buyItem.getMaxStackSize() && item.isSimilar(buyItem)) {
-                            if(buyItem.getAmount() < item.getMaxStackSize() - amount + 1) {
+                        if(buyItem != null && buyItem.getAmount() < buyItem.getMaxStackSize() && rewardItem.isSimilar(buyItem)) {
+                            if(buyItem.getAmount() < rewardItem.getMaxStackSize() - amount + 1) {
                                 buyTransaction(player, price);
                                 match = true;
 
@@ -42,10 +42,12 @@ public class EItemReward implements EReward {
                         }
                     }
                 }
-                if(!match && getEmptySlots(player) >= Math.ceil((double) amount / item.getMaxStackSize()))
+                if(!match && getEmptySlots(player) >= Math.ceil((double) amount / rewardItem.getMaxStackSize())) {
                     buyTransaction(player, price);
-                else if(!match)
+                }
+                else if(!match) {
                     MessageSender.toPlayer(player, "You do not have enough inventory space!");
+                }
             }
             else {
                 if(getEmptySlots(player) >= amount) {
@@ -58,12 +60,38 @@ public class EItemReward implements EReward {
 
         }
         else {
-            if(playerInventory.containsAtLeast(item, amount)) {
-                for(int i = 0; i < amount; i++) {
-                    playerInventory.removeItem(item);
-                    playerInventory.addItem(item);
+            ItemStack itemToSell = new ItemStack(eItem.displayItem.getType(), amount);
+
+            if(playerInventory.containsAtLeast(itemToSell, amount)) {
+                if(rewardItem.getMaxStackSize() > 1) {
+                    boolean match = false;
+                    if(playerInventory.containsAtLeast(rewardItem, 1)) {
+                        for(ItemStack item : playerInventory) {
+                            if(item != null && item.getAmount() < item.getMaxStackSize() && rewardItem.isSimilar(item)) {
+                                if(item.getAmount() < rewardItem.getMaxStackSize() - amount + 1) {
+                                    sellTransaction(player, itemToSell);
+                                    match = true;
+
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if(!match && getEmptySlots(player) >= Math.ceil((double) amount / rewardItem.getMaxStackSize())) {
+                        sellTransaction(player, itemToSell);
+                    }
+                    else if(!match) {
+                        MessageSender.toPlayer(player, "You do not have enough inventory space!");
+                    }
                 }
-                MessageSender.sellMessage(player, eItem.name, reward.name().replace("_", " ").toLowerCase(), amount);
+                else {
+                    if(getEmptySlots(player) >= amount) {
+                        sellTransaction(player, itemToSell);
+                    }
+                    else {
+                        MessageSender.toPlayer(player, "You do not have enough inventory space!");
+                    }
+                }
             }
             else {
                 MessageSender.toPlayer(player, "You do not have enough items to sell!");
@@ -73,18 +101,18 @@ public class EItemReward implements EReward {
 
     @Override
     public void setReward(String reward) {
-        this.reward = Material.matchMaterial(reward);
+        this.rewardMaterial = Material.matchMaterial(reward);
     }
 
-    private void addItems(Player player, ItemStack item, int amount) {
+    private void addItems(Player player, ItemStack rewardItem, int amount) {
         for(int i = 0; i < amount; i++) {
-            player.getInventory().addItem(item);
+            player.getInventory().addItem(rewardItem);
         }
     }
 
     private void buyTransaction(Player player, double price) {
         if(Transaction.withdraw(player, price)) {
-            addItems(player, item, amount);
+            addItems(player, rewardItem, amount);
             MessageSender.buyMessage(player, eItem.name, price, amount);
         }
         else {
@@ -92,9 +120,16 @@ public class EItemReward implements EReward {
         }
     }
 
+    private void sellTransaction(Player player, ItemStack sellItem) {
+        player.getInventory().removeItem(sellItem);
+        addItems(player, rewardItem, amount);
+
+        MessageSender.sellMessage(player, eItem.name, rewardMaterial.name().replace("_", " ").toLowerCase(), amount);
+    }
+
     @Override
     public String getReward() {
-        return reward.name();
+        return rewardMaterial.name();
     }
 
 
@@ -118,9 +153,8 @@ public class EItemReward implements EReward {
             }
         }
 
-        for(ItemStack item : player.getInventory().getExtraContents()) {
-            if(item == null)
-                amount--;
+        for(ItemStack ignored : player.getInventory().getExtraContents()) {
+            amount--;
         }
 
         if(helmet == null)
