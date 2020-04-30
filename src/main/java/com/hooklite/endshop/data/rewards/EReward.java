@@ -1,16 +1,17 @@
 package com.hooklite.endshop.data.rewards;
 
 import com.hooklite.endshop.data.models.EItem;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
 public interface EReward {
-    void executeReward(EItem item, Player player, int amount);
+    boolean execute(EItem item, Player player, int amount);
 
-    void setReward(String reward);
+    void setReward(String reward) throws InvalidConfigurationException;
 
-    void setAction(RewardAction action);
+    String getReward(int amount);
 
-    String getReward();
+    String getFailedMessage();
 
     String getType();
 

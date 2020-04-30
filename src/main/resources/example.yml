@@ -14,10 +14,15 @@ items:
       - '&6Buy it now'
     display-item: oak_log
     slot: 0
-    buy-price: 10.0
+    buy-req:
+      type: 'balance'
+      req: 10.0
     buy-reward:
       type: 'item'
       reward: oak_log
+    sell-req:
+      type: 'item'
+      req: oak_log
     sell-reward:
       type: 'balance'
       reward: 5.0

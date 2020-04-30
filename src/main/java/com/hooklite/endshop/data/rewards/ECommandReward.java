@@ -1,6 +1,5 @@
 package com.hooklite.endshop.data.rewards;
 
-import com.hooklite.endshop.data.config.Transaction;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.Bukkit;
@@ -9,52 +8,40 @@ import org.bukkit.entity.Player;
 
 public class ECommandReward implements EReward {
     private String reward;
-    private RewardAction action;
 
     @Override
-    public void executeReward(EItem eItem, Player player, int amount) {
-        double price = eItem.buyPrice;
+    public boolean execute(EItem eItem, Player player, int amount) {
         String command = reward;
         command = command.replace("%player%", player.getName());
 
-        if(action == RewardAction.BUY) {
-            if(command.contains("(CONSOLE)")) {
-                command = command.replace("(CONSOLE)", "").trim();
+        if(command.contains("(CONSOLE)")) {
+            command = command.replace("(CONSOLE)", "").trim();
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
 
-                if(Transaction.withdraw(player, price * amount)) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
-                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-                }
-                else {
-                    MessageSender.toPlayer(player, "You do not have enough balance!");
-                }
-            }
-            else if(command.contains("(PLAYER)")) {
-                command = command.replace("(PLAYER)", "").trim();
+            return true;
+        }
+        else if(command.contains("(PLAYER)")) {
+            command = command.replace("(PLAYER)", "").trim();
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
 
-                if(Transaction.withdraw(player, price * amount)) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
-                    MessageSender.buyMessage(player, eItem.name, price * amount, amount);
-                }
-                else {
-                    MessageSender.toPlayer(player, "You do not have enough balance!");
-                }
-            }
-            else {
-                // TODO: Better improperly configured command system (Possibly logging)
-                MessageSender.toConsole(String.format("%sCommand executor of \"%s\" is improperly configured!", ChatColor.RED, command));
-                MessageSender.toPlayer(player, String.format("%sCommand executor of \"%s\" is improperly configured!", ChatColor.RED, command));
-                MessageSender.toPlayer(player, "Message the admins to fix the error and get your reward!");
-            }
+            return true;
         }
         else {
-            MessageSender.toConsole(ChatColor.RED + "Commands cannot be sold!");
+            // TODO: Better improperly configured command system (Possibly logging)
+            MessageSender.toConsole(String.format("%sCommand executor of \"%s\" is improperly configured!", ChatColor.RED, command));
+            MessageSender.toPlayer(player, String.format("%sCommand executor of \"%s\" is improperly configured!", ChatColor.RED, command));
+            return false;
         }
     }
 
     @Override
-    public String getReward() {
+    public String getReward(int ignore) {
         return reward;
+    }
+
+    @Override
+    public String getFailedMessage() {
+        return String.format("%sMessage the admins to fix the error and get your reward!", ChatColor.RED);
     }
 
     @Override
@@ -70,10 +57,5 @@ public class ECommandReward implements EReward {
     @Override
     public EReward getInstance() {
         return new ECommandReward();
-    }
-
-    @Override
-    public void setAction(RewardAction action) {
-        this.action = action;
     }
 }

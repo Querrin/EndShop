@@ -1,8 +1,10 @@
 package com.hooklite.endshop.data.config;
 
+import com.hooklite.endshop.data.conditions.ERequirement;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EShop;
-import com.hooklite.endshop.data.rewards.EBalanceReward;
+import com.hooklite.endshop.data.rewards.EAction;
+import com.hooklite.endshop.data.rewards.EReward;
 import com.hooklite.endshop.shop.BuySellMenu;
 import com.hooklite.endshop.shop.ItemMenu;
 import com.hooklite.endshop.shop.ShopMenu;
@@ -113,10 +115,10 @@ public class InventoryLoader {
         inventory.setItem(11, getSellItem(item, 16));
         inventory.setItem(12, getSellItem(item, 1));
         inventory.setItem(13, item.displayItem);
-        inventory.setItem(14, getBuyItem(item, item.buyPrice, 1));
-        inventory.setItem(15, getBuyItem(item, item.buyPrice * 16, 16));
-        inventory.setItem(16, getBuyItem(item, item.buyPrice * 32, 32));
-        inventory.setItem(17, getBuyItem(item, item.buyPrice * 64, 64));
+        inventory.setItem(14, getBuyItem(item, 1));
+        inventory.setItem(15, getBuyItem(item, 16));
+        inventory.setItem(16, getBuyItem(item, 32));
+        inventory.setItem(17, getBuyItem(item, 64));
 
         inventory.setItem(31, BACK_ITEM);
 
@@ -162,18 +164,12 @@ public class InventoryLoader {
         return item;
     }
 
-    private static ItemStack getBuyItem(EItem eItem, double price, int amount) {
+    private static ItemStack getBuyItem(EItem eItem, int amount) {
         ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, amount);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sBuy %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
-        List<String> lore = new ArrayList<>();
-        lore.add(String.format("%sPrice: %s$%s", ChatColor.GRAY, ChatColor.GREEN, price));
-        lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, eItem.buyReward.getReward()));
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        return item;
+        return setItemLore(eItem.buyReq, amount, item, meta, eItem.buyReward, EAction.BUY);
     }
 
     private static ItemStack getSellItem(EItem eItem, int amount) {
@@ -181,14 +177,16 @@ public class InventoryLoader {
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell %sx%s%s", ChatColor.RED, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
-        List<String> lore = new ArrayList<>();
+        return setItemLore(eItem.sellReq, amount, item, meta, eItem.sellReward, EAction.SELL);
+    }
 
-        if(eItem.sellReward instanceof EBalanceReward) {
-            lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, Double.parseDouble(eItem.sellReward.getReward()) * amount));
-        }
-        else {
-            lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, eItem.sellReward.getReward()));
-        }
+    private static ItemStack setItemLore(ERequirement requirement, int amount, ItemStack item, ItemMeta meta, EReward reward, EAction action) {
+        List<String> lore = new ArrayList<>();
+        ChatColor color = action == EAction.BUY ? ChatColor.GREEN : ChatColor.RED;
+
+
+        lore.add(String.format("%sRequired: %s%s", ChatColor.GRAY, color, requirement.getName(amount)));
+        lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, color, reward.getReward(amount)));
         meta.setLore(lore);
         item.setItemMeta(meta);
 

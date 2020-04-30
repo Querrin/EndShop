@@ -1,5 +1,8 @@
 package com.hooklite.endshop.data.config;
 
+import com.hooklite.endshop.data.conditions.EBalanceRequirement;
+import com.hooklite.endshop.data.conditions.EItemRequirement;
+import com.hooklite.endshop.data.conditions.ERequirement;
 import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.data.rewards.EBalanceReward;
 import com.hooklite.endshop.data.rewards.ECommandReward;
@@ -30,6 +33,7 @@ public class Configuration {
     private static YamlConfiguration defaultConfig;
     private static List<YamlConfiguration> shopConfigs;
     private static List<EShop> shops = new ArrayList<>();
+    private static final List<ERequirement> requirements = new ArrayList<>();
     private static Plugin plugin;
     private static Economy econ;
     private static Permission perms;
@@ -46,7 +50,7 @@ public class Configuration {
         return shops;
     }
 
-    public static List<EReward> getRewards() {
+    static List<EReward> getRewards() {
         return rewards;
     }
 
@@ -58,6 +62,11 @@ public class Configuration {
     public static void addReward(EReward reward) {
         if(!rewards.contains(reward))
             rewards.add(reward);
+    }
+
+    public static void addRequirement(ERequirement requirement) {
+        if(!requirements.contains(requirement))
+            requirements.add(requirement);
     }
 
     public static Permission getPerms() {
@@ -72,6 +81,10 @@ public class Configuration {
         return plugin;
     }
 
+    public static List<ERequirement> getRequirements() {
+        return requirements;
+    }
+
     /**
      * Loads all the required configurations for the plugin to function.
      * <p>
@@ -81,12 +94,15 @@ public class Configuration {
         try {
             plugin = pl;
 
-            setDefaultConfig();
-            setShopConfigs();
+            addRequirement(new EItemRequirement());
+            addRequirement(new EBalanceRequirement());
 
             addReward(new ECommandReward());
             addReward(new EBalanceReward());
             addReward(new EItemReward());
+
+            setDefaultConfig();
+            setShopConfigs();
 
             econ = VaultLoader.getEcon();
             perms = VaultLoader.getPerms();

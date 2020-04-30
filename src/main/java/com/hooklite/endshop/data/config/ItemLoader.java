@@ -1,7 +1,7 @@
 package com.hooklite.endshop.data.config;
 
 import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.data.rewards.RewardAction;
+import com.hooklite.endshop.data.rewards.EAction;
 import com.hooklite.endshop.logging.Colors;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.ChatColor;
@@ -68,9 +68,10 @@ class ItemLoader {
 
                     eItem.description = description;
                     eItem.slot = config.getInt(String.format("items.%s.slot", item));
-                    eItem.buyPrice = config.getDouble(String.format("items.%s.buy-price", item));
-                    eItem.buyReward = RewardLoader.getModel(config, item, RewardAction.BUY);
-                    eItem.sellReward = RewardLoader.getModel(config, item, RewardAction.SELL);
+                    eItem.buyReward = RewardLoader.getModel(config, item, EAction.BUY);
+                    eItem.sellReward = RewardLoader.getModel(config, item, EAction.SELL);
+                    eItem.buyReq = RequirementLoader.getModel(config, item, EAction.BUY);
+                    eItem.sellReq = RequirementLoader.getModel(config, item, EAction.SELL);
 
                     ItemStack displayItem = new ItemStack(displayItemMaterial, 1);
                     ItemMeta meta = displayItem.getItemMeta();

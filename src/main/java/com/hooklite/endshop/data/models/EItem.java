@@ -1,5 +1,6 @@
 package com.hooklite.endshop.data.models;
 
+import com.hooklite.endshop.data.conditions.ERequirement;
 import com.hooklite.endshop.data.rewards.EReward;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,7 +12,8 @@ public class EItem extends DataModel {
     public List<String> description;
     public int slot;
     public ItemStack displayItem;
-    public double buyPrice;
+    public ERequirement buyReq;
+    public ERequirement sellReq;
     public EReward buyReward;
     public EReward sellReward;
 }
