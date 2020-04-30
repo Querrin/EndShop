@@ -1,11 +1,12 @@
 package com.hooklite.endshop.logging;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class MessageSender {
     public static void toConsole(String message) {
-        System.out.println(LoggingData.PREFIX + " " + message);
+        Bukkit.getConsoleSender().sendMessage(LoggingData.PREFIX + " " + message);
     }
 
     public static void toPlayer(Player player, String message) {

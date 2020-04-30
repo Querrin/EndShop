@@ -12,7 +12,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
@@ -59,29 +58,33 @@ public class CommandManager implements TabExecutor {
                         else {
                             MessageSender.noPermission(player, subCommands.get(i).getPermission());
                         }
-
-                        break;
-                    }
-                    else if(sender instanceof ConsoleCommandSender) {
-                        subCommands.get(i).execute(sender, args);
-                    }
-                }
-                else if(i == subCommands.size() - 1) {
-                    if(subCommands.get(i).getName().startsWith(args[0].toLowerCase()) || subCommands.get(i).getName().equalsIgnoreCase(args[0])) {
-                        String message = String.format("%s\n%sUsage: %s%s", subCommands.get(i).getDescription(), ChatColor.LIGHT_PURPLE, ChatColor.RESET, subCommands.get(i).getSyntax());
-
-                        if(sender instanceof Player)
-                            MessageSender.toPlayer((Player) sender, message);
-                        else
-                            MessageSender.toConsole(message);
                     }
                     else {
-                        String message = "Unknown command.";
+                        subCommands.get(i).execute(sender, args);
+                    }
 
-                        if(sender instanceof Player)
-                            MessageSender.toPlayer((Player) sender, message);
-                        else
-                            MessageSender.toConsole(message);
+                    break;
+                }
+                else if(i == subCommands.size() - 1) {
+                    for(int j = 0; j < subCommands.size(); j++) {
+                        if(subCommands.get(j).getName().startsWith(args[0].toLowerCase()) || subCommands.get(j).getName().equalsIgnoreCase(args[0])) {
+                            String message = String.format("%s\n%sUsage: %s%s", subCommands.get(j).getDescription(), ChatColor.LIGHT_PURPLE, ChatColor.RESET, subCommands.get(j).getSyntax());
+
+                            if(sender instanceof Player)
+                                MessageSender.toPlayer((Player) sender, message);
+                            else
+                                MessageSender.toConsole(message);
+
+                            break;
+                        }
+                        else if(j == subCommands.size() - 1) {
+                            String message = "Unknown command.";
+
+                            if(sender instanceof Player)
+                                MessageSender.toPlayer((Player) sender, message);
+                            else
+                                MessageSender.toConsole(message);
+                        }
                     }
                 }
             }
