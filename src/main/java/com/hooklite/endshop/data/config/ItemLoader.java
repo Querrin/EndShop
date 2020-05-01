@@ -44,6 +44,9 @@ public class ItemLoader {
                 if(!item.contains(".")) {
                     EItem eItem = new EItem();
 
+                    if(config.getString(String.format("items.%s.display-item", item)) == null)
+                        throw new InvalidConfigurationException(String.format("display-item in item \"%s\" is improperly configured!", item));
+
                     Material displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString(String.format("items.%s.display-item", item))));
                     List<String> description = new ArrayList<>();
 

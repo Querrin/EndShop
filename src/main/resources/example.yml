@@ -15,7 +15,7 @@ items:
     display-item: oak_log
     slot: 0
     buyable: true
-    sellable: true
+    sellable: false
     buy-req:
       type: 'balance'
       req: 10.0
