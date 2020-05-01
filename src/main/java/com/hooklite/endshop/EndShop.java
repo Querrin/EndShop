@@ -16,17 +16,16 @@ import static org.bukkit.Bukkit.getPluginManager;
 public final class EndShop extends JavaPlugin {
     @Override
     public void onEnable() {
-        Configuration.configurePlugin(this);
-
-        getCommand("shop").setExecutor(new CommandManager());
-        getCommand("endshop").setExecutor(new CommandManager());
-
         getPluginManager().registerEvents(new InventoryClickListener(), this);
         getPluginManager().registerEvents(new ShopMenuOpenListener(), this);
         getPluginManager().registerEvents(new ItemMenuOpenListener(), this);
         getPluginManager().registerEvents(new ActionMenuOpenListener(), this);
         getPluginManager().registerEvents(new PageNavigationListener(), this);
         getPluginManager().registerEvents(new TransactionListener(), this);
+        Configuration.configurePlugin(this);
+
+        getCommand("shop").setExecutor(new CommandManager());
+        getCommand("endshop").setExecutor(new CommandManager());
     }
 
     @Override

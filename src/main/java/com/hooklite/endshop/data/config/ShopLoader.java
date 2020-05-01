@@ -25,9 +25,21 @@ class ShopLoader {
         List<EShop> shops = new ArrayList<>();
         for(YamlConfiguration config : shopConfigs) {
             EShop shop = new EShop();
+            Material displayItemMaterial;
+
+            if(config.getString("title") != null)
+                shop.title = Colors.loadColors(config.getString("title"));
+            else
+                throw new InvalidConfigurationException("A title in a shop is improperly configured!");
 
             // Gets the display item material
-            Material displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString("display-item")));
+            try {
+                displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString("display-item")));
+            }
+            catch(NullPointerException e) {
+                throw new InvalidConfigurationException(String.format("display-item in shop \"%s\" is improperly configured!", shop.title));
+            }
+
             List<String> description = new ArrayList<>();
 
             if(displayItemMaterial == null)
@@ -42,7 +54,6 @@ class ShopLoader {
             }
 
             // Loads the required values into a new instance of EShop
-            shop.title = Colors.loadColors(config.getString("title"));
             shop.description = description;
             shop.slot = config.getInt("slot");
             shop.config = config;

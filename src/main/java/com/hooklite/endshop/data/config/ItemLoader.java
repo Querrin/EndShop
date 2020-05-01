@@ -14,7 +14,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 public class ItemLoader {
@@ -43,11 +42,15 @@ public class ItemLoader {
             for(String item : itemKeys) {
                 if(!item.contains(".")) {
                     EItem eItem = new EItem();
+                    Material displayItemMaterial;
 
-                    if(config.getString(String.format("items.%s.display-item", item)) == null)
+                    try {
+                        displayItemMaterial = Material.matchMaterial(config.getString(String.format("items.%s.display-item", item)));
+                    }
+                    catch(NullPointerException e) {
                         throw new InvalidConfigurationException(String.format("display-item in item \"%s\" is improperly configured!", item));
+                    }
 
-                    Material displayItemMaterial = Material.matchMaterial(Objects.requireNonNull(config.getString(String.format("items.%s.display-item", item))));
                     List<String> description = new ArrayList<>();
 
                     if(displayItemMaterial == null)
