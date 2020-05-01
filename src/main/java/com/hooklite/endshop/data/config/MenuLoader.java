@@ -91,8 +91,8 @@ public class MenuLoader {
         Inventory inventory = Bukkit.createInventory(new ItemMenu(), inventorySize, shop.title);
 
         // Sets the inventory items
-        for(EItem item : shop.pages.get(pageNumber).getItems()) {
-            inventory.setItem(item.slot, item.displayItem);
+        for(EItem pageItem : shop.pages.get(pageNumber).getItems()) {
+            inventory.setItem(pageItem.slot % 45, pageItem.displayItem);
         }
 
         // Adds navigation elements to the inventory
@@ -111,7 +111,7 @@ public class MenuLoader {
      *
      * @param shop   A shop with pages.
      * @param number The page number.
-     * @return An item that displays the current page.
+    ge     * @return An item that displays the current page.
      */
     private static ItemStack getPageNumberItem(EShop shop, int number) {
         ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE, 1);
