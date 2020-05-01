@@ -1,7 +1,7 @@
 package com.hooklite.endshop.listeners.navigation;
 
 import com.hooklite.endshop.data.config.Configuration;
-import com.hooklite.endshop.data.config.InventoryLoader;
+import com.hooklite.endshop.data.menus.EBuySellMenu;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EPage;
 import com.hooklite.endshop.data.models.EShop;
@@ -14,8 +14,7 @@ public class BuySellMenuOpenListener implements Listener {
     @EventHandler
     public void onBuySellMenuOpen(BuySellMenuOpenEvent event) {
         EItem item = getItemMatch(event.getItem());
-
-        event.getWhoOpened().openInventory(InventoryLoader.getBuySellMenu(item));
+        event.getWhoOpened().openInventory(new EBuySellMenu().getMenu(item, event.getWhoOpened()));
     }
 
     private EItem getItemMatch(ItemStack eventItem) {

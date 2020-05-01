@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EShop extends DataModel {
+public class EShop extends EDataModel {
     public String title;
     public List<String> description;
     public ItemStack displayItem;

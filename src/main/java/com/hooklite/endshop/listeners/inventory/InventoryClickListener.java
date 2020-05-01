@@ -1,7 +1,7 @@
 package com.hooklite.endshop.listeners.inventory;
 
 import com.hooklite.endshop.data.config.Configuration;
-import com.hooklite.endshop.data.config.InventoryLoader;
+import com.hooklite.endshop.data.config.MenuLoader;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EPage;
 import com.hooklite.endshop.data.models.EShop;
@@ -34,13 +34,13 @@ public class InventoryClickListener implements Listener {
 
             if(clickedInventory.getHolder() instanceof ItemMenu) {
 
-                if(item.equals(InventoryLoader.getBackItem())) {
+                if(item.equals(MenuLoader.getBackItem())) {
                     Bukkit.getPluginManager().callEvent(new ShopMenuOpenEvent(player));
                 }
-                else if(item.equals(InventoryLoader.getNextPageItem())) {
+                else if(item.equals(MenuLoader.getNextPageItem())) {
                     Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.NEXT_PAGE));
                 }
-                else if(item.equals(InventoryLoader.getPreviousPageItem())) {
+                else if(item.equals(MenuLoader.getPreviousPageItem())) {
                     Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.PREVIOUS_PAGE));
                 }
                 else if(!(item.getItemMeta().getDisplayName().contains("/")) && event.getClickedInventory() != player.getInventory()) {
@@ -51,7 +51,7 @@ public class InventoryClickListener implements Listener {
             }
 
             if(clickedInventory.getHolder() instanceof BuySellMenu) {
-                if(item.equals(InventoryLoader.getBackItem())) {
+                if(item.equals(MenuLoader.getBackItem())) {
                     for(EShop shop : Configuration.getShops()) {
                         for(EPage page : shop.pages) {
                             for(EItem eItem : page.getItems()) {

@@ -73,4 +73,18 @@ public class EItemRequirement implements ERequirement {
         return new EItemRequirement();
     }
 
+    @Override
+    public int getMaxAmount(Player player) {
+        int amount = 0;
+        ItemStack[] items = player.getInventory().getContents();
+        ItemStack req = new ItemStack(requirement, 1);
+
+        for(ItemStack itemStack : items) {
+            if(itemStack != null && itemStack.isSimilar(req))
+                amount += itemStack.getAmount();
+        }
+
+        return amount;
+    }
+
 }

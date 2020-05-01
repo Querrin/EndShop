@@ -3,9 +3,8 @@ package com.hooklite.endshop.data.config;
 import com.hooklite.endshop.data.conditions.ERequirement;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EShop;
-import com.hooklite.endshop.data.rewards.EAction;
 import com.hooklite.endshop.data.rewards.EReward;
-import com.hooklite.endshop.shop.BuySellMenu;
+import com.hooklite.endshop.shop.BuyMenu;
 import com.hooklite.endshop.shop.ItemMenu;
 import com.hooklite.endshop.shop.ShopMenu;
 import org.bukkit.Bukkit;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class InventoryLoader {
+public class MenuLoader {
     private static final ItemStack BACK_ITEM;
     private static final ItemStack NEXT_PAGE_ITEM;
     private static final ItemStack PREVIOUS_PAGE_ITEM;
@@ -107,20 +106,15 @@ public class InventoryLoader {
         return inventory;
     }
 
-    public static Inventory getBuySellMenu(EItem item) {
-        Inventory inventory = Bukkit.createInventory(new BuySellMenu(), 36, item.name);
+    public static Inventory getBuyInventory(Player player, EItem item) {
+        Inventory inventory = Bukkit.createInventory(new BuyMenu(), 45);
 
-        inventory.setItem(9, getSellItem(item, 64));
-        inventory.setItem(10, getSellItem(item, 32));
-        inventory.setItem(11, getSellItem(item, 16));
-        inventory.setItem(12, getSellItem(item, 1));
         inventory.setItem(13, item.displayItem);
-        inventory.setItem(14, getBuyItem(item, 1));
-        inventory.setItem(15, getBuyItem(item, 16));
-        inventory.setItem(16, getBuyItem(item, 32));
-        inventory.setItem(17, getBuyItem(item, 64));
-
-        inventory.setItem(31, BACK_ITEM);
+        inventory.setItem(18, getBuyItem(item, 1));
+        inventory.setItem(18, getBuyItem(item, 1));
+        inventory.setItem(18, getBuyItem(item, 1));
+        inventory.setItem(18, getBuyItem(item, 1));
+        inventory.setItem(18, getBuyItem(item, 1));
 
         return inventory;
     }
@@ -164,29 +158,28 @@ public class InventoryLoader {
         return item;
     }
 
-    private static ItemStack getBuyItem(EItem eItem, int amount) {
+    public static ItemStack getBuyItem(EItem eItem, int amount) {
         ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, amount);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sBuy %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
-        return setItemLore(eItem.buyReq, amount, item, meta, eItem.buyReward, EAction.BUY);
+        return setItemLore(eItem.buyReq, amount, item, meta, eItem.buyReward);
     }
 
-    private static ItemStack getSellItem(EItem eItem, int amount) {
+    public static ItemStack getSellItem(EItem eItem, int amount) {
         ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, amount);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell %sx%s%s", ChatColor.RED, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
-        return setItemLore(eItem.sellReq, amount, item, meta, eItem.sellReward, EAction.SELL);
+        return setItemLore(eItem.sellReq, amount, item, meta, eItem.sellReward);
     }
 
-    private static ItemStack setItemLore(ERequirement requirement, int amount, ItemStack item, ItemMeta meta, EReward reward, EAction action) {
+    private static ItemStack setItemLore(ERequirement requirement, int amount, ItemStack item, ItemMeta meta, EReward reward) {
         List<String> lore = new ArrayList<>();
-        ChatColor color = action == EAction.BUY ? ChatColor.GREEN : ChatColor.RED;
 
+        lore.add(String.format("%sRequired: %s%s", ChatColor.GRAY, ChatColor.RED, requirement.getName(amount)));
+        lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, reward.getReward(amount)));
 
-        lore.add(String.format("%sRequired: %s%s", ChatColor.GRAY, color, requirement.getName(amount)));
-        lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, color, reward.getReward(amount)));
         meta.setLore(lore);
         item.setItemMeta(meta);
 
@@ -216,6 +209,18 @@ public class InventoryLoader {
             throw new IllegalArgumentException("An inventory cannot contain more that 45 items!");
 
         return size;
+    }
+
+    public static int getItemAmount(Player player, ItemStack item) {
+        int amount = 0;
+        ItemStack[] items = player.getInventory().getContents();
+
+        for(ItemStack itemStack : items) {
+            if(itemStack.isSimilar(item))
+                amount += itemStack.getAmount();
+        }
+
+        return amount;
     }
 
 }

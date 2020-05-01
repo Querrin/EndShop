@@ -46,6 +46,6 @@ class PageLoader {
     }
 
     static void setInventory(EShop shop, int pageNumber) {
-        shop.pages.get(pageNumber).setInventory(InventoryLoader.getPageMenu(shop, pageNumber));
+        shop.pages.get(pageNumber).setInventory(MenuLoader.getPageMenu(shop, pageNumber));
     }
 }

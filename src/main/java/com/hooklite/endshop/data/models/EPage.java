@@ -5,7 +5,7 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EPage extends DataModel {
+public class EPage extends EDataModel {
     private int number;
     private List<EItem> items = new ArrayList<>();
     private Inventory inventory;

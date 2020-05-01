@@ -1,4 +1,4 @@
 package com.hooklite.endshop.data.models;
 
-public abstract class DataModel {
+public abstract class EDataModel {
 }

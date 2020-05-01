@@ -19,4 +19,6 @@ public interface ERequirement {
     String getName(int amount);
 
     ERequirement getInstance();
+
+    int getMaxAmount(Player player);
 }

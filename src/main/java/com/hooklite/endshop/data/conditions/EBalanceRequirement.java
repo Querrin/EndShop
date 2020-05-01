@@ -1,8 +1,8 @@
 package com.hooklite.endshop.data.conditions;
 
 import com.hooklite.endshop.data.config.Balance;
+import com.hooklite.endshop.data.config.Configuration;
 import com.hooklite.endshop.logging.MessageSender;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
@@ -53,11 +53,16 @@ public class EBalanceRequirement implements ERequirement {
 
     @Override
     public String getName(int amount) {
-        return ChatColor.GREEN + "$" + requirement * amount;
+        return "$" + requirement * amount;
     }
 
     @Override
     public ERequirement getInstance() {
         return new EBalanceRequirement();
+    }
+
+    @Override
+    public int getMaxAmount(Player player) {
+        return (int) Math.floor(Configuration.getEcon().getBalance(player) / requirement);
     }
 }
