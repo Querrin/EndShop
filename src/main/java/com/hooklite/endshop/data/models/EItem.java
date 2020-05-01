@@ -16,4 +16,6 @@ public class EItem extends EDataModel {
     public ERequirement sellReq;
     public EReward buyReward;
     public EReward sellReward;
+    public boolean buyable;
+    public boolean sellable;
 }

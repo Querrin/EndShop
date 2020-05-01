@@ -2,6 +2,7 @@ package com.hooklite.endshop.listeners.action;
 
 import com.hooklite.endshop.data.conditions.ERequirement;
 import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.data.config.ItemLoader;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EPage;
 import com.hooklite.endshop.data.models.EShop;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Objects;
 
@@ -21,7 +23,7 @@ public class TransactionListener implements Listener {
     public void onBuy(BuyEvent event) {
         EItem item = getItem(event.getItem());
         Player player = event.getWhoClicked();
-        int amount = event.getAmount();
+        int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(ItemLoader.AMOUNT_KEY, PersistentDataType.INTEGER);
         EReward reward = Objects.requireNonNull(item).buyReward;
         ERequirement req = item.buyReq;
 
@@ -43,7 +45,7 @@ public class TransactionListener implements Listener {
     public void onSell(SellEvent event) {
         EItem item = getItem(event.getItem());
         Player player = event.getWhoClicked();
-        int amount = event.getAmount();
+        int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(ItemLoader.AMOUNT_KEY, PersistentDataType.INTEGER);
         EReward reward = Objects.requireNonNull(item).sellReward;
         ERequirement req = item.sellReq;
 

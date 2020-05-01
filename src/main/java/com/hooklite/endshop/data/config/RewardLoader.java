@@ -16,7 +16,10 @@ class RewardLoader {
      * @return An object of EReward with all values configured.
      * @throws InvalidConfigurationException If the configuration file is improperly configured.
      */
-    static EReward getModel(YamlConfiguration config, String item, EAction action) throws InvalidConfigurationException {
+    static EReward getModel(YamlConfiguration config, String item, EAction action, boolean isAllowed) throws InvalidConfigurationException {
+        if(!isAllowed)
+            return null;
+
         String type;
         String reward;
         EReward eReward;

@@ -14,6 +14,8 @@ items:
       - '&6Buy it now'
     display-item: oak_log
     slot: 0
+    buyable: true
+    sellable: true
     buy-req:
       type: 'balance'
       req: 10.0

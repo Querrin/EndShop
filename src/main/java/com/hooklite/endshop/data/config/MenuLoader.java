@@ -4,7 +4,6 @@ import com.hooklite.endshop.data.conditions.ERequirement;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.data.rewards.EReward;
-import com.hooklite.endshop.shop.BuyMenu;
 import com.hooklite.endshop.shop.ItemMenu;
 import com.hooklite.endshop.shop.ShopMenu;
 import org.bukkit.Bukkit;
@@ -14,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,19 +106,6 @@ public class MenuLoader {
         return inventory;
     }
 
-    public static Inventory getBuyInventory(Player player, EItem item) {
-        Inventory inventory = Bukkit.createInventory(new BuyMenu(), 45);
-
-        inventory.setItem(13, item.displayItem);
-        inventory.setItem(18, getBuyItem(item, 1));
-        inventory.setItem(18, getBuyItem(item, 1));
-        inventory.setItem(18, getBuyItem(item, 1));
-        inventory.setItem(18, getBuyItem(item, 1));
-        inventory.setItem(18, getBuyItem(item, 1));
-
-        return inventory;
-    }
-
     /**
      * Creates an item that shows pages.
      *
@@ -159,7 +146,7 @@ public class MenuLoader {
     }
 
     public static ItemStack getBuyItem(EItem eItem, int amount) {
-        ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, amount);
+        ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sBuy %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
@@ -167,14 +154,23 @@ public class MenuLoader {
     }
 
     public static ItemStack getSellItem(EItem eItem, int amount) {
-        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, amount);
+        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
-        Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell %sx%s%s", ChatColor.RED, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
+        Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
         return setItemLore(eItem.sellReq, amount, item, meta, eItem.sellReward);
     }
 
+    public static ItemStack getSellMaxItem(EItem eItem, Player player) {
+        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
+        ItemMeta meta = item.getItemMeta();
+        Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell MAX", ChatColor.GREEN, ChatColor.BOLD));
+
+        return setItemLore(eItem.sellReq, eItem.sellReq.getMaxAmount(player), item, meta, eItem.sellReward);
+    }
+
     private static ItemStack setItemLore(ERequirement requirement, int amount, ItemStack item, ItemMeta meta, EReward reward) {
+        meta.getPersistentDataContainer().set(ItemLoader.AMOUNT_KEY, PersistentDataType.INTEGER, amount);
         List<String> lore = new ArrayList<>();
 
         lore.add(String.format("%sRequired: %s%s", ChatColor.GRAY, ChatColor.RED, requirement.getName(amount)));
@@ -210,17 +206,4 @@ public class MenuLoader {
 
         return size;
     }
-
-    public static int getItemAmount(Player player, ItemStack item) {
-        int amount = 0;
-        ItemStack[] items = player.getInventory().getContents();
-
-        for(ItemStack itemStack : items) {
-            if(itemStack.isSimilar(item))
-                amount += itemStack.getAmount();
-        }
-
-        return amount;
-    }
-
 }

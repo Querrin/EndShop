@@ -8,13 +8,13 @@ import org.bukkit.inventory.ItemStack;
 public class SellEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final ItemStack ITEM;
+    private final ItemStack CLICKED_ITEM;
     private final Player PLAYER;
-    private final int AMOUNT;
 
-    public SellEvent(ItemStack item, Player player, int amount) {
-        ITEM = item;
+    public SellEvent(ItemStack rewardItem, ItemStack clickedItem, Player player) {
+        ITEM = rewardItem;
+        CLICKED_ITEM = clickedItem;
         PLAYER = player;
-        AMOUNT = amount;
     }
 
     public static HandlerList getHandlerList() {
@@ -33,7 +33,7 @@ public class SellEvent extends Event {
         return PLAYER;
     }
 
-    public int getAmount() {
-        return AMOUNT;
+    public ItemStack getClickedItem() {
+        return CLICKED_ITEM;
     }
 }

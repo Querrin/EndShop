@@ -6,6 +6,7 @@ import com.hooklite.endshop.logging.Colors;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +17,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-class ItemLoader {
+public class ItemLoader {
+    public static final NamespacedKey AMOUNT_KEY = new NamespacedKey(Configuration.getPlugin(), "required-amount");
 
     /**
      * Deserializes the data from a config file.
@@ -66,12 +68,15 @@ class ItemLoader {
                         eItem.name = name.replace(name.charAt(0), Character.toUpperCase(name.charAt(0)));
                     }
 
+
                     eItem.description = description;
                     eItem.slot = config.getInt(String.format("items.%s.slot", item));
-                    eItem.buyReward = RewardLoader.getModel(config, item, EAction.BUY);
-                    eItem.sellReward = RewardLoader.getModel(config, item, EAction.SELL);
-                    eItem.buyReq = RequirementLoader.getModel(config, item, EAction.BUY);
-                    eItem.sellReq = RequirementLoader.getModel(config, item, EAction.SELL);
+                    eItem.buyable = config.getBoolean(String.format("items.%s.buyable", item), true);
+                    eItem.sellable = config.getBoolean(String.format("items.%s.sellable", item), true);
+                    eItem.buyReward = RewardLoader.getModel(config, item, EAction.BUY, eItem.buyable);
+                    eItem.sellReward = RewardLoader.getModel(config, item, EAction.SELL, eItem.sellable);
+                    eItem.buyReq = RequirementLoader.getModel(config, item, EAction.BUY, eItem.buyable);
+                    eItem.sellReq = RequirementLoader.getModel(config, item, EAction.SELL, eItem.sellable);
 
                     ItemStack displayItem = new ItemStack(displayItemMaterial, 1);
                     ItemMeta meta = displayItem.getItemMeta();

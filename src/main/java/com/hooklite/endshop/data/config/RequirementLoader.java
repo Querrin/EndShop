@@ -6,18 +6,23 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 class RequirementLoader {
-    static ERequirement getModel(YamlConfiguration config, String item, EAction action) throws InvalidConfigurationException {
+    static ERequirement getModel(YamlConfiguration config, String item, EAction action, boolean isAllowed) throws InvalidConfigurationException {
+        if(!isAllowed)
+            return null;
+
         ERequirement requirement;
         String req;
 
         if(action == EAction.BUY) {
             requirement = getRequirement(config.getString("items." + item + ".buy-req.type"));
             req = config.getString("items." + item + ".buy-req.req");
+
         }
         else {
             requirement = getRequirement(config.getString("items." + item + ".sell-req.type"));
             req = config.getString("items." + item + ".sell-req.req");
         }
+
 
         if(requirement == null || req == null)
             throw new InvalidConfigurationException(String.format("The buy-req/sell-req in item \"%s\" are improperly configured!", item));

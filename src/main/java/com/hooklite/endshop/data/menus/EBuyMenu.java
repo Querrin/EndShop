@@ -15,11 +15,13 @@ public class EBuyMenu implements EActionMenu {
 
         inventory.setItem(13, item.displayItem);
 
-        inventory.setItem(20, MenuLoader.getBuyItem(item, 1));
-        inventory.setItem(21, MenuLoader.getBuyItem(item, 16));
-        inventory.setItem(22, MenuLoader.getBuyItem(item, 32));
-        inventory.setItem(23, MenuLoader.getBuyItem(item, 64));
-        inventory.setItem(24, MenuLoader.getBuyItem(item, item.buyReq.getMaxAmount(player)));
+        inventory.setItem(19, MenuLoader.getBuyItem(item, 1));
+        inventory.setItem(20, MenuLoader.getBuyItem(item, 16));
+        inventory.setItem(21, MenuLoader.getBuyItem(item, 32));
+        inventory.setItem(22, MenuLoader.getBuyItem(item, 64));
+        inventory.setItem(23, MenuLoader.getBuyItem(item, 128));
+        inventory.setItem(24, MenuLoader.getBuyItem(item, 256));
+        inventory.setItem(25, MenuLoader.getBuyItem(item, 512));
 
         inventory.setItem(40, MenuLoader.getBackItem());
 
