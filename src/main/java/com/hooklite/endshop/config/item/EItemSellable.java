@@ -3,11 +3,12 @@ package com.hooklite.endshop.config.item;
 import com.hooklite.endshop.config.interfaces.EItemKey;
 import com.hooklite.endshop.config.interfaces.ERequiredKey;
 import com.hooklite.endshop.data.models.EItem;
+import com.hooklite.endshop.data.models.EShop;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class EItemSellable implements EItemKey, ERequiredKey {
     @Override
-    public void setValue(EItem item, YamlConfiguration configuration, String itemSection, int ignore) {
+    public void setValue(EShop shop, EItem item, YamlConfiguration configuration, String itemSection, int ignore) {
         item.sellable = getValue(configuration, itemSection);
     }
 

@@ -19,6 +19,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFactory;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
@@ -29,6 +30,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class Configuration {
+    private static final ItemFactory ITEM_FACTORY = Bukkit.getServer().getItemFactory();
     private static final List<EReward> rewards = new ArrayList<>();
     private static YamlConfiguration defaultConfig;
     private static List<YamlConfiguration> shopConfigs;
@@ -48,6 +50,10 @@ public class Configuration {
 
     public static List<EShop> getShops() {
         return shops;
+    }
+
+    public static ItemFactory getItemFactory() {
+        return ITEM_FACTORY;
     }
 
     static List<EReward> getRewards() {

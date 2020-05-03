@@ -1,15 +1,22 @@
 package com.hooklite.endshop.config.item;
 
+import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.config.interfaces.EItemKey;
 import com.hooklite.endshop.data.models.EItem;
+import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.data.models.persistance.EItemTagType;
+import com.hooklite.endshop.data.models.persistance.EShopTagType;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 
 public class EItemDisplayItem implements EItemKey {
     @Override
-    public void setValue(EItem item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
+    public void setValue(EShop shop, EItem item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
         String value = configuration.getString("display-item");
 
         if(value != null) {
@@ -18,10 +25,7 @@ public class EItemDisplayItem implements EItemKey {
             if(material == null)
                 throw new InvalidConfigurationException("Item type not found!");
 
-            ItemStack displayItem = new ItemStack(material);
-            setMeta(displayItem);
-
-            item.displayItem = displayItem;
+            item.displayItem = setMeta(new ItemStack(material), shop, item);
         }
         else {
             if(required())
@@ -44,7 +48,22 @@ public class EItemDisplayItem implements EItemKey {
         return true;
     }
 
-    private void setMeta(ItemStack item) {
+    private ItemStack setMeta(ItemStack itemStack, EShop shop, EItem item) {
+        ItemMeta meta = itemStack.getItemMeta();
 
+        assert meta != null;
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        NamespacedKey shopKey = new NamespacedKey(Configuration.getPlugin(), "shop");
+        NamespacedKey itemKey = new NamespacedKey(Configuration.getPlugin(), "item");
+
+        meta.setDisplayName(shop.title);
+        meta.setLore(shop.description);
+
+        container.set(shopKey, EShopTagType.getInstance(), shop);
+        container.set(itemKey, EItemTagType.getInstance(), item);
+
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
     }
 }

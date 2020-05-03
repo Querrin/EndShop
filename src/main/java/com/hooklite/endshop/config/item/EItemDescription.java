@@ -3,6 +3,7 @@ package com.hooklite.endshop.config.item;
 import com.hooklite.endshop.config.interfaces.EItemKey;
 import com.hooklite.endshop.config.interfaces.ERequiredKey;
 import com.hooklite.endshop.data.models.EItem;
+import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.logging.Colors;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class EItemDescription implements EItemKey, ERequiredKey {
     @Override
-    public void setValue(EItem item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
+    public void setValue(EShop shop, EItem item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
         List<String> values = configuration.getStringList(getKeyPath(itemSection));
 
         if(values.isEmpty() && required())
