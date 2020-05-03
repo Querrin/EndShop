@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.config;
+package com.hooklite.endshop.config;
 
 import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.logging.Colors;
@@ -27,10 +27,12 @@ class ShopLoader {
             EShop shop = new EShop();
             Material displayItemMaterial;
 
-            if(config.getString("title") != null)
+            if(config.getString("title") != null) {
                 shop.title = Colors.loadColors(config.getString("title"));
+            }
             else
                 throw new InvalidConfigurationException("A title in a shop is improperly configured!");
+
 
             // Gets the display item material
             try {
@@ -56,7 +58,6 @@ class ShopLoader {
             // Loads the required values into a new instance of EShop
             shop.description = description;
             shop.slot = config.getInt("slot");
-            shop.config = config;
             shop.pages = PageLoader.getModels(ItemLoader.getModels(config), shop);
 
             for(int i = 0; i < shop.pages.size(); i++) {

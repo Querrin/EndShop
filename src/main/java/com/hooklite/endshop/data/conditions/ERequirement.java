@@ -16,6 +16,8 @@ public interface ERequirement {
 
     void setRequirement(String requirement) throws InvalidConfigurationException;
 
+    void setAmount(int amount);
+
     String getName(int amount);
 
     ERequirement getInstance();

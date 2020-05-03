@@ -1,13 +1,14 @@
 package com.hooklite.endshop.data.conditions;
 
-import com.hooklite.endshop.data.config.Balance;
-import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.config.Balance;
+import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
 public class EBalanceRequirement implements ERequirement {
     private double requirement;
+    private int amount;
 
     @Override
     public String getType() {
@@ -46,9 +47,14 @@ public class EBalanceRequirement implements ERequirement {
             this.requirement = Double.parseDouble(requirement);
         }
         catch(NumberFormatException e) {
-            throw new InvalidConfigurationException("The requirements are improperly configured!");
+            throw new InvalidConfigurationException("The requirement is improperly configured!");
         }
 
+    }
+
+    @Override
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Override

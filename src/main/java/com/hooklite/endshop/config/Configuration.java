@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.config;
+package com.hooklite.endshop.config;
 
 import com.hooklite.endshop.data.conditions.EBalanceRequirement;
 import com.hooklite.endshop.data.conditions.EItemRequirement;
@@ -100,6 +100,7 @@ public class Configuration {
             addReward(new ECommandReward());
             addReward(new EBalanceReward());
             addReward(new EItemReward());
+
 
             setDefaultConfig();
             setShopConfigs();

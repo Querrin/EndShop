@@ -1,7 +1,7 @@
 package com.hooklite.endshop.listeners.navigation;
 
-import com.hooklite.endshop.data.config.Configuration;
-import com.hooklite.endshop.data.config.MenuLoader;
+import com.hooklite.endshop.config.Configuration;
+import com.hooklite.endshop.config.MenuLoader;
 import com.hooklite.endshop.events.ShopMenuOpenEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

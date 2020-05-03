@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.config;
+package com.hooklite.endshop.config;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;

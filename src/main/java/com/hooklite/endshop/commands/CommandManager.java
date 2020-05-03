@@ -4,7 +4,7 @@ import com.hooklite.endshop.Information;
 import com.hooklite.endshop.commands.subcommands.AddShopCommand;
 import com.hooklite.endshop.commands.subcommands.ReloadCommand;
 import com.hooklite.endshop.commands.subcommands.SubCommand;
-import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.events.ShopMenuOpenEvent;
 import com.hooklite.endshop.logging.MessageSender;
 import net.milkbowl.vault.permission.Permission;

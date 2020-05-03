@@ -1,6 +1,6 @@
 package com.hooklite.endshop.listeners.navigation;
 
-import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.data.models.EPage;
 import com.hooklite.endshop.data.models.EShop;
 import com.hooklite.endshop.events.PageNavigation;

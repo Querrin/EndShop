@@ -1,6 +1,6 @@
 package com.hooklite.endshop.data.rewards;
 
-import com.hooklite.endshop.data.config.Balance;
+import com.hooklite.endshop.config.Balance;
 import com.hooklite.endshop.data.models.EItem;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;

@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.config;
+package com.hooklite.endshop.config;
 
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EPage;

@@ -1,6 +1,6 @@
 package com.hooklite.endshop.commands.subcommands;
 
-import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

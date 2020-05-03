@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.config;
+package com.hooklite.endshop.config;
 
 import com.hooklite.endshop.data.conditions.ERequirement;
 import com.hooklite.endshop.data.rewards.EAction;

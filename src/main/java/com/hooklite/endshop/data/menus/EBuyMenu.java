@@ -1,6 +1,6 @@
 package com.hooklite.endshop.data.menus;
 
-import com.hooklite.endshop.data.config.MenuLoader;
+import com.hooklite.endshop.config.MenuLoader;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.shop.BuyMenu;
 import org.bukkit.Bukkit;

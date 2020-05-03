@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class EItemRequirement implements ERequirement {
     private Material requirement;
+    private int amount;
 
     @Override
     public String getType() {
@@ -57,7 +58,12 @@ public class EItemRequirement implements ERequirement {
         if(material != null)
             this.requirement = material;
         else
-            throw new InvalidConfigurationException("Item requirements improperly configured!");
+            throw new InvalidConfigurationException("The requirement is improperly configured!");
+    }
+
+    @Override
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Override

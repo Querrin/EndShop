@@ -1,7 +1,7 @@
 package com.hooklite.endshop;
 
 import com.hooklite.endshop.commands.CommandManager;
-import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.listeners.action.TransactionListener;
 import com.hooklite.endshop.listeners.inventory.InventoryClickListener;
 import com.hooklite.endshop.listeners.navigation.ActionMenuOpenListener;

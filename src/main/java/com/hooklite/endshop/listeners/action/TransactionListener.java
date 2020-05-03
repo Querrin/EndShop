@@ -1,8 +1,8 @@
 package com.hooklite.endshop.listeners.action;
 
+import com.hooklite.endshop.config.Configuration;
+import com.hooklite.endshop.config.ItemLoader;
 import com.hooklite.endshop.data.conditions.ERequirement;
-import com.hooklite.endshop.data.config.Configuration;
-import com.hooklite.endshop.data.config.ItemLoader;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EPage;
 import com.hooklite.endshop.data.models.EShop;

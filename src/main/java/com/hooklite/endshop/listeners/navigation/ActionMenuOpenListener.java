@@ -1,6 +1,6 @@
 package com.hooklite.endshop.listeners.navigation;
 
-import com.hooklite.endshop.data.config.Configuration;
+import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.data.menus.EBuyMenu;
 import com.hooklite.endshop.data.menus.EBuySellMenu;
 import com.hooklite.endshop.data.menus.ESellMenu;

@@ -1,7 +1,7 @@
 package com.hooklite.endshop.listeners.inventory;
 
-import com.hooklite.endshop.data.config.Configuration;
-import com.hooklite.endshop.data.config.MenuLoader;
+import com.hooklite.endshop.config.Configuration;
+import com.hooklite.endshop.config.MenuLoader;
 import com.hooklite.endshop.data.models.EItem;
 import com.hooklite.endshop.data.models.EPage;
 import com.hooklite.endshop.data.models.EShop;
