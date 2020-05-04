@@ -1,11 +1,11 @@
 package com.hooklite.endshop.config.shop;
 
-import com.hooklite.endshop.config.interfaces.EShopKey;
-import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.config.interfaces.ShopKey;
+import com.hooklite.endshop.data.models.Shop;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class EShopSlot implements EShopKey {
+public class ShopSlot implements ShopKey {
     @Override
     public String getKey() {
         return "slot";
@@ -22,7 +22,7 @@ public class EShopSlot implements EShopKey {
     }
 
     @Override
-    public void setValue(EShop shop, YamlConfiguration configuration, int counter) throws InvalidConfigurationException {
+    public void setValue(Shop shop, YamlConfiguration configuration, int counter) throws InvalidConfigurationException {
 
         // TODO: Max slot number
         String value = configuration.getString("slot");

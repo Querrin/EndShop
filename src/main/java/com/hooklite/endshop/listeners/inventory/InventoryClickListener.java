@@ -2,9 +2,9 @@ package com.hooklite.endshop.listeners.inventory;
 
 import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.config.MenuLoader;
-import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.data.models.EPage;
-import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.models.Page;
+import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.events.*;
 import com.hooklite.endshop.shop.*;
 import org.bukkit.Bukkit;
@@ -50,9 +50,9 @@ public class InventoryClickListener implements Listener {
 
             if(clickedInventory.getHolder() instanceof BuySellMenu || clickedInventory.getHolder() instanceof BuyMenu || clickedInventory.getHolder() instanceof SellMenu) {
                 if(item.equals(MenuLoader.getBackItem())) {
-                    for(EShop shop : Configuration.getShops()) {
-                        for(EPage page : shop.pages) {
-                            for(EItem eItem : page.getItems()) {
+                    for(Shop shop : Configuration.getShops()) {
+                        for(Page page : shop.pages) {
+                            for(Item eItem : page.getItems()) {
                                 if(eItem.displayItem.equals(clickedInventory.getStorageContents()[13])) {
                                     player.openInventory(page.getInventory());
                                     event.setCancelled(true);

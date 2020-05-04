@@ -4,9 +4,9 @@ import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.data.menus.EBuyMenu;
 import com.hooklite.endshop.data.menus.EBuySellMenu;
 import com.hooklite.endshop.data.menus.ESellMenu;
-import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.data.models.EPage;
-import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.models.Page;
+import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.events.ActionMenuOpenEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public class ActionMenuOpenListener implements Listener {
     @EventHandler
     public void onActionMenuOpen(ActionMenuOpenEvent event) {
-        EItem item = getItemMatch(event.getItem());
+        Item item = getItemMatch(event.getItem());
         Player player = event.getWhoOpened();
 
         if(item.buyable && item.sellable)
@@ -27,12 +27,12 @@ public class ActionMenuOpenListener implements Listener {
             player.openInventory(new ESellMenu().getMenu(item, player));
     }
 
-    private EItem getItemMatch(ItemStack eventItem) {
-        for(EShop shop : Configuration.getShops()) {
-            for(EPage page : shop.pages) {
-                for(EItem eItem : page.getItems()) {
-                    if(eItem.displayItem.equals(eventItem)) {
-                        return eItem;
+    private Item getItemMatch(ItemStack eventItem) {
+        for(Shop shop : Configuration.getShops()) {
+            for(Page page : shop.pages) {
+                for(Item item : page.getItems()) {
+                    if(item.displayItem.equals(eventItem)) {
+                        return item;
                     }
                 }
             }

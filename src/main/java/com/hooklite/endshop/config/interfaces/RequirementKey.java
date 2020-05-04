@@ -5,7 +5,7 @@ import com.hooklite.endshop.data.rewards.EAction;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public interface ERequirementKey extends EConfigKey {
+public interface RequirementKey extends ConfigKey {
     void setValue(ERequirement req, YamlConfiguration configuration, String itemSection, EAction action) throws InvalidConfigurationException;
 
     String getKeyPath(String itemSection, EAction action);

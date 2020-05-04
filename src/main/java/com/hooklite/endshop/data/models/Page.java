@@ -5,9 +5,9 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EPage extends EDataModel {
+public class Page extends DataModel {
     private int number;
-    private List<EItem> items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
     private Inventory inventory;
 
     public int getNumber() {
@@ -18,11 +18,11 @@ public class EPage extends EDataModel {
         this.number = number;
     }
 
-    public List<EItem> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(List<EItem> items) {
+    public void setItems(List<Item> items) {
         if(items.size() > 45)
             throw new IllegalArgumentException("A page should not contain more than 45 items!");
 

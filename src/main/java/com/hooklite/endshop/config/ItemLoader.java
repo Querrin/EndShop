@@ -1,6 +1,6 @@
 package com.hooklite.endshop.config;
 
-import com.hooklite.endshop.data.models.EItem;
+import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.rewards.EAction;
 import com.hooklite.endshop.logging.Colors;
 import com.hooklite.endshop.logging.MessageSender;
@@ -27,8 +27,8 @@ public class ItemLoader {
      * @throws InvalidConfigurationException If the configuration file is improperly configured.
      * @throws NullPointerException          If the configuration section doesn't exist.
      */
-    static List<EItem> getModels(YamlConfiguration config) throws InvalidConfigurationException {
-        List<EItem> items = new ArrayList<>();
+    static List<Item> getModels(YamlConfiguration config) throws InvalidConfigurationException {
+        List<Item> items = new ArrayList<>();
         Set<String> itemKeys = null;
 
         try {
@@ -41,7 +41,7 @@ public class ItemLoader {
         if(itemKeys != null) {
             for(String item : itemKeys) {
                 if(!item.contains(".")) {
-                    EItem eItem = new EItem();
+                    Item eItem = new Item();
                     Material displayItemMaterial;
 
                     try {

@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 // TODO: Add one time buy option
-public class EItem extends EDataModel {
+public class Item extends DataModel {
     public String name;
     public List<String> description;
     public int slot;

@@ -1,9 +1,11 @@
 package com.hooklite.endshop.config;
 
+import com.hooklite.endshop.config.interfaces.ConfigKey;
+import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.data.conditions.EBalanceRequirement;
 import com.hooklite.endshop.data.conditions.EItemRequirement;
 import com.hooklite.endshop.data.conditions.ERequirement;
-import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.rewards.EBalanceReward;
 import com.hooklite.endshop.data.rewards.ECommandReward;
 import com.hooklite.endshop.data.rewards.EItemReward;
@@ -19,7 +21,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFactory;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
@@ -30,15 +31,25 @@ import java.util.Collection;
 import java.util.List;
 
 public class Configuration {
-    private static final ItemFactory ITEM_FACTORY = Bukkit.getServer().getItemFactory();
+    private static final List<RequiredKey> requiredKeys = new ArrayList<>();
+    private static final List<ConfigKey> configKeys = new ArrayList<>();
     private static final List<EReward> rewards = new ArrayList<>();
     private static YamlConfiguration defaultConfig;
     private static List<YamlConfiguration> shopConfigs;
-    private static List<EShop> shops = new ArrayList<>();
+    private static List<Shop> shops = new ArrayList<>();
     private static final List<ERequirement> requirements = new ArrayList<>();
     private static Plugin plugin;
     private static Economy econ;
     private static Permission perms;
+
+    static {
+        addRequirement(new EItemRequirement());
+        addRequirement(new EBalanceRequirement());
+
+        addReward(new ECommandReward());
+        addReward(new EBalanceReward());
+        addReward(new EItemReward());
+    }
 
     public static YamlConfiguration getDefaultConfig() {
         return defaultConfig;
@@ -48,16 +59,16 @@ public class Configuration {
         return shopConfigs;
     }
 
-    public static List<EShop> getShops() {
+    public static List<Shop> getShops() {
         return shops;
-    }
-
-    public static ItemFactory getItemFactory() {
-        return ITEM_FACTORY;
     }
 
     static List<EReward> getRewards() {
         return rewards;
+    }
+
+    public static List<RequiredKey> getRequiredKeys() {
+        return requiredKeys;
     }
 
     /**
@@ -73,6 +84,20 @@ public class Configuration {
     public static void addRequirement(ERequirement requirement) {
         if(!requirements.contains(requirement))
             requirements.add(requirement);
+    }
+
+    public static void addRequiredKey(RequiredKey key) {
+        if(!configKeys.contains(key) && !requiredKeys.contains(key))
+            requiredKeys.add(key);
+    }
+
+    public static void addConfigKey(ConfigKey key) {
+        if(!configKeys.contains(key) && !requiredKeys.contains(key))
+            configKeys.add(key);
+    }
+
+    public static List<ConfigKey> getConfigKeys() {
+        return configKeys;
     }
 
     public static Permission getPerms() {
@@ -99,14 +124,6 @@ public class Configuration {
     public static void configurePlugin(Plugin pl) {
         try {
             plugin = pl;
-
-            addRequirement(new EItemRequirement());
-            addRequirement(new EBalanceRequirement());
-
-            addReward(new ECommandReward());
-            addReward(new EBalanceReward());
-            addReward(new EItemReward());
-
 
             setDefaultConfig();
             setShopConfigs();

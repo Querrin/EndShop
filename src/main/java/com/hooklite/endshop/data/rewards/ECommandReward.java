@@ -1,6 +1,6 @@
 package com.hooklite.endshop.data.rewards;
 
-import com.hooklite.endshop.data.models.EItem;
+import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,7 +10,7 @@ public class ECommandReward implements EReward {
     private String reward;
 
     @Override
-    public boolean execute(EItem eItem, Player player, int amount) {
+    public boolean execute(Item item, Player player, int amount) {
         String command = reward;
         command = command.replace("%player%", player.getName());
 

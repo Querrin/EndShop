@@ -1,8 +1,8 @@
 package com.hooklite.endshop.config.shop;
 
-import com.hooklite.endshop.config.interfaces.ERequiredKey;
-import com.hooklite.endshop.config.interfaces.EShopKey;
-import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.config.interfaces.RequiredKey;
+import com.hooklite.endshop.config.interfaces.ShopKey;
+import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.logging.Colors;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EShopDescription implements EShopKey, ERequiredKey {
+public class ShopDescription implements ShopKey, RequiredKey {
     @Override
     public String getKey() {
         return "description";
@@ -27,7 +27,7 @@ public class EShopDescription implements EShopKey, ERequiredKey {
     }
 
     @Override
-    public void setValue(EShop shop, YamlConfiguration configuration, int ignore) throws InvalidConfigurationException {
+    public void setValue(Shop shop, YamlConfiguration configuration, int ignore) throws InvalidConfigurationException {
         List<String> values = configuration.getStringList("description");
 
         if(values.isEmpty() && required())

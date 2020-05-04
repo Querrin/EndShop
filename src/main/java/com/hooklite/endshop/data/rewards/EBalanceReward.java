@@ -1,7 +1,7 @@
 package com.hooklite.endshop.data.rewards;
 
 import com.hooklite.endshop.config.Balance;
-import com.hooklite.endshop.data.models.EItem;
+import com.hooklite.endshop.data.models.Item;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ public class EBalanceReward implements EReward {
     private double reward;
 
     @Override
-    public boolean execute(EItem eItem, Player player, int amount) {
+    public boolean execute(Item item, Player player, int amount) {
         return Balance.deposit(player, reward * amount);
     }
 

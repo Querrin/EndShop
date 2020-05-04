@@ -1,7 +1,7 @@
 package com.hooklite.endshop.data.menus;
 
 import com.hooklite.endshop.config.MenuLoader;
-import com.hooklite.endshop.data.models.EItem;
+import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.shop.BuyMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.Inventory;
 public class EBuyMenu implements EActionMenu {
 
     @Override
-    public Inventory getMenu(EItem item, Player player) {
+    public Inventory getMenu(Item item, Player player) {
         Inventory inventory = Bukkit.createInventory(new BuyMenu(), 45);
 
         inventory.setItem(13, item.displayItem);

@@ -1,11 +1,11 @@
 package com.hooklite.endshop.config.item;
 
 import com.hooklite.endshop.config.Configuration;
-import com.hooklite.endshop.config.interfaces.EItemKey;
-import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.data.models.EShop;
-import com.hooklite.endshop.data.models.persistance.EItemTagType;
-import com.hooklite.endshop.data.models.persistance.EShopTagType;
+import com.hooklite.endshop.config.interfaces.ItemKey;
+import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.models.Shop;
+import com.hooklite.endshop.data.models.persistance.ItemTagType;
+import com.hooklite.endshop.data.models.persistance.ShopTagType;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -14,9 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 
-public class EItemDisplayItem implements EItemKey {
+public class ItemDisplayItem implements ItemKey {
     @Override
-    public void setValue(EShop shop, EItem item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
+    public void setValue(Shop shop, Item item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
         String value = configuration.getString("display-item");
 
         if(value != null) {
@@ -48,7 +48,7 @@ public class EItemDisplayItem implements EItemKey {
         return true;
     }
 
-    private ItemStack setMeta(ItemStack itemStack, EShop shop, EItem item) {
+    private ItemStack setMeta(ItemStack itemStack, Shop shop, Item item) {
         ItemMeta meta = itemStack.getItemMeta();
 
         assert meta != null;
@@ -59,8 +59,8 @@ public class EItemDisplayItem implements EItemKey {
         meta.setDisplayName(shop.title);
         meta.setLore(shop.description);
 
-        container.set(shopKey, EShopTagType.getInstance(), shop);
-        container.set(itemKey, EItemTagType.getInstance(), item);
+        container.set(shopKey, ShopTagType.getInstance(), shop);
+        container.set(itemKey, ItemTagType.getInstance(), item);
 
         itemStack.setItemMeta(meta);
 

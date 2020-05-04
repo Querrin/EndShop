@@ -1,6 +1,6 @@
 package com.hooklite.endshop.config;
 
-import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.logging.Colors;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -21,10 +21,10 @@ class ShopLoader {
      * @return A list of EShop data models.
      * @throws InvalidConfigurationException If the configuration is improperly configured.
      */
-    static List<EShop> getModels(List<YamlConfiguration> shopConfigs) throws InvalidConfigurationException {
-        List<EShop> shops = new ArrayList<>();
+    static List<Shop> getModels(List<YamlConfiguration> shopConfigs) throws InvalidConfigurationException {
+        List<Shop> shops = new ArrayList<>();
         for(YamlConfiguration config : shopConfigs) {
-            EShop shop = new EShop();
+            Shop shop = new Shop();
             Material displayItemMaterial;
 
             if(config.getString("title") != null) {

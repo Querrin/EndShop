@@ -1,6 +1,6 @@
 package com.hooklite.endshop.data.rewards;
 
-import com.hooklite.endshop.data.models.EItem;
+import com.hooklite.endshop.data.models.Item;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -10,7 +10,7 @@ public class EItemReward implements EReward {
     private Material rewardMaterial;
 
     @Override
-    public boolean execute(EItem eItem, Player player, int amount) {
+    public boolean execute(Item eItem, Player player, int amount) {
         ItemStack reward = new ItemStack(rewardMaterial, 1);
         Inventory playerInventory = player.getInventory();
 

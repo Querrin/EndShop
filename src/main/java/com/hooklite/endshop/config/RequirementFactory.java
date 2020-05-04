@@ -1,13 +1,13 @@
 package com.hooklite.endshop.config;
 
-import com.hooklite.endshop.config.item.EItemBuyable;
-import com.hooklite.endshop.config.item.EItemSellable;
+import com.hooklite.endshop.config.item.ItemBuyable;
+import com.hooklite.endshop.config.item.ItemSellable;
 import com.hooklite.endshop.data.conditions.ERequirement;
 import com.hooklite.endshop.data.rewards.EAction;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-class ERequirementFactory {
+class RequirementFactory {
     ERequirement getRequirement(YamlConfiguration configuration, String itemSection, EAction action) throws InvalidConfigurationException {
         if(required(configuration, itemSection, action)) {
             String value = configuration.getString(getKeyPath(itemSection, action));
@@ -31,9 +31,9 @@ class ERequirementFactory {
 
     boolean required(YamlConfiguration configuration, String itemSection, EAction action) {
         if(action == EAction.BUY)
-            return new EItemBuyable().getValue(configuration, itemSection);
+            return new ItemBuyable().getValue(configuration, itemSection);
 
-        return new EItemSellable().getValue(configuration, itemSection);
+        return new ItemSellable().getValue(configuration, itemSection);
     }
 
     private ERequirement getRequirement(String type) {

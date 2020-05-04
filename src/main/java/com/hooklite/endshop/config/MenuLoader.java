@@ -1,8 +1,8 @@
 package com.hooklite.endshop.config;
 
 import com.hooklite.endshop.data.conditions.ERequirement;
-import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.rewards.EReward;
 import com.hooklite.endshop.shop.ItemMenu;
 import com.hooklite.endshop.shop.ShopMenu;
@@ -20,44 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MenuLoader {
-    private static final ItemStack BACK_ITEM;
-    private static final ItemStack NEXT_PAGE_ITEM;
-    private static final ItemStack PREVIOUS_PAGE_ITEM;
 
-    static {
-        // Loads the static navigation elements
-
-        ItemStack backItem = new ItemStack(Material.CHEST, 1);
-        ItemMeta backItemMeta = backItem.getItemMeta();
-        Objects.requireNonNull(backItemMeta).setDisplayName(String.format("%s%sBack", ChatColor.RED, ChatColor.BOLD));
-        backItem.setItemMeta(backItemMeta);
-
-        ItemStack nextPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta nextPageItemMeta = nextPageItem.getItemMeta();
-        Objects.requireNonNull(nextPageItemMeta).setDisplayName(String.format("%s%sNext page", ChatColor.GREEN, ChatColor.BOLD));
-        nextPageItem.setItemMeta(nextPageItemMeta);
-
-        ItemStack previousPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta previousPageItemMeta = previousPageItem.getItemMeta();
-        Objects.requireNonNull(previousPageItemMeta).setDisplayName(String.format("%s%sPrevious page", ChatColor.GREEN, ChatColor.BOLD));
-        previousPageItem.setItemMeta(previousPageItemMeta);
-
-        BACK_ITEM = backItem;
-        NEXT_PAGE_ITEM = nextPageItem;
-        PREVIOUS_PAGE_ITEM = previousPageItem;
-    }
-
-    public static ItemStack getBackItem() {
-        return BACK_ITEM;
-    }
-
-    public static ItemStack getNextPageItem() {
-        return NEXT_PAGE_ITEM;
-    }
-
-    public static ItemStack getPreviousPageItem() {
-        return PREVIOUS_PAGE_ITEM;
-    }
 
     /**
      * Creates a new inventory and loads all the registered shops into it.
@@ -66,11 +29,11 @@ public class MenuLoader {
      * @param player A player object, used for getting the balance.
      * @return An inventory with shops.
      */
-    public static Inventory getShopMenu(List<EShop> shops, Player player) {
+    public static Inventory getShopMenu(List<Shop> shops, Player player) {
         Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
 
         // Sets the shop display items
-        for(EShop shop : shops) {
+        for(Shop shop : shops) {
             inventory.setItem(shop.slot, shop.displayItem);
         }
 
@@ -86,12 +49,12 @@ public class MenuLoader {
      * @param pageNumber The page number.
      * @return A list of inventories with navigation and items.
      */
-    public static Inventory getPageMenu(EShop shop, int pageNumber) {
+    public static Inventory getPageMenu(Shop shop, int pageNumber) {
         int inventorySize = getSize(shop.pages.get(pageNumber).getItems().size());
         Inventory inventory = Bukkit.createInventory(new ItemMenu(), inventorySize, shop.title);
 
         // Sets the inventory items
-        for(EItem pageItem : shop.pages.get(pageNumber).getItems()) {
+        for(Item pageItem : shop.pages.get(pageNumber).getItems()) {
             inventory.setItem(pageItem.slot % 45, pageItem.displayItem);
         }
 
@@ -111,9 +74,9 @@ public class MenuLoader {
      *
      * @param shop   A shop with pages.
      * @param number The page number.
-    ge     * @return An item that displays the current page.
+     *               ge     * @return An item that displays the current page.
      */
-    private static ItemStack getPageNumberItem(EShop shop, int number) {
+    private static ItemStack getPageNumberItem(Shop shop, int number) {
         ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
 
@@ -145,7 +108,7 @@ public class MenuLoader {
         return item;
     }
 
-    public static ItemStack getBuyItem(EItem eItem, int amount) {
+    public static ItemStack getBuyItem(Item eItem, int amount) {
         ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sBuy %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
@@ -153,7 +116,7 @@ public class MenuLoader {
         return setItemLore(eItem.buyReq, amount, item, meta, eItem.buyReward);
     }
 
-    public static ItemStack getSellItem(EItem eItem, int amount) {
+    public static ItemStack getSellItem(Item eItem, int amount) {
         ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
@@ -161,7 +124,7 @@ public class MenuLoader {
         return setItemLore(eItem.sellReq, amount, item, meta, eItem.sellReward);
     }
 
-    public static ItemStack getSellMaxItem(EItem eItem, Player player) {
+    public static ItemStack getSellMaxItem(Item eItem, Player player) {
         ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell MAX", ChatColor.GREEN, ChatColor.BOLD));
@@ -188,22 +151,5 @@ public class MenuLoader {
      * @param itemAmount Amount of items.
      * @return A integer that represents the amount of slots in an inventory.
      */
-    private static int getSize(int itemAmount) {
-        int size;
 
-        if(itemAmount <= 9)
-            size = 18;
-        else if(itemAmount <= 18)
-            size = 27;
-        else if(itemAmount <= 27)
-            size = 36;
-        else if(itemAmount <= 36)
-            size = 45;
-        else if(itemAmount <= 45)
-            size = 54;
-        else
-            throw new IllegalArgumentException("An inventory cannot contain more that 45 items!");
-
-        return size;
-    }
 }

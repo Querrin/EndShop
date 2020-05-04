@@ -1,14 +1,14 @@
 package com.hooklite.endshop.config.item;
 
-import com.hooklite.endshop.config.interfaces.EItemKey;
-import com.hooklite.endshop.config.interfaces.ERequiredKey;
-import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.config.interfaces.ItemKey;
+import com.hooklite.endshop.config.interfaces.RequiredKey;
+import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.models.Shop;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class EItemBuyable implements EItemKey, ERequiredKey {
+public class ItemBuyable implements ItemKey, RequiredKey {
     @Override
-    public void setValue(EShop shop, EItem item, YamlConfiguration configuration, String itemSection, int ignore) {
+    public void setValue(Shop shop, Item item, YamlConfiguration configuration, String itemSection, int ignore) {
         item.buyable = getValue(configuration, itemSection);
     }
 

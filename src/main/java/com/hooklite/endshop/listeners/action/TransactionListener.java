@@ -3,9 +3,9 @@ package com.hooklite.endshop.listeners.action;
 import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.config.ItemLoader;
 import com.hooklite.endshop.data.conditions.ERequirement;
-import com.hooklite.endshop.data.models.EItem;
-import com.hooklite.endshop.data.models.EPage;
-import com.hooklite.endshop.data.models.EShop;
+import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.models.Page;
+import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.rewards.EReward;
 import com.hooklite.endshop.events.BuyEvent;
 import com.hooklite.endshop.events.SellEvent;
@@ -21,7 +21,7 @@ import java.util.Objects;
 public class TransactionListener implements Listener {
     @EventHandler
     public void onBuy(BuyEvent event) {
-        EItem item = getItem(event.getItem());
+        Item item = getItem(event.getItem());
         Player player = event.getWhoClicked();
         int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(ItemLoader.AMOUNT_KEY, PersistentDataType.INTEGER);
         EReward reward = Objects.requireNonNull(item).buyReward;
@@ -43,7 +43,7 @@ public class TransactionListener implements Listener {
 
     @EventHandler
     public void onSell(SellEvent event) {
-        EItem item = getItem(event.getItem());
+        Item item = getItem(event.getItem());
         Player player = event.getWhoClicked();
         int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(ItemLoader.AMOUNT_KEY, PersistentDataType.INTEGER);
         EReward reward = Objects.requireNonNull(item).sellReward;
@@ -63,10 +63,10 @@ public class TransactionListener implements Listener {
         }
     }
 
-    private EItem getItem(ItemStack item) {
-        for(EShop shop : Configuration.getShops()) {
-            for(EPage page : shop.pages) {
-                for(EItem eItem : page.getItems()) {
+    private Item getItem(ItemStack item) {
+        for(Shop shop : Configuration.getShops()) {
+            for(Page page : shop.pages) {
+                for(Item eItem : page.getItems()) {
                     if(item.equals(eItem.displayItem)) {
                         return eItem;
                     }
