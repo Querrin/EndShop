@@ -2,12 +2,14 @@ package com.hooklite.endshop.data.rewards;
 
 import com.hooklite.endshop.data.models.Item;
 import org.bukkit.Material;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class EItemReward implements EReward {
     private Material rewardMaterial;
+    private int configAmount;
 
     @Override
     public boolean execute(Item eItem, Player player, int amount) {
@@ -60,6 +62,16 @@ public class EItemReward implements EReward {
     @Override
     public void setReward(String reward) {
         this.rewardMaterial = Material.matchMaterial(reward);
+    }
+
+    @Override
+    public int getAmount() {
+        return configAmount;
+    }
+
+    @Override
+    public void setAmount(int amount) throws InvalidConfigurationException {
+        configAmount = amount;
     }
 
     @Override

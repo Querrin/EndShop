@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.conditions;
+package com.hooklite.endshop.data.requirements;
 
 import com.hooklite.endshop.config.Balance;
 import com.hooklite.endshop.config.Configuration;
@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class EBalanceRequirement implements ERequirement {
     private double requirement;
-    private int amount;
+    private int configAmount;
 
     @Override
     public String getType() {
@@ -22,7 +22,7 @@ public class EBalanceRequirement implements ERequirement {
 
     @Override
     public boolean doTransaction(Player player, int amount) {
-        if(Balance.withdraw(player, requirement * amount)) {
+        if(Balance.withdraw(player, requirement * amount * configAmount)) {
             return true;
         }
         else {
@@ -33,7 +33,7 @@ public class EBalanceRequirement implements ERequirement {
 
     @Override
     public boolean undoTransaction(Player player, int amount) {
-        return Balance.deposit(player, requirement * amount);
+        return Balance.deposit(player, requirement * amount * configAmount);
     }
 
     @Override
@@ -54,12 +54,12 @@ public class EBalanceRequirement implements ERequirement {
 
     @Override
     public void setAmount(int amount) {
-        this.amount = amount;
+        this.configAmount = amount;
     }
 
     @Override
     public String getName(int amount) {
-        return "$" + requirement * amount;
+        return "$" + requirement * amount * configAmount;
     }
 
     @Override

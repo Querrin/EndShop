@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.conditions;
+package com.hooklite.endshop.data.requirements;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class EItemRequirement implements ERequirement {
     private Material requirement;
-    private int amount;
+    private int configAmount;
 
     @Override
     public String getType() {
@@ -19,15 +19,15 @@ public class EItemRequirement implements ERequirement {
     public boolean check(Player player, int amount) {
         ItemStack requiredItem = new ItemStack(requirement, 1);
 
-        return player.getInventory().containsAtLeast(requiredItem, amount);
+        return player.getInventory().containsAtLeast(requiredItem, amount * configAmount);
     }
 
     @Override
     public boolean doTransaction(Player player, int amount) {
-        ItemStack requiredItem = new ItemStack(requirement, 1);
+        ItemStack requiredItem = new ItemStack(requirement);
         Inventory playerInventory = player.getInventory();
 
-        for(int i = 0; i < amount; i++) {
+        for(int i = 0; i < amount * configAmount; i++) {
             playerInventory.removeItem(requiredItem);
         }
 
@@ -39,7 +39,7 @@ public class EItemRequirement implements ERequirement {
         ItemStack requiredItem = new ItemStack(requirement, 1);
         Inventory playerInventory = player.getInventory();
 
-        for(int i = 0; i < amount; i++) {
+        for(int i = 0; i < amount * configAmount; i++) {
             playerInventory.addItem(requiredItem);
         }
 
@@ -63,15 +63,15 @@ public class EItemRequirement implements ERequirement {
 
     @Override
     public void setAmount(int amount) {
-        this.amount = amount;
+        this.configAmount = amount;
     }
 
     @Override
-    public String getName(int ignore) {
+    public String getName(int amount) {
         String materialName = requirement.name();
         materialName = materialName.replace("_", " ").toLowerCase();
 
-        return materialName.substring(0, 1).toUpperCase() + materialName.substring(1);
+        return String.format("x%s %s", amount * configAmount, materialName.substring(0, 1).toUpperCase() + materialName.substring(1));
     }
 
     @Override

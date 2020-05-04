@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.conditions;
+package com.hooklite.endshop.data.requirements;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;

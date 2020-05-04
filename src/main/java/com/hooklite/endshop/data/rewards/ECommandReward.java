@@ -4,10 +4,12 @@ import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
 public class ECommandReward implements EReward {
     private String reward;
+    private int configAmount;
 
     @Override
     public boolean execute(Item item, Player player, int amount) {
@@ -47,6 +49,16 @@ public class ECommandReward implements EReward {
     @Override
     public void setReward(String reward) {
         this.reward = reward;
+    }
+
+    @Override
+    public int getAmount() {
+        return configAmount;
+    }
+
+    @Override
+    public void setAmount(int amount) throws InvalidConfigurationException {
+        configAmount = amount;
     }
 
     @Override

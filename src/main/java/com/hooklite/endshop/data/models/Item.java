@@ -1,6 +1,6 @@
 package com.hooklite.endshop.data.models;
 
-import com.hooklite.endshop.data.conditions.ERequirement;
+import com.hooklite.endshop.data.requirements.ERequirement;
 import com.hooklite.endshop.data.rewards.EReward;
 import org.bukkit.inventory.ItemStack;
 

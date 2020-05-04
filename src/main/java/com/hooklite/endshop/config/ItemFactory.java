@@ -5,6 +5,7 @@ import com.hooklite.endshop.config.interfaces.ItemKey;
 import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Shop;
+import com.hooklite.endshop.data.rewards.EAction;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,8 +25,14 @@ class ItemFactory {
             Iterator<String> keyIteration = keys.iterator();
             Item item = new Item();
 
+
             for(int i = 0; i < keys.size(); i++) {
                 String sectionKey = keyIteration.next();
+
+                item.buyReward = RewardFactory.getReward(config, item, sectionKey, EAction.BUY);
+                item.sellReward = RewardFactory.getReward(config, item, sectionKey, EAction.SELL);
+                item.buyReq = RequirementFactory.getRequirement(config, item, sectionKey, EAction.BUY);
+                item.sellReq = RequirementFactory.getRequirement(config, item, sectionKey, EAction.SELL);
 
                 for(RequiredKey rKey : Configuration.getRequiredKeys()) {
                     if(rKey instanceof ItemKey) {
@@ -39,6 +46,8 @@ class ItemFactory {
                     }
                 }
             }
+
+            items.add(item);
         }
 
         return items;

@@ -9,6 +9,10 @@ public interface EReward {
 
     void setReward(String reward) throws InvalidConfigurationException;
 
+    int getAmount();
+
+    void setAmount(int amount) throws InvalidConfigurationException;
+
     String getReward(int amount);
 
     String getFailedMessage();

@@ -3,16 +3,16 @@ package com.hooklite.endshop.events;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class PageNavigationEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
-    private final Inventory INVENTORY;
+    private final ItemStack ITEM;
     private final Player PLAYER;
     private final PageNavigation DIRECTION;
 
-    public PageNavigationEvent(Inventory inventory, Player player, PageNavigation direction) {
-        INVENTORY = inventory;
+    public PageNavigationEvent(ItemStack item, Player player, PageNavigation direction) {
+        ITEM = item;
         PLAYER = player;
         DIRECTION = direction;
     }
@@ -25,8 +25,8 @@ public class PageNavigationEvent extends Event {
         return HANDLERS;
     }
 
-    public Inventory getInventory() {
-        return INVENTORY;
+    public ItemStack getItem() {
+        return ITEM;
     }
 
     public Player getWhoClicked() {

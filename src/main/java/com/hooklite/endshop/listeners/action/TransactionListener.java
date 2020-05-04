@@ -1,14 +1,14 @@
 package com.hooklite.endshop.listeners.action;
 
 import com.hooklite.endshop.config.Configuration;
-import com.hooklite.endshop.config.ItemLoader;
-import com.hooklite.endshop.data.conditions.ERequirement;
+import com.hooklite.endshop.config.MenuItemFactory;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
+import com.hooklite.endshop.data.requirements.ERequirement;
+import com.hooklite.endshop.data.rewards.EAction;
 import com.hooklite.endshop.data.rewards.EReward;
-import com.hooklite.endshop.events.BuyEvent;
-import com.hooklite.endshop.events.SellEvent;
+import com.hooklite.endshop.events.TransactionEvent;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,46 +20,40 @@ import java.util.Objects;
 
 public class TransactionListener implements Listener {
     @EventHandler
-    public void onBuy(BuyEvent event) {
+    public void onBuy(TransactionEvent event) {
         Item item = getItem(event.getItem());
         Player player = event.getWhoClicked();
-        int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(ItemLoader.AMOUNT_KEY, PersistentDataType.INTEGER);
+        int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(MenuItemFactory.AMOUNT_KEY, PersistentDataType.INTEGER);
         EReward reward = Objects.requireNonNull(item).buyReward;
         ERequirement req = item.buyReq;
 
-        if(req.check(player, amount) && req.doTransaction(player, amount)) {
-            if(reward.execute(item, player, amount)) {
-                MessageSender.buyMessage(player, req.getName(amount), reward.getReward(amount), amount);
+        if(event.getAction() == EAction.BUY) {
+            if(req.check(player, amount) && req.doTransaction(player, amount)) {
+                if(reward.execute(item, player, amount)) {
+                    MessageSender.buyMessage(player, req.getName(amount), reward.getReward(amount), amount);
+                }
+                else {
+                    req.undoTransaction(player, amount);
+                    MessageSender.toPlayer(player, reward.getFailedMessage());
+                }
             }
             else {
-                req.undoTransaction(player, amount);
-                MessageSender.toPlayer(player, reward.getFailedMessage());
+                MessageSender.toPlayer(player, req.getFailedMessage());
             }
         }
         else {
-            MessageSender.toPlayer(player, req.getFailedMessage());
-        }
-    }
-
-    @EventHandler
-    public void onSell(SellEvent event) {
-        Item item = getItem(event.getItem());
-        Player player = event.getWhoClicked();
-        int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(ItemLoader.AMOUNT_KEY, PersistentDataType.INTEGER);
-        EReward reward = Objects.requireNonNull(item).sellReward;
-        ERequirement req = item.sellReq;
-
-        if(req.check(player, amount) && req.doTransaction(player, amount)) {
-            if(reward.execute(item, player, amount)) {
-                MessageSender.sellMessage(player, req.getName(amount), reward.getReward(amount), amount);
+            if(req.check(player, amount) && req.doTransaction(player, amount)) {
+                if(reward.execute(item, player, amount)) {
+                    MessageSender.sellMessage(player, req.getName(amount), reward.getReward(amount), amount);
+                }
+                else {
+                    req.undoTransaction(player, amount);
+                    MessageSender.toPlayer(player, reward.getFailedMessage());
+                }
             }
             else {
-                req.undoTransaction(player, amount);
-                MessageSender.toPlayer(player, reward.getFailedMessage());
+                MessageSender.toPlayer(player, req.getFailedMessage());
             }
-        }
-        else {
-            MessageSender.toPlayer(player, req.getFailedMessage());
         }
     }
 

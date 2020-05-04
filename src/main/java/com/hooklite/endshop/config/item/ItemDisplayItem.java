@@ -1,13 +1,12 @@
 package com.hooklite.endshop.config.item;
 
-import com.hooklite.endshop.config.Configuration;
+import com.hooklite.endshop.config.MenuItemFactory;
 import com.hooklite.endshop.config.interfaces.ItemKey;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.models.persistance.ItemTagType;
 import com.hooklite.endshop.data.models.persistance.ShopTagType;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -53,14 +52,12 @@ public class ItemDisplayItem implements ItemKey {
 
         assert meta != null;
         PersistentDataContainer container = meta.getPersistentDataContainer();
-        NamespacedKey shopKey = new NamespacedKey(Configuration.getPlugin(), "shop");
-        NamespacedKey itemKey = new NamespacedKey(Configuration.getPlugin(), "item");
 
         meta.setDisplayName(shop.title);
         meta.setLore(shop.description);
 
-        container.set(shopKey, ShopTagType.getInstance(), shop);
-        container.set(itemKey, ItemTagType.getInstance(), item);
+        container.set(MenuItemFactory.SHOP_KEY, ShopTagType.getInstance(), shop);
+        container.set(MenuItemFactory.ITEM_KEY, ItemTagType.getInstance(), item);
 
         itemStack.setItemMeta(meta);
 

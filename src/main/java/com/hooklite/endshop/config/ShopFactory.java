@@ -28,8 +28,10 @@ class ShopFactory {
                 }
             }
 
+            shop.pages = PageFactory.getPages(shop, ItemFactory.getItems(configs.get(i), shop));
             shops.add(shop);
         }
+
 
         return shops;
     }

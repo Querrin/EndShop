@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 public class EBalanceReward implements EReward {
     private double reward;
+    private int configAmount;
 
     @Override
     public boolean execute(Item item, Player player, int amount) {
@@ -32,6 +33,16 @@ public class EBalanceReward implements EReward {
         catch(NumberFormatException e) {
             throw new InvalidConfigurationException("Rewards are improperly configured!");
         }
+    }
+
+    @Override
+    public int getAmount() {
+        return configAmount;
+    }
+
+    @Override
+    public void setAmount(int amount) throws InvalidConfigurationException {
+        configAmount = amount;
     }
 
     @Override

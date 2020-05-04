@@ -1,12 +1,13 @@
 package com.hooklite.endshop.listeners.inventory;
 
-import com.hooklite.endshop.config.Configuration;
-import com.hooklite.endshop.config.MenuLoader;
-import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.config.MenuItemFactory;
 import com.hooklite.endshop.data.models.Page;
-import com.hooklite.endshop.data.models.Shop;
+import com.hooklite.endshop.data.models.persistance.PageTagType;
+import com.hooklite.endshop.data.rewards.EAction;
 import com.hooklite.endshop.events.*;
-import com.hooklite.endshop.shop.*;
+import com.hooklite.endshop.shop.BuySellMenu;
+import com.hooklite.endshop.shop.ItemMenu;
+import com.hooklite.endshop.shop.ShopMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,6 +25,7 @@ public class InventoryClickListener implements Listener {
             Player player = (Player) event.getWhoClicked();
             Inventory clickedInventory = event.getInventory();
             ItemStack item = event.getCurrentItem();
+            ItemStack displayItem = clickedInventory.getItem(13);
 
             if(clickedInventory.getHolder() instanceof ShopMenu) {
                 Bukkit.getPluginManager().callEvent(new ItemMenuOpenEvent(player, clickedSlot));
@@ -32,14 +34,14 @@ public class InventoryClickListener implements Listener {
 
             if(clickedInventory.getHolder() instanceof ItemMenu) {
 
-                if(item.equals(MenuLoader.getBackItem())) {
+                if(item.equals(MenuItemFactory.BACK_ITEM)) {
                     Bukkit.getPluginManager().callEvent(new ShopMenuOpenEvent(player));
                 }
-                else if(item.equals(MenuLoader.getNextPageItem())) {
-                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.NEXT_PAGE));
+                else if(item.equals(MenuItemFactory.NEXT_PAGE_ITEM)) {
+                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent(displayItem, player, PageNavigation.NEXT_PAGE));
                 }
-                else if(item.equals(MenuLoader.getPreviousPageItem())) {
-                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent(clickedInventory, player, PageNavigation.PREVIOUS_PAGE));
+                else if(item.equals(MenuItemFactory.PREVIOUS_PAGE_ITEM)) {
+                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent(displayItem, player, PageNavigation.PREVIOUS_PAGE));
                 }
                 else if(!(item.getItemMeta().getDisplayName().contains("/")) && event.getClickedInventory() != player.getInventory()) {
                     Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent((Player) event.getWhoClicked(), item, clickedSlot));
@@ -48,24 +50,18 @@ public class InventoryClickListener implements Listener {
                 event.setCancelled(true);
             }
 
-            if(clickedInventory.getHolder() instanceof BuySellMenu || clickedInventory.getHolder() instanceof BuyMenu || clickedInventory.getHolder() instanceof SellMenu) {
-                if(item.equals(MenuLoader.getBackItem())) {
-                    for(Shop shop : Configuration.getShops()) {
-                        for(Page page : shop.pages) {
-                            for(Item eItem : page.getItems()) {
-                                if(eItem.displayItem.equals(clickedInventory.getStorageContents()[13])) {
-                                    player.openInventory(page.getInventory());
-                                    event.setCancelled(true);
-                                }
-                            }
-                        }
-                    }
+            if(clickedInventory.getHolder() instanceof BuySellMenu) {
+                if(item.equals(MenuItemFactory.BACK_ITEM)) {
+                    Page page = displayItem.getItemMeta().getPersistentDataContainer().get(MenuItemFactory.PAGE_KEY, PageTagType.getInstance());
+
+                    player.openInventory(page.getInventory());
+                    event.setCancelled(true);
                 }
                 else if(item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
-                    Bukkit.getPluginManager().callEvent(new BuyEvent(clickedInventory.getStorageContents()[13], event.getCurrentItem(), player));
+                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, EAction.BUY));
                 }
                 else if(item.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
-                    Bukkit.getPluginManager().callEvent(new SellEvent(clickedInventory.getStorageContents()[13], event.getCurrentItem(), player));
+                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, EAction.SELL));
                 }
 
                 event.setCancelled(true);

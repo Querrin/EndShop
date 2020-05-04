@@ -4,7 +4,7 @@ import com.hooklite.endshop.data.models.Shop;
 import org.bukkit.persistence.PersistentDataAdapterContext;
 import org.bukkit.persistence.PersistentDataType;
 
-public class ShopTagType implements PersistentDataType<Shop, Shop> {
+public class ShopTagType implements PersistentDataType<byte[], Shop> {
     private static final ShopTagType TAG_TYPE;
 
     static {
@@ -16,8 +16,8 @@ public class ShopTagType implements PersistentDataType<Shop, Shop> {
     }
 
     @Override
-    public Class<Shop> getPrimitiveType() {
-        return Shop.class;
+    public Class<byte[]> getPrimitiveType() {
+        return byte[].class;
     }
 
     @Override
@@ -26,12 +26,12 @@ public class ShopTagType implements PersistentDataType<Shop, Shop> {
     }
 
     @Override
-    public Shop toPrimitive(Shop complex, PersistentDataAdapterContext context) {
-        return null;
+    public byte[] toPrimitive(Shop complex, PersistentDataAdapterContext context) {
+        return Serializer.serialize(complex);
     }
 
     @Override
-    public Shop fromPrimitive(Shop primitive, PersistentDataAdapterContext context) {
-        return null;
+    public Shop fromPrimitive(byte[] primitive, PersistentDataAdapterContext context) {
+        return (Shop) Serializer.deserialize(primitive);
     }
 }

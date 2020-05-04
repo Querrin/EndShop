@@ -2,10 +2,19 @@ package com.hooklite.endshop.config;
 
 import com.hooklite.endshop.config.interfaces.ConfigKey;
 import com.hooklite.endshop.config.interfaces.RequiredKey;
-import com.hooklite.endshop.data.conditions.EBalanceRequirement;
-import com.hooklite.endshop.data.conditions.EItemRequirement;
-import com.hooklite.endshop.data.conditions.ERequirement;
+import com.hooklite.endshop.config.item.*;
+import com.hooklite.endshop.config.item.requirement.RequirementAmount;
+import com.hooklite.endshop.config.item.requirement.RequirementReq;
+import com.hooklite.endshop.config.item.reward.Reward;
+import com.hooklite.endshop.config.item.reward.RewardAmount;
+import com.hooklite.endshop.config.shop.ShopDescription;
+import com.hooklite.endshop.config.shop.ShopDisplayItem;
+import com.hooklite.endshop.config.shop.ShopSlot;
+import com.hooklite.endshop.config.shop.ShopTitle;
 import com.hooklite.endshop.data.models.Shop;
+import com.hooklite.endshop.data.requirements.EBalanceRequirement;
+import com.hooklite.endshop.data.requirements.EItemRequirement;
+import com.hooklite.endshop.data.requirements.ERequirement;
 import com.hooklite.endshop.data.rewards.EBalanceReward;
 import com.hooklite.endshop.data.rewards.ECommandReward;
 import com.hooklite.endshop.data.rewards.EItemReward;
@@ -49,6 +58,22 @@ public class Configuration {
         addReward(new ECommandReward());
         addReward(new EBalanceReward());
         addReward(new EItemReward());
+
+        addRequiredKey(new ItemDescription());
+        addRequiredKey(new ItemName());
+        addRequiredKey(new ShopDescription());
+        addRequiredKey(new ShopTitle());
+        addRequiredKey(new ItemSellable());
+        addRequiredKey(new ItemBuyable());
+
+        addConfigKey(new ItemSlot());
+        addConfigKey(new ItemDisplayItem());
+        addConfigKey(new ShopDisplayItem());
+        addConfigKey(new ShopSlot());
+        addConfigKey(new RequirementAmount());
+        addConfigKey(new RequirementReq());
+        addConfigKey(new RewardAmount());
+        addConfigKey(new Reward());
     }
 
     public static YamlConfiguration getDefaultConfig() {
@@ -130,7 +155,7 @@ public class Configuration {
 
             econ = VaultLoader.getEcon();
             perms = VaultLoader.getPerms();
-            shops = ShopLoader.getModels(shopConfigs);
+            shops = ShopFactory.getShops(shopConfigs);
 
             listRegisteredShops();
         }
@@ -157,7 +182,7 @@ public class Configuration {
             reloadDefaultConfig();
             setShopConfigs();
 
-            shops = ShopLoader.getModels(shopConfigs);
+            shops = ShopFactory.getShops(shopConfigs);
             listRegisteredShops();
         }
         catch(Exception e) {

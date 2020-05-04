@@ -4,57 +4,26 @@ import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.shop.ItemMenu;
+import com.hooklite.endshop.shop.ShopMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Objects;
+import java.util.List;
 
 public class InventoryFactory {
-    public static final ItemStack BACK_ITEM;
-    public static final ItemStack NEXT_PAGE_ITEM;
-    public static final ItemStack PREVIOUS_PAGE_ITEM;
+    public static Inventory getShopMenu(List<Shop> shops, Player player) {
+        Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
 
-    static {
-        // Loads the static navigation elements
-        ItemStack backItem = new ItemStack(Material.CHEST, 1);
-        ItemMeta backItemMeta = backItem.getItemMeta();
-        Objects.requireNonNull(backItemMeta).setDisplayName(String.format("%s%sBack", ChatColor.RED, ChatColor.BOLD));
-        backItem.setItemMeta(backItemMeta);
+        // Sets the shop display items
+        for(Shop shop : shops) {
+            inventory.setItem(shop.slot, shop.displayItem);
+        }
 
-        ItemStack nextPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta nextPageItemMeta = nextPageItem.getItemMeta();
-        Objects.requireNonNull(nextPageItemMeta).setDisplayName(String.format("%s%sNext page", ChatColor.GREEN, ChatColor.BOLD));
-        nextPageItem.setItemMeta(nextPageItemMeta);
+        inventory.setItem(inventory.getSize() - 5, MenuItemFactory.getBalanceItem(player));
 
-        ItemStack previousPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
-        ItemMeta previousPageItemMeta = previousPageItem.getItemMeta();
-        Objects.requireNonNull(previousPageItemMeta).setDisplayName(String.format("%s%sPrevious page", ChatColor.GREEN, ChatColor.BOLD));
-        previousPageItem.setItemMeta(previousPageItemMeta);
-
-        BACK_ITEM = backItem;
-        NEXT_PAGE_ITEM = nextPageItem;
-        PREVIOUS_PAGE_ITEM = previousPageItem;
-    }
-
-    private static ItemStack getPageNumberItem(int page, int pages) {
-        ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
-        ItemMeta meta = item.getItemMeta();
-
-        assert meta != null;
-        meta.setDisplayName(String.valueOf(ChatColor.RED) +
-                (page + 1) +
-                ChatColor.DARK_GRAY +
-                "/" +
-                ChatColor.RED +
-                pages);
-
-        item.setItemMeta(meta);
-
-        return item;
+        return inventory;
     }
 
     public static Inventory getPageInventory(Shop shop, Page page, int pageAmount) {
@@ -68,11 +37,11 @@ public class InventoryFactory {
 
         // Adds navigation elements to the inventory
         if(pageAmount > 1) {
-            inventory.setItem(inventorySize - 6, InventoryFactory.PREVIOUS_PAGE_ITEM);
-            inventory.setItem(inventorySize - 4, InventoryFactory.NEXT_PAGE_ITEM);
+            inventory.setItem(inventorySize - 6, MenuItemFactory.PREVIOUS_PAGE_ITEM);
+            inventory.setItem(inventorySize - 4, MenuItemFactory.NEXT_PAGE_ITEM);
         }
-        inventory.setItem(inventorySize - 9, InventoryFactory.BACK_ITEM);
-        inventory.setItem(inventorySize - 5, getPageNumberItem(page.getNumber(), pageAmount));
+        inventory.setItem(inventorySize - 9, MenuItemFactory.BACK_ITEM);
+        inventory.setItem(inventorySize - 5, MenuItemFactory.getPageNumberItem(page.getNumber(), pageAmount));
 
         return inventory;
     }
