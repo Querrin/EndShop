@@ -12,7 +12,7 @@ public class BalanceReward implements Reward {
 
     @Override
     public boolean execute(Item item, Player player, int amount) {
-        return Balance.deposit(player, reward * amount);
+        return Balance.deposit(player, reward * amount * configAmount);
     }
 
     @Override

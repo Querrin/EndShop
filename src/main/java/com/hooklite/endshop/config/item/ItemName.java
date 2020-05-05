@@ -3,9 +3,9 @@ package com.hooklite.endshop.config.item;
 import com.hooklite.endshop.config.interfaces.ItemKey;
 import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.data.models.Item;
-import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.logging.Colors;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 public class ItemName implements ItemKey, RequiredKey {
     @Override
@@ -24,7 +24,7 @@ public class ItemName implements ItemKey, RequiredKey {
     }
 
     @Override
-    public void setValue(Shop shop, Item item, YamlConfiguration configuration, String itemSection, int ignore) {
+    public void setValue(Item item, YamlConfiguration configuration, String itemSection, int ignore) {
         String value = configuration.getString(getKeyPath(itemSection));
 
         if(value == null || value.isEmpty()) {
@@ -34,6 +34,19 @@ public class ItemName implements ItemKey, RequiredKey {
         }
         else {
             item.name = Colors.loadColors(value);
+        }
+    }
+
+    public String getValue(ItemStack item, YamlConfiguration configuration, String itemSection) {
+        String value = configuration.getString(getKeyPath(itemSection));
+
+        if(value == null || value.isEmpty()) {
+            String materialName = item.getType().name().replace("_", " ").toLowerCase();
+
+            return materialName.substring(0, 1).toUpperCase() + materialName.substring(1);
+        }
+        else {
+            return Colors.loadColors(value);
         }
     }
 }

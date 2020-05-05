@@ -71,7 +71,7 @@ public class ItemRequirement implements Requirement {
         String materialName = requirement.name();
         materialName = materialName.replace("_", " ").toLowerCase();
 
-        return String.format("x%s %s", amount * configAmount, materialName.substring(0, 1).toUpperCase() + materialName.substring(1));
+        return String.format("%sx %s", amount * configAmount, materialName.substring(0, 1).toUpperCase() + materialName.substring(1));
     }
 
     @Override

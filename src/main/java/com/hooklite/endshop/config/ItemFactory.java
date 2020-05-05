@@ -23,10 +23,10 @@ class ItemFactory {
         if(itemSection != null) {
             Set<String> keys = itemSection.getKeys(false);
             Iterator<String> keyIteration = keys.iterator();
-            Item item = new Item();
-
+            Item item = null;
 
             for(int i = 0; i < keys.size(); i++) {
+                item = new Item();
                 String sectionKey = keyIteration.next();
 
                 item.buyReward = RewardFactory.getReward(config, item, sectionKey, Action.BUY);
@@ -36,18 +36,18 @@ class ItemFactory {
 
                 for(RequiredKey rKey : Configuration.getRequiredKeys()) {
                     if(rKey instanceof ItemKey) {
-                        ((ItemKey) rKey).setValue(shop, item, config, sectionKey, i);
+                        ((ItemKey) rKey).setValue(item, config, sectionKey, i);
                     }
                 }
 
                 for(ConfigKey cKey : Configuration.getConfigKeys()) {
                     if(cKey instanceof ItemKey) {
-                        ((ItemKey) cKey).setValue(shop, item, config, sectionKey, i);
+                        ((ItemKey) cKey).setValue(item, config, sectionKey, i);
                     }
                 }
-            }
 
-            items.add(item);
+                items.add(item);
+            }
         }
 
         return items;

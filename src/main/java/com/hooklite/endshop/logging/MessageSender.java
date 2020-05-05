@@ -14,11 +14,11 @@ public class MessageSender {
     }
 
     public static void buyMessage(Player player, String requirement, String reward, int amount) {
-        player.sendMessage(String.format("%sSuccessfully bought %s%sx%d %s%s%s%s for %s%s", ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, amount, ChatColor.RESET, reward, ChatColor.RESET, ChatColor.BOLD, ChatColor.RESET, requirement));
+        player.sendMessage(String.format("%sSuccessfully bought %s%s%s%s%s for %s%s%s", ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, reward, ChatColor.RESET, ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, requirement));
     }
 
     public static void sellMessage(Player player, String requirement, String reward, int amount) {
-        player.sendMessage(String.format("%sSuccessfully sold %s%sx%d %s%s%s%s for %s%s", ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, amount, ChatColor.RESET, requirement, ChatColor.RESET, ChatColor.BOLD, ChatColor.RESET, reward));
+        player.sendMessage(String.format("%sSuccessfully sold %s%s%s%s%s for %s%s%s", ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, requirement, ChatColor.RESET, ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, reward));
     }
 
     public static void noPermission(Player player, String permission) {

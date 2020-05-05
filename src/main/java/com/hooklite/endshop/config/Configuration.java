@@ -63,8 +63,8 @@ public class Configuration {
         addRequiredKey(new ShopTitle());
         addRequiredKey(new ItemSellable());
         addRequiredKey(new ItemBuyable());
-        addRequiredKey(new ItemName());
         addRequiredKey(new ItemDisplayItem());
+        addRequiredKey(new ItemName());
 
         addConfigKey(new ItemSlot());
         addConfigKey(new ShopDisplayItem());

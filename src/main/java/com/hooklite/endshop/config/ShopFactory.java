@@ -14,8 +14,9 @@ class ShopFactory {
     static List<Shop> getShops(List<YamlConfiguration> configs) throws InvalidConfigurationException {
         List<Shop> shops = new ArrayList<>();
 
-        Shop shop = new Shop();
         for(int i = 0; i < configs.size(); i++) {
+            Shop shop = new Shop();
+
             for(RequiredKey rKey : Configuration.getRequiredKeys()) {
                 if(rKey instanceof ShopKey) {
                     ((ShopKey) rKey).setValue(shop, configs.get(i), i);

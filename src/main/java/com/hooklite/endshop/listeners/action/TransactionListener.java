@@ -16,44 +16,29 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Objects;
-
 public class TransactionListener implements Listener {
     @EventHandler
     public void onBuy(TransactionEvent event) {
         Item item = getItem(event.getItem());
         Player player = event.getWhoClicked();
         int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(MenuItemFactory.AMOUNT_KEY, PersistentDataType.INTEGER);
-        Reward reward = Objects.requireNonNull(item).buyReward;
-        Requirement req = item.buyReq;
+        Reward reward = event.getAction() == Action.BUY ? item.buyReward : item.sellReward;
+        Requirement req = event.getAction() == Action.BUY ? item.buyReq : item.sellReq;
 
-        if(event.getAction() == Action.BUY) {
-            if(req.check(player, amount) && req.doTransaction(player, amount)) {
-                if(reward.execute(item, player, amount)) {
+        if(req.check(player, amount) && req.doTransaction(player, amount)) {
+            if(reward.execute(item, player, amount)) {
+                if(event.getAction() == Action.BUY)
                     MessageSender.buyMessage(player, req.getName(amount), reward.getReward(amount), amount);
-                }
-                else {
-                    req.undoTransaction(player, amount);
-                    MessageSender.toPlayer(player, reward.getFailedMessage());
-                }
+                else
+                    MessageSender.sellMessage(player, req.getName(amount), reward.getReward(amount), amount);
             }
             else {
-                MessageSender.toPlayer(player, req.getFailedMessage());
+                req.undoTransaction(player, amount);
+                MessageSender.toPlayer(player, reward.getFailedMessage());
             }
         }
         else {
-            if(req.check(player, amount) && req.doTransaction(player, amount)) {
-                if(reward.execute(item, player, amount)) {
-                    MessageSender.sellMessage(player, req.getName(amount), reward.getReward(amount), amount);
-                }
-                else {
-                    req.undoTransaction(player, amount);
-                    MessageSender.toPlayer(player, reward.getFailedMessage());
-                }
-            }
-            else {
-                MessageSender.toPlayer(player, req.getFailedMessage());
-            }
+            MessageSender.toPlayer(player, req.getFailedMessage());
         }
     }
 

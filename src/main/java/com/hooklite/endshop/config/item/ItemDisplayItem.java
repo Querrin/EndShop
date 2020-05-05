@@ -3,7 +3,6 @@ package com.hooklite.endshop.config.item;
 import com.hooklite.endshop.config.interfaces.ItemKey;
 import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.data.models.Item;
-import com.hooklite.endshop.data.models.Shop;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemDisplayItem implements ItemKey, RequiredKey {
     @Override
-    public void setValue(Shop shop, Item item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
+    public void setValue(Item item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
         String value = configuration.getString("display-item");
 
         if(value != null) {
@@ -21,7 +20,7 @@ public class ItemDisplayItem implements ItemKey, RequiredKey {
             if(material == null)
                 throw new InvalidConfigurationException("Item type not found!");
 
-            item.displayItem = setMeta(new ItemStack(material), item);
+            item.displayItem = setMeta(new ItemStack(material), item, configuration, itemSection);
         }
         else {
             if(required())
@@ -44,12 +43,12 @@ public class ItemDisplayItem implements ItemKey, RequiredKey {
         return true;
     }
 
-    private ItemStack setMeta(ItemStack itemStack, Item item) {
+    private ItemStack setMeta(ItemStack itemStack, Item item, YamlConfiguration config, String itemSection) {
         ItemMeta meta = itemStack.getItemMeta();
 
         assert meta != null;
 
-        meta.setDisplayName(item.name);
+        meta.setDisplayName(new ItemName().getValue(itemStack, config, itemSection));
         meta.setLore(item.description);
 
         itemStack.setItemMeta(meta);
