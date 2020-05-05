@@ -11,7 +11,7 @@ public class BuyInventory implements EActionMenu {
 
     @Override
     public Inventory getMenu(Item item, Player player) {
-        Inventory inventory = Bukkit.createInventory(new BuySellMenu(), 45);
+        Inventory inventory = Bukkit.createInventory(new BuySellMenu(), 45, item.name);
 
         inventory.setItem(13, item.displayItem);
 

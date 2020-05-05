@@ -19,6 +19,7 @@ public class ActionMenuOpenListener implements Listener {
         Item item = getItemMatch(event.getItem());
         Player player = event.getWhoOpened();
 
+        assert item != null;
         if(item.buyable && item.sellable)
             player.openInventory(new BuySellInventory().getMenu(item, player));
         else if(item.buyable)
@@ -30,9 +31,9 @@ public class ActionMenuOpenListener implements Listener {
     private Item getItemMatch(ItemStack eventItem) {
         for(Shop shop : Configuration.getShops()) {
             for(Page page : shop.pages) {
-                for(Item item : page.getItems()) {
-                    if(item.displayItem.equals(eventItem)) {
-                        return item;
+                for(Item eItem : page.getItems()) {
+                    if(eItem.displayItem.equals(eventItem)) {
+                        return eItem;
                     }
                 }
             }

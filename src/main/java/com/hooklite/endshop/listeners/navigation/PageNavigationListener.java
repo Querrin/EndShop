@@ -1,28 +1,34 @@
 package com.hooklite.endshop.listeners.navigation;
 
-import com.hooklite.endshop.config.MenuItemFactory;
+import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.data.models.persistance.PageTagType;
-import com.hooklite.endshop.data.models.persistance.ShopTagType;
 import com.hooklite.endshop.events.PageNavigation;
 import com.hooklite.endshop.events.PageNavigationEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 
 public class PageNavigationListener implements Listener {
     @EventHandler
     public void onPageNavigation(PageNavigationEvent event) {
-        ItemMeta meta = event.getItem().getItemMeta();
+        Shop shop = null;
+        Page page = null;
+        boolean matchFound = false;
 
-        assert meta != null;
-        PersistentDataContainer container = meta.getPersistentDataContainer();
-        Shop shop = container.get(MenuItemFactory.SHOP_KEY, ShopTagType.getInstance());
-        Page page = container.get(MenuItemFactory.PAGE_KEY, PageTagType.getInstance());
+        for(Shop eShop : Configuration.getShops()) {
+            if(matchFound)
+                break;
 
-        assert shop != null && page != null;
+            for(Page ePage : eShop.pages) {
+                if(event.getWhoClicked().getInventory().equals(ePage.getInventory())) {
+                    shop = eShop;
+                    page = ePage;
+                    matchFound = true;
+                    break;
+                }
+            }
+        }
+        assert page != null;
 
         if(event.getDirection() == PageNavigation.NEXT_PAGE) {
             int nextPage = page.getNumber() + 1;

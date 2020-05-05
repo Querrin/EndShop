@@ -1,19 +1,16 @@
 package com.hooklite.endshop.config.item;
 
-import com.hooklite.endshop.config.MenuItemFactory;
 import com.hooklite.endshop.config.interfaces.ItemKey;
+import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.data.models.persistance.ItemTagType;
-import com.hooklite.endshop.data.models.persistance.ShopTagType;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 
-public class ItemDisplayItem implements ItemKey {
+public class ItemDisplayItem implements ItemKey, RequiredKey {
     @Override
     public void setValue(Shop shop, Item item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
         String value = configuration.getString("display-item");
@@ -51,13 +48,9 @@ public class ItemDisplayItem implements ItemKey {
         ItemMeta meta = itemStack.getItemMeta();
 
         assert meta != null;
-        PersistentDataContainer container = meta.getPersistentDataContainer();
 
         meta.setDisplayName(shop.title);
         meta.setLore(shop.description);
-
-        container.set(MenuItemFactory.SHOP_KEY, ShopTagType.getInstance(), shop);
-        container.set(MenuItemFactory.ITEM_KEY, ItemTagType.getInstance(), item);
 
         itemStack.setItemMeta(meta);
 

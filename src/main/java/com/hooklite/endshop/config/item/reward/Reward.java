@@ -13,8 +13,13 @@ public class Reward implements RewardKey {
 
     @Override
     public EReward setValue(EReward reward, Item item, YamlConfiguration config, String itemSection, EAction action) throws InvalidConfigurationException {
+        String value = config.getString(getKeyPath(itemSection, action));
+
         if(required(config, itemSection, action)) {
-            reward.setReward(getKeyPath(itemSection, action));
+            if(value == null || value.isEmpty())
+                throw new InvalidConfigurationException("Reward improperly configured!");
+
+            reward.setReward(value);
         }
 
         return reward;

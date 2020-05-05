@@ -2,10 +2,11 @@ package com.hooklite.endshop.data.models;
 
 import org.bukkit.inventory.Inventory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Page extends DataModel {
+public class Page extends DataModel implements Serializable {
     private int number;
     private List<Item> items = new ArrayList<>();
     private Inventory inventory;

@@ -3,9 +3,6 @@ package com.hooklite.endshop.config;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.data.models.persistance.PageTagType;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,6 @@ class PageFactory {
             List<Item> pageItems = new ArrayList<>();
             while(j < items.size()) {
                 Item item = items.get(j);
-                setPageToDisplayItem(item, page);
 
                 pageItems.add(item);
 
@@ -42,14 +38,5 @@ class PageFactory {
         }
 
         return pages;
-    }
-
-    private static void setPageToDisplayItem(Item item, Page page) {
-        ItemMeta meta = item.displayItem.getItemMeta();
-
-        assert meta != null;
-        PersistentDataContainer container = meta.getPersistentDataContainer();
-
-        container.set(MenuItemFactory.PAGE_KEY, PageTagType.getInstance(), page);
     }
 }

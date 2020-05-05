@@ -21,7 +21,7 @@ public class EItemReward implements EReward {
                 for(ItemStack item : playerInventory) {
                     if(item != null && item.getAmount() < item.getMaxStackSize() && reward.isSimilar(item)) {
                         if(item.getAmount() < reward.getMaxStackSize() - amount + 1) {
-                            addItems(player, reward, amount);
+                            addItems(player, reward, amount * configAmount);
                             return true;
                         }
                     }
