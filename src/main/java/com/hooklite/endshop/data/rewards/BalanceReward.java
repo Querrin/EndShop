@@ -17,7 +17,7 @@ public class BalanceReward implements Reward {
 
     @Override
     public String getReward(int amount) {
-        return ChatColor.GREEN + "$" + reward * amount;
+        return ChatColor.GREEN + "$" + reward * amount * configAmount;
     }
 
     @Override
@@ -36,12 +36,12 @@ public class BalanceReward implements Reward {
     }
 
     @Override
-    public int getAmount() {
+    public int getConfigAmount() {
         return configAmount;
     }
 
     @Override
-    public void setAmount(int amount) throws InvalidConfigurationException {
+    public void setAmount(int amount) {
         configAmount = amount;
     }
 

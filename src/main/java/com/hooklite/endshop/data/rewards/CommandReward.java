@@ -52,7 +52,7 @@ public class CommandReward implements Reward {
     }
 
     @Override
-    public int getAmount() {
+    public int getConfigAmount() {
         return configAmount;
     }
 

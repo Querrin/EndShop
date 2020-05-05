@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ShopDisplayItem implements ShopKey {
     @Override
@@ -33,11 +34,24 @@ public class ShopDisplayItem implements ShopKey {
             if(material == null)
                 throw new InvalidConfigurationException("Item type not found!");
 
-            shop.displayItem = new ItemStack(material);
+            shop.displayItem = setMeta(new ItemStack(material), shop);
         }
         else {
             if(required())
                 throw new InvalidConfigurationException("Value must be set!");
         }
+    }
+
+    private ItemStack setMeta(ItemStack itemStack, Shop shop) {
+        ItemMeta meta = itemStack.getItemMeta();
+
+        assert meta != null;
+
+        meta.setDisplayName(shop.title);
+        meta.setLore(shop.description);
+
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
     }
 }

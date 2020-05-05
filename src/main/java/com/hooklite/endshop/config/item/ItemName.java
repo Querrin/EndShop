@@ -28,7 +28,7 @@ public class ItemName implements ItemKey, RequiredKey {
         String value = configuration.getString(getKeyPath(itemSection));
 
         if(value == null || value.isEmpty()) {
-            String materialName = item.displayItem.getType().name().replace("_", " ");
+            String materialName = item.displayItem.getType().name().replace("_", " ").toLowerCase();
 
             item.name = materialName.substring(0, 1).toUpperCase() + materialName.substring(1);
         }

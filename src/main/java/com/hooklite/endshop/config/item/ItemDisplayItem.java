@@ -21,7 +21,7 @@ public class ItemDisplayItem implements ItemKey, RequiredKey {
             if(material == null)
                 throw new InvalidConfigurationException("Item type not found!");
 
-            item.displayItem = setMeta(new ItemStack(material), shop, item);
+            item.displayItem = setMeta(new ItemStack(material), item);
         }
         else {
             if(required())
@@ -44,13 +44,13 @@ public class ItemDisplayItem implements ItemKey, RequiredKey {
         return true;
     }
 
-    private ItemStack setMeta(ItemStack itemStack, Shop shop, Item item) {
+    private ItemStack setMeta(ItemStack itemStack, Item item) {
         ItemMeta meta = itemStack.getItemMeta();
 
         assert meta != null;
 
-        meta.setDisplayName(shop.title);
-        meta.setLore(shop.description);
+        meta.setDisplayName(item.name);
+        meta.setLore(item.description);
 
         itemStack.setItemMeta(meta);
 

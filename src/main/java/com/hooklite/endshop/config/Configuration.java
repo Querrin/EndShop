@@ -59,11 +59,11 @@ public class Configuration {
         addReward(new ItemReward());
 
         addRequiredKey(new ItemDescription());
-        addRequiredKey(new ItemName());
         addRequiredKey(new ShopDescription());
         addRequiredKey(new ShopTitle());
         addRequiredKey(new ItemSellable());
         addRequiredKey(new ItemBuyable());
+        addRequiredKey(new ItemName());
         addRequiredKey(new ItemDisplayItem());
 
         addConfigKey(new ItemSlot());

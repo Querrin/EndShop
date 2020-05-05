@@ -9,7 +9,7 @@ public interface Reward {
 
     void setReward(String reward) throws InvalidConfigurationException;
 
-    int getAmount();
+    int getConfigAmount();
 
     void setAmount(int amount) throws InvalidConfigurationException;
 

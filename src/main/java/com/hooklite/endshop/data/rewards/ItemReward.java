@@ -47,11 +47,11 @@ public class ItemReward implements Reward {
     }
 
     @Override
-    public String getReward(int ignore) {
+    public String getReward(int amount) {
         String materialName = rewardMaterial.name();
         materialName = materialName.replace("_", " ").toLowerCase();
 
-        return materialName.substring(0, 1).toUpperCase() + materialName.substring(1);
+        return String.format("x%s %s", amount * configAmount, materialName.substring(0, 1).toUpperCase() + materialName.substring(1));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ItemReward implements Reward {
     }
 
     @Override
-    public int getAmount() {
+    public int getConfigAmount() {
         return configAmount;
     }
 

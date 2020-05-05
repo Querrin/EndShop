@@ -33,8 +33,7 @@ public class InventoryClickListener implements Listener {
                 Bukkit.getPluginManager().callEvent(new ItemMenuOpenEvent(player, clickedSlot));
                 event.setCancelled(true);
             }
-
-            if(clickedInventory.getHolder() instanceof ItemMenu) {
+            else if(clickedInventory.getHolder() instanceof ItemMenu) {
 
                 if(item.equals(MenuItemFactory.BACK_ITEM)) {
                     Bukkit.getPluginManager().callEvent(new ShopMenuOpenEvent(player));
@@ -51,8 +50,7 @@ public class InventoryClickListener implements Listener {
 
                 event.setCancelled(true);
             }
-
-            if(clickedInventory.getHolder() instanceof BuySellMenu) {
+            else if(clickedInventory.getHolder() instanceof BuySellMenu) {
                 if(item.equals(MenuItemFactory.BACK_ITEM)) {
                     for(Shop shop : Configuration.getShops()) {
                         for(Page page : shop.pages) {
