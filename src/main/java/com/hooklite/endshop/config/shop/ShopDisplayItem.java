@@ -32,13 +32,13 @@ public class ShopDisplayItem implements ShopKey {
             Material material = Material.matchMaterial(value);
 
             if(material == null)
-                throw new InvalidConfigurationException("Item type not found!");
+                throw new InvalidConfigurationException("Display item type improperly configured!");
 
             shop.displayItem = setMeta(new ItemStack(material), shop);
         }
         else {
             if(required())
-                throw new InvalidConfigurationException("Value must be set!");
+                throw new InvalidConfigurationException("Display item value must be set!");
         }
     }
 

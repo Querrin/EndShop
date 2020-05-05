@@ -12,19 +12,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class ItemDisplayItem implements ItemKey, RequiredKey {
     @Override
     public void setValue(Item item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
-        String value = configuration.getString("display-item");
+        String value = configuration.getString(getKeyPath(itemSection));
 
         if(value != null) {
             Material material = Material.matchMaterial(value);
 
             if(material == null)
-                throw new InvalidConfigurationException("Item type not found!");
+                throw new InvalidConfigurationException("Display item type not found!");
 
             item.displayItem = setMeta(new ItemStack(material), item, configuration, itemSection);
         }
         else {
             if(required())
-                throw new InvalidConfigurationException("Value must be set!");
+                throw new InvalidConfigurationException("Display item value must be set!");
         }
     }
 

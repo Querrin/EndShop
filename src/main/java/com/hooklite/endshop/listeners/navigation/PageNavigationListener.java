@@ -20,7 +20,7 @@ public class PageNavigationListener implements Listener {
                 break;
 
             for(Page ePage : eShop.pages) {
-                if(event.getWhoClicked().getInventory().equals(ePage.getInventory())) {
+                if(event.getWhoClicked().getOpenInventory().getTopInventory().equals(ePage.getInventory())) {
                     shop = eShop;
                     page = ePage;
                     matchFound = true;

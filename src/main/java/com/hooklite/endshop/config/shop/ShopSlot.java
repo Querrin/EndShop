@@ -1,5 +1,6 @@
 package com.hooklite.endshop.config.shop;
 
+import com.hooklite.endshop.config.ShopFactory;
 import com.hooklite.endshop.config.interfaces.ShopKey;
 import com.hooklite.endshop.data.models.Shop;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -28,13 +29,13 @@ public class ShopSlot implements ShopKey {
         String value = configuration.getString("slot");
 
         if(value == null && required())
-            throw new InvalidConfigurationException("Value must be set!");
+            throw new InvalidConfigurationException("Slot value must be set!");
 
         try {
-            shop.slot = value == null ? counter : Integer.parseInt(value);
+            shop.slot = value == null ? ShopFactory.getMaxSlot() + counter + 1 : Integer.parseInt(value);
         }
         catch(NumberFormatException e) {
-            throw new InvalidConfigurationException("Invalid value!");
+            throw new InvalidConfigurationException("Invalid shop slot value!");
         }
     }
 }

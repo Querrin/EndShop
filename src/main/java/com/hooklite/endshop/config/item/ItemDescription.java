@@ -16,7 +16,7 @@ public class ItemDescription implements ItemKey, RequiredKey {
         List<String> values = configuration.getStringList(getKeyPath(itemSection));
 
         if(values.isEmpty() && required())
-            throw new InvalidConfigurationException("Value must be set!");
+            throw new InvalidConfigurationException("Description value must be set!");
 
         List<String> description = new ArrayList<>();
         for(String value : values) {
