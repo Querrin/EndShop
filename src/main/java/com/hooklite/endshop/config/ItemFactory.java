@@ -5,7 +5,7 @@ import com.hooklite.endshop.config.interfaces.ItemKey;
 import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.data.rewards.EAction;
+import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -29,10 +29,10 @@ class ItemFactory {
             for(int i = 0; i < keys.size(); i++) {
                 String sectionKey = keyIteration.next();
 
-                item.buyReward = RewardFactory.getReward(config, item, sectionKey, EAction.BUY);
-                item.sellReward = RewardFactory.getReward(config, item, sectionKey, EAction.SELL);
-                item.buyReq = RequirementFactory.getRequirement(config, item, sectionKey, EAction.BUY);
-                item.sellReq = RequirementFactory.getRequirement(config, item, sectionKey, EAction.SELL);
+                item.buyReward = RewardFactory.getReward(config, item, sectionKey, Action.BUY);
+                item.sellReward = RewardFactory.getReward(config, item, sectionKey, Action.SELL);
+                item.buyReq = RequirementFactory.getRequirement(config, item, sectionKey, Action.BUY);
+                item.sellReq = RequirementFactory.getRequirement(config, item, sectionKey, Action.SELL);
 
                 for(RequiredKey rKey : Configuration.getRequiredKeys()) {
                     if(rKey instanceof ItemKey) {

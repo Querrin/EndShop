@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class EItemRequirement implements ERequirement {
+public class ItemRequirement implements Requirement {
     private Material requirement;
     private int configAmount;
 
@@ -75,8 +75,8 @@ public class EItemRequirement implements ERequirement {
     }
 
     @Override
-    public ERequirement getInstance() {
-        return new EItemRequirement();
+    public Requirement getInstance() {
+        return new ItemRequirement();
     }
 
     @Override

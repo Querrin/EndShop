@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-public class BuyInventory implements EActionMenu {
+public class BuyInventory implements ActionMenu {
 
     @Override
     public Inventory getMenu(Item item, Player player) {

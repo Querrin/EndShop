@@ -3,7 +3,7 @@ package com.hooklite.endshop.data.requirements;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
-public interface ERequirement {
+public interface Requirement {
     String getType();
 
     boolean check(Player player, int amount);
@@ -20,7 +20,7 @@ public interface ERequirement {
 
     String getName(int amount);
 
-    ERequirement getInstance();
+    Requirement getInstance();
 
     int getMaxAmount(Player player);
 }

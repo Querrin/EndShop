@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
-public class ECommandReward implements EReward {
+public class CommandReward implements Reward {
     private String reward;
     private int configAmount;
 
@@ -67,7 +67,7 @@ public class ECommandReward implements EReward {
     }
 
     @Override
-    public EReward getInstance() {
-        return new ECommandReward();
+    public Reward getInstance() {
+        return new CommandReward();
     }
 }

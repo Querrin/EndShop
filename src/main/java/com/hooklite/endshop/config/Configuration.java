@@ -5,20 +5,19 @@ import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.config.item.*;
 import com.hooklite.endshop.config.item.requirement.RequirementAmount;
 import com.hooklite.endshop.config.item.requirement.RequirementReq;
-import com.hooklite.endshop.config.item.reward.Reward;
 import com.hooklite.endshop.config.item.reward.RewardAmount;
 import com.hooklite.endshop.config.shop.ShopDescription;
 import com.hooklite.endshop.config.shop.ShopDisplayItem;
 import com.hooklite.endshop.config.shop.ShopSlot;
 import com.hooklite.endshop.config.shop.ShopTitle;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.data.requirements.EBalanceRequirement;
-import com.hooklite.endshop.data.requirements.EItemRequirement;
-import com.hooklite.endshop.data.requirements.ERequirement;
-import com.hooklite.endshop.data.rewards.EBalanceReward;
-import com.hooklite.endshop.data.rewards.ECommandReward;
-import com.hooklite.endshop.data.rewards.EItemReward;
-import com.hooklite.endshop.data.rewards.EReward;
+import com.hooklite.endshop.data.requirements.BalanceRequirement;
+import com.hooklite.endshop.data.requirements.ItemRequirement;
+import com.hooklite.endshop.data.requirements.Requirement;
+import com.hooklite.endshop.data.rewards.BalanceReward;
+import com.hooklite.endshop.data.rewards.CommandReward;
+import com.hooklite.endshop.data.rewards.ItemReward;
+import com.hooklite.endshop.data.rewards.Reward;
 import com.hooklite.endshop.logging.MessageSender;
 import com.hooklite.endshop.shop.BuySellMenu;
 import com.hooklite.endshop.shop.ItemMenu;
@@ -42,22 +41,22 @@ import java.util.List;
 public class Configuration {
     private static final List<RequiredKey> requiredKeys = new ArrayList<>();
     private static final List<ConfigKey> configKeys = new ArrayList<>();
-    private static final List<EReward> rewards = new ArrayList<>();
+    private static final List<Reward> rewards = new ArrayList<>();
     private static YamlConfiguration defaultConfig;
     private static List<YamlConfiguration> shopConfigs;
     private static List<Shop> shops = new ArrayList<>();
-    private static final List<ERequirement> requirements = new ArrayList<>();
+    private static final List<Requirement> requirements = new ArrayList<>();
     private static Plugin plugin;
     private static Economy econ;
     private static Permission perms;
 
     static {
-        addRequirement(new EItemRequirement());
-        addRequirement(new EBalanceRequirement());
+        addRequirement(new ItemRequirement());
+        addRequirement(new BalanceRequirement());
 
-        addReward(new ECommandReward());
-        addReward(new EBalanceReward());
-        addReward(new EItemReward());
+        addReward(new CommandReward());
+        addReward(new BalanceReward());
+        addReward(new ItemReward());
 
         addRequiredKey(new ItemDescription());
         addRequiredKey(new ItemName());
@@ -73,7 +72,7 @@ public class Configuration {
         addConfigKey(new RequirementAmount());
         addConfigKey(new RequirementReq());
         addConfigKey(new RewardAmount());
-        addConfigKey(new Reward());
+        addConfigKey(new com.hooklite.endshop.config.item.reward.Reward());
     }
 
     public static YamlConfiguration getDefaultConfig() {
@@ -88,7 +87,7 @@ public class Configuration {
         return shops;
     }
 
-    static List<EReward> getRewards() {
+    static List<Reward> getRewards() {
         return rewards;
     }
 
@@ -101,12 +100,12 @@ public class Configuration {
      *
      * @param reward An instance of EReward.
      */
-    public static void addReward(EReward reward) {
+    public static void addReward(Reward reward) {
         if(!rewards.contains(reward))
             rewards.add(reward);
     }
 
-    public static void addRequirement(ERequirement requirement) {
+    public static void addRequirement(Requirement requirement) {
         if(!requirements.contains(requirement))
             requirements.add(requirement);
     }
@@ -137,7 +136,7 @@ public class Configuration {
         return plugin;
     }
 
-    public static List<ERequirement> getRequirements() {
+    public static List<Requirement> getRequirements() {
         return requirements;
     }
 

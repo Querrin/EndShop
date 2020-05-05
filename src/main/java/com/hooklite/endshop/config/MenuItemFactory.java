@@ -2,8 +2,8 @@ package com.hooklite.endshop.config;
 
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.data.requirements.ERequirement;
-import com.hooklite.endshop.data.rewards.EReward;
+import com.hooklite.endshop.data.requirements.Requirement;
+import com.hooklite.endshop.data.rewards.Reward;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -114,7 +114,7 @@ public class MenuItemFactory {
         return setItemLore(eItem.sellReq, eItem.sellReq.getMaxAmount(player), item, meta, eItem.sellReward);
     }
 
-    private static ItemStack setItemLore(ERequirement requirement, int amount, ItemStack item, ItemMeta meta, EReward reward) {
+    private static ItemStack setItemLore(Requirement requirement, int amount, ItemStack item, ItemMeta meta, Reward reward) {
         List<String> lore = new ArrayList<>();
 
         lore.add(String.format("%sRequired: %s%s", ChatColor.GRAY, ChatColor.RED, requirement.getName(amount)));

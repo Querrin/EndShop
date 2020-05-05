@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class EItemReward implements EReward {
+public class ItemReward implements Reward {
     private Material rewardMaterial;
     private int configAmount;
 
@@ -80,8 +80,8 @@ public class EItemReward implements EReward {
     }
 
     @Override
-    public EReward getInstance() {
-        return new EItemReward();
+    public Reward getInstance() {
+        return new ItemReward();
     }
 
     private void addItems(Player player, ItemStack reward, int amount) {

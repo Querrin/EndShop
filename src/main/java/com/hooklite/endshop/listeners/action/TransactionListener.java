@@ -5,9 +5,9 @@ import com.hooklite.endshop.config.MenuItemFactory;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.data.requirements.ERequirement;
-import com.hooklite.endshop.data.rewards.EAction;
-import com.hooklite.endshop.data.rewards.EReward;
+import com.hooklite.endshop.data.requirements.Requirement;
+import com.hooklite.endshop.data.rewards.Action;
+import com.hooklite.endshop.data.rewards.Reward;
 import com.hooklite.endshop.events.TransactionEvent;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.entity.Player;
@@ -24,10 +24,10 @@ public class TransactionListener implements Listener {
         Item item = getItem(event.getItem());
         Player player = event.getWhoClicked();
         int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(MenuItemFactory.AMOUNT_KEY, PersistentDataType.INTEGER);
-        EReward reward = Objects.requireNonNull(item).buyReward;
-        ERequirement req = item.buyReq;
+        Reward reward = Objects.requireNonNull(item).buyReward;
+        Requirement req = item.buyReq;
 
-        if(event.getAction() == EAction.BUY) {
+        if(event.getAction() == Action.BUY) {
             if(req.check(player, amount) && req.doTransaction(player, amount)) {
                 if(reward.execute(item, player, amount)) {
                     MessageSender.buyMessage(player, req.getName(amount), reward.getReward(amount), amount);

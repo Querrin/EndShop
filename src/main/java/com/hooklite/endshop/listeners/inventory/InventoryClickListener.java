@@ -5,7 +5,7 @@ import com.hooklite.endshop.config.MenuItemFactory;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.data.rewards.EAction;
+import com.hooklite.endshop.data.rewards.Action;
 import com.hooklite.endshop.events.*;
 import com.hooklite.endshop.shop.BuySellMenu;
 import com.hooklite.endshop.shop.ItemMenu;
@@ -66,10 +66,10 @@ public class InventoryClickListener implements Listener {
                     }
                 }
                 else if(item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, EAction.BUY));
+                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.BUY));
                 }
                 else if(item.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, EAction.SELL));
+                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.SELL));
                 }
 
                 event.setCancelled(true);

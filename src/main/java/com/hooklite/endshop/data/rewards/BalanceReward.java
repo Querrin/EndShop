@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
-public class EBalanceReward implements EReward {
+public class BalanceReward implements Reward {
     private double reward;
     private int configAmount;
 
@@ -51,8 +51,8 @@ public class EBalanceReward implements EReward {
     }
 
     @Override
-    public EReward getInstance() {
-        return new EBalanceReward();
+    public Reward getInstance() {
+        return new BalanceReward();
     }
 
 }

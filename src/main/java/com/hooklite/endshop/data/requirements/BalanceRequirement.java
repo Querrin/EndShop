@@ -6,7 +6,7 @@ import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
-public class EBalanceRequirement implements ERequirement {
+public class BalanceRequirement implements Requirement {
     private double requirement;
     private int configAmount;
 
@@ -63,8 +63,8 @@ public class EBalanceRequirement implements ERequirement {
     }
 
     @Override
-    public ERequirement getInstance() {
-        return new EBalanceRequirement();
+    public Requirement getInstance() {
+        return new BalanceRequirement();
     }
 
     @Override

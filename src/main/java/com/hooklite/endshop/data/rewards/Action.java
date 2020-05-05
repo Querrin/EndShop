@@ -1,6 +1,6 @@
 package com.hooklite.endshop.data.rewards;
 
-public enum EAction {
+public enum Action {
     BUY,
     SELL
 }

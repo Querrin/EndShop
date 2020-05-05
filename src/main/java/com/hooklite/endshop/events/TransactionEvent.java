@@ -1,6 +1,6 @@
 package com.hooklite.endshop.events;
 
-import com.hooklite.endshop.data.rewards.EAction;
+import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -11,9 +11,9 @@ public class TransactionEvent extends Event {
     private final ItemStack ITEM;
     private final ItemStack CLICKED_ITEM;
     private final Player PLAYER;
-    private final EAction ACTION;
+    private final Action ACTION;
 
-    public TransactionEvent(ItemStack rewardItem, ItemStack clickedItem, Player player, EAction action) {
+    public TransactionEvent(ItemStack rewardItem, ItemStack clickedItem, Player player, Action action) {
         ITEM = rewardItem;
         CLICKED_ITEM = clickedItem;
         PLAYER = player;
@@ -24,7 +24,7 @@ public class TransactionEvent extends Event {
         return HANDLERS;
     }
 
-    public EAction getAction() {
+    public Action getAction() {
         return ACTION;
     }
 
