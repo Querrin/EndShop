@@ -21,9 +21,8 @@ public class MenuItemFactory {
     public static final ItemStack BACK_ITEM;
     public static final ItemStack NEXT_PAGE_ITEM;
     public static final ItemStack PREVIOUS_PAGE_ITEM;
-    public static final NamespacedKey ITEM_KEY = new NamespacedKey(Configuration.getPlugin(), "item");
-    public static final NamespacedKey SHOP_KEY = new NamespacedKey(Configuration.getPlugin(), "shop");
-    public static final NamespacedKey PAGE_KEY = new NamespacedKey(Configuration.getPlugin(), "page");
+    public static final ItemStack CONFIRM_ITEM;
+    public static final ItemStack CANCEL_ITEM;
     public static final NamespacedKey AMOUNT_KEY = new NamespacedKey(Configuration.getPlugin(), "amount");
 
     static {
@@ -42,9 +41,21 @@ public class MenuItemFactory {
         Objects.requireNonNull(previousPageItemMeta).setDisplayName(String.format("%s%sPrevious page", ChatColor.GREEN, ChatColor.BOLD));
         previousPageItem.setItemMeta(previousPageItemMeta);
 
+        ItemStack confirmItem = new ItemStack(Material.GREEN_STAINED_GLASS);
+        ItemMeta confirmItemMeta = confirmItem.getItemMeta();
+        confirmItemMeta.setDisplayName(String.format("%s%sCONFIRM", ChatColor.GREEN, ChatColor.BOLD));
+        confirmItem.setItemMeta(confirmItemMeta);
+
+        ItemStack cancelItem = new ItemStack(Material.GREEN_STAINED_GLASS);
+        ItemMeta cancelItemMeta = cancelItem.getItemMeta();
+        cancelItemMeta.setDisplayName(String.format("%s%sCANCEL", ChatColor.RED, ChatColor.BOLD));
+        cancelItem.setItemMeta(cancelItemMeta);
+
         BACK_ITEM = backItem;
         NEXT_PAGE_ITEM = nextPageItem;
         PREVIOUS_PAGE_ITEM = previousPageItem;
+        CONFIRM_ITEM = confirmItem;
+        CANCEL_ITEM = cancelItem;
     }
 
     static ItemStack getPageNumberItem(int page, int pages) {

@@ -18,7 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class TransactionListener implements Listener {
     @EventHandler
-    public void onBuy(TransactionEvent event) {
+    public void onTransaction(TransactionEvent event) {
         Item item = getItem(event.getItem());
         Player player = event.getWhoClicked();
         int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(MenuItemFactory.AMOUNT_KEY, PersistentDataType.INTEGER);

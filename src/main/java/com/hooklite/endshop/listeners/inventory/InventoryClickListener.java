@@ -64,10 +64,19 @@ public class InventoryClickListener implements Listener {
                     }
                 }
                 else if(item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.BUY));
+                    if(item.getItemMeta().getDisplayName().contains("Max")) {
+                    }
+                    else {
+                        Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.BUY));
+                    }
                 }
                 else if(item.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.SELL));
+                    if(item.getItemMeta().getDisplayName().contains("Max")) {
+
+                    }
+                    else {
+                        Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.SELL));
+                    }
                 }
 
                 event.setCancelled(true);
