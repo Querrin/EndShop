@@ -27,8 +27,8 @@ public class ItemReward implements Reward {
                     }
                 }
             }
-            if(getEmptySlots(player) >= Math.ceil((double) amount / reward.getMaxStackSize())) {
-                addItems(player, reward, amount);
+            if(getEmptySlots(player) >= Math.ceil((double) (amount * configAmount) / reward.getMaxStackSize())) {
+                addItems(player, reward, amount * configAmount);
                 return true;
             }
             else {
@@ -36,8 +36,8 @@ public class ItemReward implements Reward {
             }
         }
         else {
-            if(getEmptySlots(player) >= amount) {
-                addItems(player, reward, amount);
+            if(getEmptySlots(player) >= amount * configAmount) {
+                addItems(player, reward, amount * configAmount);
                 return true;
             }
             else {
