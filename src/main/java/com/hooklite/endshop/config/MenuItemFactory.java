@@ -27,17 +27,17 @@ public class MenuItemFactory {
     public static final NamespacedKey AMOUNT_KEY = new NamespacedKey(Configuration.getPlugin(), "amount");
 
     static {
-        ItemStack backItem = new ItemStack(Material.CHEST, 1);
+        ItemStack backItem = new ItemStack(Material.CHEST);
         ItemMeta backItemMeta = backItem.getItemMeta();
         Objects.requireNonNull(backItemMeta).setDisplayName(String.format("%s%sBack", ChatColor.RED, ChatColor.BOLD));
         backItem.setItemMeta(backItemMeta);
 
-        ItemStack nextPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
+        ItemStack nextPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta nextPageItemMeta = nextPageItem.getItemMeta();
         Objects.requireNonNull(nextPageItemMeta).setDisplayName(String.format("%s%sNext page", ChatColor.GREEN, ChatColor.BOLD));
         nextPageItem.setItemMeta(nextPageItemMeta);
 
-        ItemStack previousPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
+        ItemStack previousPageItem = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta previousPageItemMeta = previousPageItem.getItemMeta();
         Objects.requireNonNull(previousPageItemMeta).setDisplayName(String.format("%s%sPrevious page", ChatColor.GREEN, ChatColor.BOLD));
         previousPageItem.setItemMeta(previousPageItemMeta);
@@ -65,7 +65,7 @@ public class MenuItemFactory {
     }
 
     private static ItemStack getPageNumberItem(Shop shop, int number) {
-        ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE, 1);
+        ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
 
         meta.setDisplayName(String.valueOf(ChatColor.RED) +
@@ -81,7 +81,7 @@ public class MenuItemFactory {
     }
 
     public static ItemStack getBalanceItem(Player player) {
-        ItemStack item = new ItemStack(Material.GOLD_NUGGET, 1);
+        ItemStack item = new ItemStack(Material.GOLD_NUGGET);
         ItemMeta meta = item.getItemMeta();
 
         Objects.requireNonNull(meta).setDisplayName(String.format("%sBalance: %s$%.2f", ChatColor.GRAY, ChatColor.GREEN, Configuration.getEcon().getBalance(player)));
@@ -91,7 +91,7 @@ public class MenuItemFactory {
     }
 
     public static ItemStack getBuyItem(Item eItem, int amount) {
-        ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
+        ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sBuy %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
@@ -99,7 +99,7 @@ public class MenuItemFactory {
     }
 
     public static ItemStack getSellItem(Item eItem, int amount) {
-        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
+        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
 
@@ -107,11 +107,19 @@ public class MenuItemFactory {
     }
 
     public static ItemStack getSellMaxItem(Item eItem, Player player) {
-        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
+        ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
-        Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell MAX", ChatColor.GREEN, ChatColor.BOLD));
+        Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell Max", ChatColor.GREEN, ChatColor.BOLD));
 
         return setItemLore(eItem.sellReq, eItem.sellReq.getMaxAmount(player), item, meta, eItem.sellReward);
+    }
+
+    public static ItemStack getBuyMaxItem(Item eItem, Player player) {
+        ItemStack item = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        ItemMeta meta = item.getItemMeta();
+        Objects.requireNonNull(meta).setDisplayName(String.format("%s%sBuy Max", ChatColor.GREEN, ChatColor.BOLD));
+
+        return setItemLore(eItem.buyReq, eItem.buyReq.getMaxAmount(player), item, meta, eItem.buyReward);
     }
 
     private static ItemStack setItemLore(Requirement requirement, int amount, ItemStack item, ItemMeta meta, Reward reward) {

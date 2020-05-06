@@ -21,7 +21,7 @@ public class BuyInventory implements ActionMenu {
         inventory.setItem(22, MenuItemFactory.getBuyItem(item, 64));
         inventory.setItem(23, MenuItemFactory.getBuyItem(item, 128));
         inventory.setItem(24, MenuItemFactory.getBuyItem(item, 256));
-        inventory.setItem(25, MenuItemFactory.getBuyItem(item, 512));
+        inventory.setItem(25, MenuItemFactory.getBuyMaxItem(item, player));
 
         inventory.setItem(40, MenuItemFactory.BACK_ITEM);
 
