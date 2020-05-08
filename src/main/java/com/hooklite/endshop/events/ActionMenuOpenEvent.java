@@ -9,12 +9,10 @@ public class ActionMenuOpenEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player PLAYER;
     private final ItemStack ITEM;
-    private final int SLOT;
 
-    public ActionMenuOpenEvent(Player player, ItemStack item, int slot) {
+    public ActionMenuOpenEvent(Player player, ItemStack item) {
         PLAYER = player;
         ITEM = item;
-        SLOT = slot;
     }
 
     public static HandlerList getHandlerList() {
@@ -33,7 +31,4 @@ public class ActionMenuOpenEvent extends Event {
         return ITEM;
     }
 
-    public int getSlot() {
-        return SLOT;
-    }
 }
