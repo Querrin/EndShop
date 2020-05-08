@@ -3,6 +3,7 @@ package com.hooklite.endshop.config;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.requirements.Requirement;
+import com.hooklite.endshop.data.rewards.Action;
 import com.hooklite.endshop.data.rewards.Reward;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,7 +22,6 @@ public class MenuItemFactory {
     public static final ItemStack BACK_ITEM;
     public static final ItemStack NEXT_PAGE_ITEM;
     public static final ItemStack PREVIOUS_PAGE_ITEM;
-    public static final ItemStack CONFIRM_ITEM;
     public static final ItemStack CANCEL_ITEM;
     public static final NamespacedKey AMOUNT_KEY = new NamespacedKey(Configuration.getPlugin(), "amount");
 
@@ -41,11 +41,6 @@ public class MenuItemFactory {
         Objects.requireNonNull(previousPageItemMeta).setDisplayName(String.format("%s%sPrevious page", ChatColor.GREEN, ChatColor.BOLD));
         previousPageItem.setItemMeta(previousPageItemMeta);
 
-        ItemStack confirmItem = new ItemStack(Material.GREEN_STAINED_GLASS);
-        ItemMeta confirmItemMeta = confirmItem.getItemMeta();
-        confirmItemMeta.setDisplayName(String.format("%s%sCONFIRM", ChatColor.GREEN, ChatColor.BOLD));
-        confirmItem.setItemMeta(confirmItemMeta);
-
         ItemStack cancelItem = new ItemStack(Material.RED_STAINED_GLASS);
         ItemMeta cancelItemMeta = cancelItem.getItemMeta();
         cancelItemMeta.setDisplayName(String.format("%s%sCANCEL", ChatColor.RED, ChatColor.BOLD));
@@ -54,8 +49,17 @@ public class MenuItemFactory {
         BACK_ITEM = backItem;
         NEXT_PAGE_ITEM = nextPageItem;
         PREVIOUS_PAGE_ITEM = previousPageItem;
-        CONFIRM_ITEM = confirmItem;
         CANCEL_ITEM = cancelItem;
+    }
+
+    public static ItemStack getConfirmItem(int amount) {
+        ItemStack confirmItem = new ItemStack(Material.GREEN_STAINED_GLASS);
+        ItemMeta confirmItemMeta = confirmItem.getItemMeta();
+        confirmItemMeta.setDisplayName(String.format("%s%sCONFIRM", ChatColor.GREEN, ChatColor.BOLD));
+        confirmItemMeta.getPersistentDataContainer().set(AMOUNT_KEY, PersistentDataType.INTEGER, amount);
+        confirmItem.setItemMeta(confirmItemMeta);
+
+        return confirmItem;
     }
 
     static ItemStack getPageNumberItem(int page, int pages) {
@@ -122,7 +126,7 @@ public class MenuItemFactory {
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sSell Max", ChatColor.GREEN, ChatColor.BOLD));
 
-        return setItemLore(eItem.sellReq, eItem.sellReq.getMaxAmount(player), item, meta, eItem.sellReward);
+        return setItemLore(eItem.sellReq, eItem.sellReq.getMaxAmount(eItem, player, Action.SELL), item, meta, eItem.sellReward);
     }
 
     public static ItemStack getBuyMaxItem(Item eItem, Player player) {
@@ -130,14 +134,19 @@ public class MenuItemFactory {
         ItemMeta meta = item.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(String.format("%s%sBuy Max", ChatColor.GREEN, ChatColor.BOLD));
 
-        return setItemLore(eItem.buyReq, eItem.buyReq.getMaxAmount(player), item, meta, eItem.buyReward);
+        return setItemLore(eItem.buyReq, eItem.buyReq.getMaxAmount(eItem, player, Action.BUY), item, meta, eItem.buyReward);
     }
 
     private static ItemStack setItemLore(Requirement requirement, int amount, ItemStack item, ItemMeta meta, Reward reward) {
         List<String> lore = new ArrayList<>();
 
-        lore.add(String.format("%sRequired: %s%s", ChatColor.GRAY, ChatColor.RED, requirement.getName(amount)));
-        lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, reward.getReward(amount)));
+        if(amount == 0) {
+            lore.add(String.format("%sYou do not have the requirements!", ChatColor.RED));
+        }
+        else {
+            lore.add(String.format("%sRequired: %s%s", ChatColor.GRAY, ChatColor.RED, requirement.getName(amount)));
+            lore.add(String.format("%sReward: %s%s", ChatColor.GRAY, ChatColor.GREEN, reward.getReward(amount)));
+        }
 
         assert meta != null;
         meta.getPersistentDataContainer().set(AMOUNT_KEY, PersistentDataType.INTEGER, amount);

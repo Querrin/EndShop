@@ -11,6 +11,8 @@ public interface Reward {
 
     int getConfigAmount();
 
+    int getMaxAmount(Player player);
+
     void setAmount(int amount) throws InvalidConfigurationException;
 
     String getReward(int amount);

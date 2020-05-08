@@ -1,5 +1,7 @@
 package com.hooklite.endshop.data.requirements;
 
+import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
@@ -22,5 +24,5 @@ public interface Requirement {
 
     Requirement getInstance();
 
-    int getMaxAmount(Player player);
+    int getMaxAmount(Item item, Player player, Action action);
 }

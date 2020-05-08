@@ -4,12 +4,15 @@ import com.hooklite.endshop.config.interfaces.ConfigKey;
 import com.hooklite.endshop.config.interfaces.ItemKey;
 import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.models.Page;
+import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.rewards.Action;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -76,5 +79,19 @@ public class ItemFactory {
         }
 
         return items;
+    }
+
+    public static Item getItemMatch(ItemStack eventItem) {
+        for(Shop shop : Configuration.getShops()) {
+            for(Page page : shop.pages) {
+                for(Item eItem : page.getItems()) {
+                    if(eItem.displayItem.equals(eventItem)) {
+                        return eItem;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }

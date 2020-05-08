@@ -57,6 +57,11 @@ public class CommandReward implements Reward {
     }
 
     @Override
+    public int getMaxAmount(Player player) {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
     public void setAmount(int amount) throws InvalidConfigurationException {
         configAmount = amount;
     }
