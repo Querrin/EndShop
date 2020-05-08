@@ -46,7 +46,7 @@ public class MenuItemFactory {
         confirmItemMeta.setDisplayName(String.format("%s%sCONFIRM", ChatColor.GREEN, ChatColor.BOLD));
         confirmItem.setItemMeta(confirmItemMeta);
 
-        ItemStack cancelItem = new ItemStack(Material.GREEN_STAINED_GLASS);
+        ItemStack cancelItem = new ItemStack(Material.RED_STAINED_GLASS);
         ItemMeta cancelItemMeta = cancelItem.getItemMeta();
         cancelItemMeta.setDisplayName(String.format("%s%sCANCEL", ChatColor.RED, ChatColor.BOLD));
         cancelItem.setItemMeta(cancelItemMeta);
