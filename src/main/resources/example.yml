@@ -22,11 +22,11 @@ items:
       req: 10.0
     buy-reward:
       type: 'item'
-      amount: 1
+      amount: 2
       reward: oak_log
     sell-req:
       type: 'item'
-      amount: 1
+      amount: 2
       req: oak_log
     sell-reward:
       type: 'balance'

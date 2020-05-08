@@ -13,7 +13,7 @@ public class ItemReward implements Reward {
 
     @Override
     public boolean execute(Item eItem, Player player, int amount) {
-        ItemStack reward = new ItemStack(rewardMaterial, 1);
+        ItemStack reward = new ItemStack(rewardMaterial);
         Inventory playerInventory = player.getInventory();
 
         if(reward.getMaxStackSize() > 1) {
@@ -67,6 +67,34 @@ public class ItemReward implements Reward {
     @Override
     public int getConfigAmount() {
         return configAmount;
+    }
+
+    @Override
+    public int getMaxAmount(Player player) {
+        ItemStack reward = new ItemStack(rewardMaterial);
+        Inventory inventory = player.getInventory();
+        int amount = 0;
+
+        if(reward.getMaxStackSize() > 1) {
+            if(inventory.containsAtLeast(reward, 1)) {
+                int stackAmount = 0;
+
+                for(ItemStack item : inventory.getContents()) {
+                    if(item != null && item.getType().equals(rewardMaterial)) {
+                        stackAmount += item.getAmount();
+                    }
+                }
+
+                amount += 64 - (stackAmount % reward.getMaxStackSize()) != 64 ? 64 - (stackAmount % reward.getMaxStackSize()) : 0;
+                amount += getEmptySlots(player) * reward.getMaxStackSize();
+
+                return amount / configAmount;
+            }
+
+            return getEmptySlots(player) * reward.getMaxStackSize();
+        }
+
+        return getEmptySlots(player);
     }
 
     @Override

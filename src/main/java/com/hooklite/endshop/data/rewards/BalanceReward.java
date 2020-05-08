@@ -17,7 +17,7 @@ public class BalanceReward implements Reward {
 
     @Override
     public String getReward(int amount) {
-        return ChatColor.GREEN + "$" + reward * amount * configAmount;
+        return String.format("%s$%.2f", ChatColor.GREEN, reward * amount * configAmount);
     }
 
     @Override
@@ -38,6 +38,11 @@ public class BalanceReward implements Reward {
     @Override
     public int getConfigAmount() {
         return configAmount;
+    }
+
+    @Override
+    public int getMaxAmount(Player player) {
+        return Integer.MAX_VALUE;
     }
 
     @Override

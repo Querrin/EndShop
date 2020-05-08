@@ -2,6 +2,7 @@ package com.hooklite.endshop;
 
 import com.hooklite.endshop.commands.CommandManager;
 import com.hooklite.endshop.config.Configuration;
+import com.hooklite.endshop.listeners.action.ConfirmMenuOpenListener;
 import com.hooklite.endshop.listeners.action.TransactionListener;
 import com.hooklite.endshop.listeners.inventory.InventoryClickListener;
 import com.hooklite.endshop.listeners.navigation.ActionMenuOpenListener;
@@ -22,6 +23,7 @@ public final class EndShop extends JavaPlugin {
         getPluginManager().registerEvents(new ActionMenuOpenListener(), this);
         getPluginManager().registerEvents(new PageNavigationListener(), this);
         getPluginManager().registerEvents(new TransactionListener(), this);
+        getPluginManager().registerEvents(new ConfirmMenuOpenListener(), this);
         Configuration.configurePlugin(this);
 
         getCommand("shop").setExecutor(new CommandManager());

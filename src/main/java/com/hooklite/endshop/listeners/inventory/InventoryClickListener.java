@@ -7,7 +7,9 @@ import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.rewards.Action;
 import com.hooklite.endshop.events.*;
+import com.hooklite.endshop.logging.MessageSender;
 import com.hooklite.endshop.shop.BuySellMenu;
+import com.hooklite.endshop.shop.ConfirmMenu;
 import com.hooklite.endshop.shop.ItemMenu;
 import com.hooklite.endshop.shop.ShopMenu;
 import org.bukkit.Bukkit;
@@ -18,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 public class InventoryClickListener implements Listener {
     @EventHandler
@@ -45,7 +48,7 @@ public class InventoryClickListener implements Listener {
                     Bukkit.getPluginManager().callEvent(new PageNavigationEvent(displayItem, player, PageNavigation.PREVIOUS_PAGE));
                 }
                 else if(!(item.getItemMeta().getDisplayName().contains("/")) && event.getClickedInventory() != player.getInventory()) {
-                    Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent((Player) event.getWhoClicked(), item, clickedSlot));
+                    Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent((Player) event.getWhoClicked(), item));
                 }
 
                 event.setCancelled(true);
@@ -64,10 +67,41 @@ public class InventoryClickListener implements Listener {
                     }
                 }
                 else if(item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.BUY));
+                    if(item.getItemMeta().getDisplayName().contains("Max")) {
+                        int amount = event.getCurrentItem().getItemMeta().getPersistentDataContainer().get(MenuItemFactory.AMOUNT_KEY, PersistentDataType.INTEGER);
+
+                        if(amount > 0)
+                            Bukkit.getPluginManager().callEvent(new ConfirmMenuOpenEvent(player, displayItem, amount, Action.BUY));
+                        else
+                            MessageSender.toPlayer(player, "You do not meet the requirements!");
+                    }
+                    else {
+                        Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.BUY));
+                    }
                 }
                 else if(item.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.SELL));
+                    if(item.getItemMeta().getDisplayName().contains("Max")) {
+                        int amount = event.getCurrentItem().getItemMeta().getPersistentDataContainer().get(MenuItemFactory.AMOUNT_KEY, PersistentDataType.INTEGER);
+
+                        if(amount > 0)
+                            Bukkit.getPluginManager().callEvent(new ConfirmMenuOpenEvent(player, displayItem, amount, Action.SELL));
+                        else
+                            MessageSender.toPlayer(player, "You do not meet the requirements!");
+                    }
+                    else {
+                        Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.SELL));
+                    }
+                }
+
+                event.setCancelled(true);
+            }
+            else if(clickedInventory.getHolder() instanceof ConfirmMenu) {
+                if(event.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS)) {
+                    Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, ((ConfirmMenu) clickedInventory.getHolder()).getAction()));
+                    Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent(player, clickedInventory.getItem(22)));
+                }
+                else if(event.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS)) {
+                    Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent(player, clickedInventory.getItem(22)));
                 }
 
                 event.setCancelled(true);

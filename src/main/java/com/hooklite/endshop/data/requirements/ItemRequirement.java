@@ -1,5 +1,7 @@
 package com.hooklite.endshop.data.requirements;
 
+import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
@@ -36,7 +38,7 @@ public class ItemRequirement implements Requirement {
 
     @Override
     public boolean undoTransaction(Player player, int amount) {
-        ItemStack requiredItem = new ItemStack(requirement, 1);
+        ItemStack requiredItem = new ItemStack(requirement);
         Inventory playerInventory = player.getInventory();
 
         for(int i = 0; i < amount * configAmount; i++) {
@@ -80,17 +82,16 @@ public class ItemRequirement implements Requirement {
     }
 
     @Override
-    public int getMaxAmount(Player player) {
-        int amount = 0;
+    public int getMaxAmount(Item item, Player player, Action action) {
+        int reqAmount = 0;
+        int rewardAmount = action == Action.BUY ? item.buyReward.getMaxAmount(player) : item.sellReward.getMaxAmount(player);
         ItemStack[] items = player.getInventory().getContents();
-        ItemStack req = new ItemStack(requirement, 1);
 
         for(ItemStack itemStack : items) {
-            if(itemStack != null && itemStack.isSimilar(req))
-                amount += itemStack.getAmount();
+            if(itemStack != null && itemStack.getType().equals(requirement))
+                reqAmount += itemStack.getAmount();
         }
 
-        return amount;
+        return rewardAmount != 0 ? Math.min(reqAmount / configAmount, rewardAmount) : 0;
     }
-
 }

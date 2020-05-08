@@ -13,7 +13,7 @@ public class BuySellInventory implements ActionMenu {
     public Inventory getMenu(Item item, Player player) {
         Inventory inventory = Bukkit.createInventory(new BuySellMenu(), 36, item.name);
 
-        inventory.setItem(9, MenuItemFactory.getSellItem(item, item.sellReq.getMaxAmount(player)));
+        inventory.setItem(9, MenuItemFactory.getSellMaxItem(item, player));
         inventory.setItem(10, MenuItemFactory.getSellItem(item, 64));
         inventory.setItem(11, MenuItemFactory.getSellItem(item, 32));
         inventory.setItem(12, MenuItemFactory.getSellItem(item, 1));
@@ -21,7 +21,7 @@ public class BuySellInventory implements ActionMenu {
         inventory.setItem(14, MenuItemFactory.getBuyItem(item, 1));
         inventory.setItem(15, MenuItemFactory.getBuyItem(item, 32));
         inventory.setItem(16, MenuItemFactory.getBuyItem(item, 64));
-        inventory.setItem(17, MenuItemFactory.getBuyItem(item, item.buyReq.getMaxAmount(player)));
+        inventory.setItem(17, MenuItemFactory.getBuyMaxItem(item, player));
 
         inventory.setItem(31, MenuItemFactory.BACK_ITEM);
 

@@ -1,29 +1,24 @@
 package com.hooklite.endshop.events;
 
-import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
-public class ActionMenuOpenEvent extends Event {
+public class ConfirmMenuOpenEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player PLAYER;
-    private final ItemStack ITEM_STACK;
-    private final Item ITEM;
+    private final ItemStack ITEM;
+    private final int AMOUNT;
+    private final Action ACTION;
 
-    public ActionMenuOpenEvent(Player player, ItemStack item) {
+    public ConfirmMenuOpenEvent(Player player, ItemStack displayItem, int amount, Action action) {
         PLAYER = player;
-        ITEM_STACK = item;
-        ITEM = null;
+        ITEM = displayItem;
+        AMOUNT = amount;
+        ACTION = action;
     }
-
-    public ActionMenuOpenEvent(Player player, Item item) {
-        PLAYER = player;
-        ITEM_STACK = null;
-        ITEM = item;
-    }
-
 
     public static HandlerList getHandlerList() {
         return HANDLERS;
@@ -37,11 +32,15 @@ public class ActionMenuOpenEvent extends Event {
         return PLAYER;
     }
 
-    public ItemStack getItemStack() {
-        return ITEM_STACK;
+    public ItemStack getItem() {
+        return ITEM;
     }
 
-    public Item getItem() {
-        return ITEM;
+    public int getAmount() {
+        return AMOUNT;
+    }
+
+    public Action getAction() {
+        return ACTION;
     }
 }

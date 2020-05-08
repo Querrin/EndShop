@@ -2,7 +2,10 @@ package com.hooklite.endshop.data.requirements;
 
 import com.hooklite.endshop.config.Balance;
 import com.hooklite.endshop.config.Configuration;
+import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.rewards.Action;
 import com.hooklite.endshop.logging.MessageSender;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
@@ -59,7 +62,7 @@ public class BalanceRequirement implements Requirement {
 
     @Override
     public String getName(int amount) {
-        return "$" + requirement * amount * configAmount;
+        return String.format("%s$%.2f", ChatColor.GREEN, requirement * amount * configAmount);
     }
 
     @Override
@@ -68,7 +71,10 @@ public class BalanceRequirement implements Requirement {
     }
 
     @Override
-    public int getMaxAmount(Player player) {
-        return (int) Math.floor(Configuration.getEcon().getBalance(player) / requirement);
+    public int getMaxAmount(Item item, Player player, Action action) {
+        int reqAmount = (int) Math.floor(Configuration.getEcon().getBalance(player) / requirement * configAmount);
+        int rewardAmount = action == Action.BUY ? item.buyReward.getMaxAmount(player) : item.sellReward.getMaxAmount(player);
+
+        return rewardAmount != -1 ? Math.min(reqAmount, rewardAmount) : reqAmount;
     }
 }

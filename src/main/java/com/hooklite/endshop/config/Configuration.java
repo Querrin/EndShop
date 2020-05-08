@@ -20,6 +20,7 @@ import com.hooklite.endshop.data.rewards.ItemReward;
 import com.hooklite.endshop.data.rewards.Reward;
 import com.hooklite.endshop.logging.MessageSender;
 import com.hooklite.endshop.shop.BuySellMenu;
+import com.hooklite.endshop.shop.ConfirmMenu;
 import com.hooklite.endshop.shop.ItemMenu;
 import com.hooklite.endshop.shop.ShopMenu;
 import net.milkbowl.vault.economy.Economy;
@@ -169,7 +170,7 @@ public class Configuration {
         for(Player player : players) {
             Inventory topInventory = player.getOpenInventory().getTopInventory();
 
-            if(topInventory.getHolder() instanceof ShopMenu || topInventory.getHolder() instanceof ItemMenu || topInventory.getHolder() instanceof BuySellMenu)
+            if(topInventory.getHolder() instanceof ShopMenu || topInventory.getHolder() instanceof ItemMenu || topInventory.getHolder() instanceof BuySellMenu || topInventory.getHolder() instanceof ConfirmMenu)
                 player.closeInventory();
         }
     }
