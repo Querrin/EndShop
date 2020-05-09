@@ -60,7 +60,12 @@ public class ItemReward implements Reward {
     }
 
     @Override
-    public void setReward(String reward) {
+    public void setReward(String reward) throws InvalidConfigurationException {
+        Material material = Material.matchMaterial(reward);
+
+        if(material == null)
+            throw new InvalidConfigurationException("Reward improperly configured!");
+
         this.rewardMaterial = Material.matchMaterial(reward);
     }
 
@@ -98,7 +103,7 @@ public class ItemReward implements Reward {
     }
 
     @Override
-    public void setAmount(int amount) throws InvalidConfigurationException {
+    public void setAmount(int amount) {
         configAmount = amount;
     }
 
