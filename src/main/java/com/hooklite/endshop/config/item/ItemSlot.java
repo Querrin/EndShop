@@ -15,10 +15,10 @@ public class ItemSlot implements ItemKey {
             throw new InvalidConfigurationException("Slot value must be set!");
 
         try {
-            item.slot = value == null ? ItemFactory.getMaxSlot() + counter + 1 : Integer.parseInt(value);
+            item.slot = value == null ? ItemFactory.getMaxSlot() + counter : Integer.parseInt(value);
         }
         catch(NumberFormatException e) {
-            throw new InvalidConfigurationException("Invalid shop slotvalue!");
+            throw new InvalidConfigurationException("Invalid shop slot value!");
         }
     }
 

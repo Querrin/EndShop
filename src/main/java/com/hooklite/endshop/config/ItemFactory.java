@@ -29,7 +29,7 @@ public class ItemFactory {
     static List<Item> getItems(YamlConfiguration config) throws InvalidConfigurationException {
         List<Item> items = new ArrayList<>();
         ConfigurationSection itemSection = config.getConfigurationSection("items");
-
+        maxSlot = 0;
 
         if(itemSection != null) {
             Set<String> keys = itemSection.getKeys(false);
@@ -38,10 +38,8 @@ public class ItemFactory {
             for(String key : keys) {
                 int value = config.getInt("items." + key + ".slot", 0);
 
-                if(value != 0) {
-                    if(value > maxSlot) {
-                        maxSlot = value;
-                    }
+                if(value != 0 && value > maxSlot) {
+                    maxSlot = value;
                 }
             }
 
