@@ -14,7 +14,7 @@ import java.util.List;
 
 public class InventoryFactory {
     public static Inventory getShopMenu(List<Shop> shops, Player player) {
-        Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size() - 1), ChatColor.DARK_GRAY + "Shops");
+        Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
 
         // Sets the shop display items
         for(Shop shop : shops) {
