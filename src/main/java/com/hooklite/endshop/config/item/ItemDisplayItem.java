@@ -18,7 +18,7 @@ public class ItemDisplayItem implements ItemKey, RequiredKey {
             Material material = Material.matchMaterial(value);
 
             if(material == null)
-                throw new InvalidConfigurationException("Display item type not found!");
+                throw new InvalidConfigurationException("Display item type invalid!");
 
             item.displayItem = setMeta(new ItemStack(material), item, configuration, itemSection);
         }
