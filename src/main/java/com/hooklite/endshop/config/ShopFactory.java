@@ -1,5 +1,6 @@
 package com.hooklite.endshop.config;
 
+import com.hooklite.endshop.commands.CommandStatus;
 import com.hooklite.endshop.config.interfaces.ConfigKey;
 import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.config.interfaces.ShopKey;
@@ -57,7 +58,9 @@ public class ShopFactory {
                 MessageSender.toConsole(ChatColor.RED + "SHOP: " + Colors.loadColors(configs.get(i).getString("title")));
                 MessageSender.toConsole(ChatColor.RED + "ERROR: " + e.getMessage());
                 e.printStackTrace();
-                Bukkit.getPluginManager().disablePlugin(Configuration.getPlugin());
+
+                Configuration.closeShopMenus(Bukkit.getOnlinePlayers());
+                CommandStatus.disableShopCommand();
                 break;
             }
         }

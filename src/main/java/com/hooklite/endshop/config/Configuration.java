@@ -1,5 +1,6 @@
 package com.hooklite.endshop.config;
 
+import com.hooklite.endshop.commands.CommandStatus;
 import com.hooklite.endshop.config.interfaces.ConfigKey;
 import com.hooklite.endshop.config.interfaces.RequiredKey;
 import com.hooklite.endshop.config.item.*;
@@ -150,6 +151,7 @@ public class Configuration {
         try {
             plugin = pl;
 
+            CommandStatus.enableShopCommand();
             setDefaultConfig();
             setShopConfigs();
 
@@ -166,6 +168,7 @@ public class Configuration {
         }
     }
 
+
     public static void closeShopMenus(Collection<? extends Player> players) {
         for(Player player : players) {
             Inventory topInventory = player.getOpenInventory().getTopInventory();
@@ -179,6 +182,7 @@ public class Configuration {
         try {
             closeShopMenus(plugin.getServer().getOnlinePlayers());
 
+            CommandStatus.enableShopCommand();
             reloadDefaultConfig();
             setShopConfigs();
 

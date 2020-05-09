@@ -26,8 +26,8 @@ public final class EndShop extends JavaPlugin {
         getPluginManager().registerEvents(new ConfirmMenuOpenListener(), this);
         Configuration.configurePlugin(this);
 
-        getCommand("shop").setExecutor(new CommandManager());
         getCommand("endshop").setExecutor(new CommandManager());
+        getCommand("shop").setExecutor(new CommandManager());
     }
 
     @Override

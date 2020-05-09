@@ -37,13 +37,20 @@ public class CommandManager implements TabExecutor {
         Player player = sender instanceof Player ? (Player) sender : null;
 
         if(command.getName().equalsIgnoreCase("shop")) {
-            if(sender instanceof Player)
-                if(perms.has(player, "endshop.shop")) {
-                    Bukkit.getServer().getPluginManager().callEvent(new ShopMenuOpenEvent(((Player) sender).getPlayer()));
+            if(sender instanceof Player) {
+                if(CommandStatus.isShopCommandEnabled()) {
+                    if(perms.has(player, "endshop.shop")) {
+                        Bukkit.getServer().getPluginManager().callEvent(new ShopMenuOpenEvent(((Player) sender).getPlayer()));
+                    }
+                    else {
+                        MessageSender.noPermission(player, "endshop.shop");
+                    }
                 }
                 else {
-                    MessageSender.noPermission(player, "endshop.shop");
+                    MessageSender.toPlayer(player, ChatColor.RED + "Shop is disabled! (improper config)");
+                    MessageSender.toConsole(ChatColor.RED + "Shop is disabled! (improper config)");
                 }
+            }
             else {
                 MessageSender.noConsoleExecution();
             }
