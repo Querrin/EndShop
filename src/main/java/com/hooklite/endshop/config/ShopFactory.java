@@ -13,7 +13,9 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class ShopFactory {
     private static int maxSlot = 0;
@@ -22,13 +24,17 @@ public class ShopFactory {
         return maxSlot;
     }
 
-    static List<Shop> getShops(List<YamlConfiguration> configs) {
+    static List<Shop> getShops(Map<String, YamlConfiguration> map) {
         List<Shop> shops = new ArrayList<>();
+        Iterator<YamlConfiguration> valueIterator = map.values().iterator();
+        Iterator<String> keyIterator = map.keySet().iterator();
 
-        for(int i = 0; i < configs.size(); i++) {
+        for(int i = 0; i < map.size(); i++) {
             Shop shop = new Shop();
+            YamlConfiguration yamlConfig = valueIterator.next();
+            String shopFile = keyIterator.next();
 
-            for(YamlConfiguration config : configs) {
+            for(YamlConfiguration config : map.values()) {
                 int value = config.getInt("slot", 0);
 
                 if(value != 0) {
@@ -41,21 +47,21 @@ public class ShopFactory {
             try {
                 for(RequiredKey rKey : Configuration.getRequiredKeys()) {
                     if(rKey instanceof ShopKey) {
-                        ((ShopKey) rKey).setValue(shop, configs.get(i), i);
+                        ((ShopKey) rKey).setValue(shop, yamlConfig, i);
                     }
                 }
 
                 for(ConfigKey cKey : Configuration.getConfigKeys()) {
                     if(cKey instanceof ShopKey) {
-                        ((ShopKey) cKey).setValue(shop, configs.get(i), i);
+                        ((ShopKey) cKey).setValue(shop, yamlConfig, i);
                     }
                 }
 
-                shop.pages = PageFactory.getPages(shop, ItemFactory.getItems(configs.get(i)));
+                shop.pages = PageFactory.getPages(shop, ItemFactory.getItems(yamlConfig));
                 shops.add(shop);
             }
             catch(InvalidConfigurationException e) {
-                MessageSender.toConsole(ChatColor.RED + "SHOP: " + Colors.loadColors(configs.get(i).getString("title")));
+                MessageSender.toConsole(ChatColor.RED + "FILE: " + Colors.loadColors(shopFile));
                 MessageSender.toConsole(ChatColor.RED + "ERROR: " + e.getMessage());
                 e.printStackTrace();
 

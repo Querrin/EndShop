@@ -36,16 +36,14 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class Configuration {
     private static final List<RequiredKey> requiredKeys = new ArrayList<>();
     private static final List<ConfigKey> configKeys = new ArrayList<>();
     private static final List<Reward> rewards = new ArrayList<>();
     private static YamlConfiguration defaultConfig;
-    private static List<YamlConfiguration> shopConfigs;
+    private static Map<String, YamlConfiguration> shopConfigs;
     private static List<Shop> shops = new ArrayList<>();
     private static final List<Requirement> requirements = new ArrayList<>();
     private static Plugin plugin;
@@ -81,7 +79,7 @@ public class Configuration {
         return defaultConfig;
     }
 
-    public static List<YamlConfiguration> getShopConfigs() {
+    public static Map<String, YamlConfiguration> getShopConfigs() {
         return shopConfigs;
     }
 
@@ -217,7 +215,7 @@ public class Configuration {
      * @throws InvalidConfigurationException If the configuration file is improperly configured.
      */
     private static void setShopConfigs() throws IOException, InvalidConfigurationException {
-        shopConfigs = new ArrayList<>();
+        shopConfigs = new HashMap<>();
 
         // Creates the shops directory
         File shopsDirectory = new File(plugin.getDataFolder().getPath(), "shops");
@@ -244,7 +242,7 @@ public class Configuration {
                 throw new InvalidConfigurationException(String.format("File \"%s\" is improperly configured!", file));
             }
 
-            shopConfigs.add(configuration);
+            shopConfigs.put(shop + ".yml", configuration);
         }
     }
 
