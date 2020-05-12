@@ -18,26 +18,27 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 public class InventoryClickListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if(event.getClickedInventory() != null && event.getCurrentItem() != null && event.getClickedInventory().getType() == InventoryType.CHEST) {
+        if(event.getClickedInventory() != null && event.getCurrentItem() != null) {
+            Inventory clickedInventory = event.getInventory();
+            InventoryHolder holder = event.getInventory().getHolder();
             int clickedSlot = event.getSlot();
             Player player = (Player) event.getWhoClicked();
-            Inventory clickedInventory = event.getInventory();
             ItemStack item = event.getCurrentItem();
-            ItemStack displayItem = clickedInventory.getItem(13);
 
-            if(clickedInventory.getHolder() instanceof ShopMenu) {
+            if(holder instanceof ShopMenu) {
                 Bukkit.getPluginManager().callEvent(new ItemMenuOpenEvent(player, clickedSlot));
                 event.setCancelled(true);
             }
-            else if(clickedInventory.getHolder() instanceof ItemMenu) {
+            else if(holder instanceof ItemMenu) {
+                ItemStack displayItem = clickedInventory.getItem(13);
 
                 if(item.equals(MenuItemFactory.BACK_ITEM)) {
                     Bukkit.getPluginManager().callEvent(new ShopMenuOpenEvent(player));
@@ -54,7 +55,9 @@ public class InventoryClickListener implements Listener {
 
                 event.setCancelled(true);
             }
-            else if(clickedInventory.getHolder() instanceof BuySellMenu) {
+            else if(holder instanceof BuySellMenu) {
+                ItemStack displayItem = clickedInventory.getItem(13);
+
                 if(item.equals(MenuItemFactory.BACK_ITEM)) {
                     for(Shop shop : Configuration.getShops()) {
                         for(Page page : shop.pages) {
@@ -96,9 +99,9 @@ public class InventoryClickListener implements Listener {
 
                 event.setCancelled(true);
             }
-            else if(clickedInventory.getHolder() instanceof ConfirmMenu) {
+            else if(holder instanceof ConfirmMenu) {
                 if(event.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, ((ConfirmMenu) clickedInventory.getHolder()).getAction()));
+                    Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, ((ConfirmMenu) holder).getAction()));
                     Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent(player, clickedInventory.getItem(22)));
                 }
                 else if(event.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS)) {
