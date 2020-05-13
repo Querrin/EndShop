@@ -96,7 +96,7 @@ public class ItemReward implements Reward {
                 return amount / configAmount;
             }
 
-            return getEmptySlots(player) * reward.getMaxStackSize();
+            return (getEmptySlots(player) * reward.getMaxStackSize()) / configAmount;
         }
 
         return getEmptySlots(player);
