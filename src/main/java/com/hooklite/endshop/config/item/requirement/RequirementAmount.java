@@ -3,16 +3,15 @@ package com.hooklite.endshop.config.item.requirement;
 import com.hooklite.endshop.config.interfaces.RequirementKey;
 import com.hooklite.endshop.config.item.ItemBuyable;
 import com.hooklite.endshop.config.item.ItemSellable;
-import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.requirements.Requirement;
 import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class RequirementAmount implements RequirementKey {
     @Override
-    public Requirement setValue(Requirement req, Item item, YamlConfiguration config, String itemSection, Action action) {
-        if(required(config, itemSection, action)) {
-            req.setAmount(config.getInt(getKeyPath(itemSection, action), 1));
+    public Requirement setValue(Requirement req, YamlConfiguration config, String itemKey, Action action) {
+        if(required(config, itemKey, action)) {
+            req.setAmount(config.getInt(getKeyPath(itemKey, action), 1));
         }
 
         return req;

@@ -3,14 +3,14 @@ package com.hooklite.endshop.data.menus;
 import com.hooklite.endshop.config.MenuItemFactory;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.rewards.Action;
-import com.hooklite.endshop.shop.ConfirmMenu;
+import com.hooklite.endshop.shop.ConfirmMenuHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.Inventory;
 
 public class BuyConfirmInventory {
     public Inventory getMenu(Item item, int amount, Action action) {
-        Inventory inventory = Bukkit.createInventory(new ConfirmMenu(action), 45, String.format("%s%sConfirm", ChatColor.DARK_GRAY, ChatColor.BOLD));
+        Inventory inventory = Bukkit.createInventory(new ConfirmMenuHolder(action), 45, String.format("%s%sConfirm", ChatColor.DARK_GRAY, ChatColor.BOLD));
 
         inventory.setItem(22, item.displayItem);
 

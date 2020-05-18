@@ -8,8 +8,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ItemSlot implements ItemKey {
     @Override
-    public void setValue(Item item, YamlConfiguration configuration, String itemSection, int counter) throws InvalidConfigurationException {
-        String value = configuration.getString(getKeyPath(itemSection));
+    public void setValue(Item item, YamlConfiguration configuration, String itemKey, int counter) throws InvalidConfigurationException {
+        String value = configuration.getString(getKeyPath(itemKey));
 
         if(value == null && required())
             throw new InvalidConfigurationException("Slot value must be set!");
@@ -23,8 +23,8 @@ public class ItemSlot implements ItemKey {
     }
 
     @Override
-    public String getKeyPath(String itemSection) {
-        return "items." + itemSection + ".slot";
+    public String getKeyPath(String itemKey) {
+        return "items." + itemKey + ".slot";
     }
 
     @Override

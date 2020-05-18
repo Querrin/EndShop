@@ -31,6 +31,16 @@ public class CommandManager implements TabExecutor {
         }
     }
 
+    /**
+     * Manages and routes the commands and subcommands that the plugins contains.
+     * TODO: Split this big function into multiple parts.
+     *
+     * @param sender  The sender of the command.
+     * @param command The name of the command.
+     * @param label   The alias used.
+     * @param args    Additional command arguments.
+     * @return If the command was executed successfully.
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Permission perms = Configuration.getPerms();
@@ -114,6 +124,15 @@ public class CommandManager implements TabExecutor {
         return true;
     }
 
+    /**
+     * Provides tab completion for subcommands.
+     *
+     * @param sender  The sender of the command.
+     * @param command The command sent.
+     * @param alias   The alias used.
+     * @param args    Additional command arguments to be autocompleted if they exist.
+     * @return A list of possible arguments.
+     */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if(command.getName().equals("endshop")) {

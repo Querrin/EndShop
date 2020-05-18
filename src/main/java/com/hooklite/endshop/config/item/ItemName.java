@@ -14,8 +14,8 @@ public class ItemName implements ItemKey, RequiredKey {
     }
 
     @Override
-    public String getKeyPath(String itemSection) {
-        return "items." + itemSection + ".name";
+    public String getKeyPath(String itemKey) {
+        return "items." + itemKey + ".name";
     }
 
     @Override
@@ -24,8 +24,8 @@ public class ItemName implements ItemKey, RequiredKey {
     }
 
     @Override
-    public void setValue(Item item, YamlConfiguration configuration, String itemSection, int ignore) {
-        String value = configuration.getString(getKeyPath(itemSection));
+    public void setValue(Item item, YamlConfiguration configuration, String itemKey, int ignore) {
+        String value = configuration.getString(getKeyPath(itemKey));
 
         if(value == null || value.isEmpty()) {
             String materialName = item.displayItem.getType().name().replace("_", " ").toLowerCase();

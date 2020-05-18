@@ -4,10 +4,10 @@ import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-public class ConfirmMenu implements InventoryHolder {
+public class ConfirmMenuHolder implements InventoryHolder {
     private final Action ACTION;
 
-    public ConfirmMenu(Action action) {
+    public ConfirmMenuHolder(Action action) {
         ACTION = action;
     }
 

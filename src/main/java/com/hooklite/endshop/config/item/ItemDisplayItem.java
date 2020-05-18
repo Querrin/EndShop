@@ -11,8 +11,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemDisplayItem implements ItemKey, RequiredKey {
     @Override
-    public void setValue(Item item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
-        String value = configuration.getString(getKeyPath(itemSection));
+    public void setValue(Item item, YamlConfiguration configuration, String itemKey, int ignore) throws InvalidConfigurationException {
+        String value = configuration.getString(getKeyPath(itemKey));
 
         if(value != null) {
             Material material = Material.matchMaterial(value);
@@ -20,7 +20,7 @@ public class ItemDisplayItem implements ItemKey, RequiredKey {
             if(material == null)
                 throw new InvalidConfigurationException("Display item type invalid!");
 
-            item.displayItem = setMeta(new ItemStack(material), item, configuration, itemSection);
+            item.displayItem = setMeta(new ItemStack(material), item, configuration, itemKey);
         }
         else {
             if(required())
@@ -29,8 +29,8 @@ public class ItemDisplayItem implements ItemKey, RequiredKey {
     }
 
     @Override
-    public String getKeyPath(String itemSection) {
-        return "items." + itemSection + ".display-item";
+    public String getKeyPath(String itemKey) {
+        return "items." + itemKey + ".display-item";
     }
 
     @Override

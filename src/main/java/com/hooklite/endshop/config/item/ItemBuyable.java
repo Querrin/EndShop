@@ -7,13 +7,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ItemBuyable implements ItemKey, RequiredKey {
     @Override
-    public void setValue(Item item, YamlConfiguration configuration, String itemSection, int ignore) {
-        item.buyable = getValue(configuration, itemSection);
+    public void setValue(Item item, YamlConfiguration configuration, String itemKey, int ignore) {
+        item.buyable = getValue(configuration, itemKey);
     }
 
     @Override
-    public String getKeyPath(String itemSection) {
-        return "items." + itemSection + ".buyable";
+    public String getKeyPath(String itemKey) {
+        return "items." + itemKey + ".buyable";
     }
 
     @Override

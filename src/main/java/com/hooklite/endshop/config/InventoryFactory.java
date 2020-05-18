@@ -3,8 +3,8 @@ package com.hooklite.endshop.config;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.shop.ItemMenu;
-import com.hooklite.endshop.shop.ShopMenu;
+import com.hooklite.endshop.shop.ItemMenuHolder;
+import com.hooklite.endshop.shop.ShopMenuHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,8 +13,15 @@ import org.bukkit.inventory.Inventory;
 import java.util.List;
 
 public class InventoryFactory {
+
+    /**
+     * Creates a new inventory then loads in data from the shop.
+     *
+     * @param shops A list of shops that the data will be read from.
+     * @return The inventory containing all the shop data.
+     */
     public static Inventory getShopMenu(List<Shop> shops, Player player) {
-        Inventory inventory = Bukkit.createInventory(new ShopMenu(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
+        Inventory inventory = Bukkit.createInventory(new ShopMenuHolder(), getSize(shops.size()), ChatColor.DARK_GRAY + "Shops");
 
         // Sets the shop display items
         for(Shop shop : shops) {
@@ -26,9 +33,16 @@ public class InventoryFactory {
         return inventory;
     }
 
+    /**
+     * Creates an inventory or page of items from the given page.
+     *
+     * @param page       The page that contains the items.
+     * @param pageAmount The amount of pages.
+     * @return An inventory containing the page items.
+     */
     public static Inventory getPageInventory(Shop shop, Page page, int pageAmount) {
         int inventorySize = getSize(page.getItems().size());
-        Inventory inventory = Bukkit.createInventory(new ItemMenu(), inventorySize, shop.title);
+        Inventory inventory = Bukkit.createInventory(new ItemMenuHolder(), inventorySize, shop.title);
 
         // Sets the inventory items
         for(Item pageItem : page.getItems()) {
@@ -46,6 +60,11 @@ public class InventoryFactory {
         return inventory;
     }
 
+    /**
+     * Calculates the size of the inventory from the amount of items.
+     *
+     * @return The size of the inventory.
+     */
     private static int getSize(int itemAmount) {
         int size;
 

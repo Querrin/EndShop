@@ -7,6 +7,7 @@ import com.hooklite.endshop.config.item.*;
 import com.hooklite.endshop.config.item.requirement.RequirementAmount;
 import com.hooklite.endshop.config.item.requirement.RequirementReq;
 import com.hooklite.endshop.config.item.reward.RewardAmount;
+import com.hooklite.endshop.config.item.reward.RewardConfigKey;
 import com.hooklite.endshop.config.shop.ShopDescription;
 import com.hooklite.endshop.config.shop.ShopDisplayItem;
 import com.hooklite.endshop.config.shop.ShopSlot;
@@ -20,10 +21,10 @@ import com.hooklite.endshop.data.rewards.CommandReward;
 import com.hooklite.endshop.data.rewards.ItemReward;
 import com.hooklite.endshop.data.rewards.Reward;
 import com.hooklite.endshop.logging.MessageSender;
-import com.hooklite.endshop.shop.BuySellMenu;
-import com.hooklite.endshop.shop.ConfirmMenu;
-import com.hooklite.endshop.shop.ItemMenu;
-import com.hooklite.endshop.shop.ShopMenu;
+import com.hooklite.endshop.shop.ActionMenuHolder;
+import com.hooklite.endshop.shop.ConfirmMenuHolder;
+import com.hooklite.endshop.shop.ItemMenuHolder;
+import com.hooklite.endshop.shop.ShopMenuHolder;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
@@ -72,7 +73,7 @@ public class Configuration {
         addConfigKey(new RequirementAmount());
         addConfigKey(new RequirementReq());
         addConfigKey(new RewardAmount());
-        addConfigKey(new com.hooklite.endshop.config.item.reward.Reward());
+        addConfigKey(new RewardConfigKey());
     }
 
     public static YamlConfiguration getDefaultConfig() {
@@ -143,7 +144,7 @@ public class Configuration {
     /**
      * Loads all the required configurations for the plugin to function.
      * <p>
-     * THIS METHOD SHOULD ONLY BE CALLED UPON THE START OF THE APPLICATION!
+     * THIS METHOD SHOULD ONLY BE CALLED ONCE UPON THE APPLICATION'S LIFETIME!
      */
     public static void configurePlugin(Plugin pl) {
         try {
@@ -166,12 +167,14 @@ public class Configuration {
         }
     }
 
-
+    /**
+     * Closes the shop inventory if the player has it open.
+     */
     public static void closeShopMenus(Collection<? extends Player> players) {
         for(Player player : players) {
             Inventory topInventory = player.getOpenInventory().getTopInventory();
 
-            if(topInventory.getHolder() instanceof ShopMenu || topInventory.getHolder() instanceof ItemMenu || topInventory.getHolder() instanceof BuySellMenu || topInventory.getHolder() instanceof ConfirmMenu)
+            if(topInventory.getHolder() instanceof ShopMenuHolder || topInventory.getHolder() instanceof ItemMenuHolder || topInventory.getHolder() instanceof ActionMenuHolder || topInventory.getHolder() instanceof ConfirmMenuHolder)
                 player.closeInventory();
         }
     }

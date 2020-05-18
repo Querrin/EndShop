@@ -8,10 +8,10 @@ import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.rewards.Action;
 import com.hooklite.endshop.events.*;
 import com.hooklite.endshop.logging.MessageSender;
-import com.hooklite.endshop.shop.BuySellMenu;
-import com.hooklite.endshop.shop.ConfirmMenu;
-import com.hooklite.endshop.shop.ItemMenu;
-import com.hooklite.endshop.shop.ShopMenu;
+import com.hooklite.endshop.shop.ActionMenuHolder;
+import com.hooklite.endshop.shop.ConfirmMenuHolder;
+import com.hooklite.endshop.shop.ItemMenuHolder;
+import com.hooklite.endshop.shop.ShopMenuHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,11 +33,11 @@ public class InventoryClickListener implements Listener {
             Player player = (Player) event.getWhoClicked();
             ItemStack item = event.getCurrentItem();
 
-            if(holder instanceof ShopMenu) {
+            if(holder instanceof ShopMenuHolder) {
                 Bukkit.getPluginManager().callEvent(new ItemMenuOpenEvent(player, clickedSlot));
                 event.setCancelled(true);
             }
-            else if(holder instanceof ItemMenu) {
+            else if(holder instanceof ItemMenuHolder) {
                 ItemStack displayItem = clickedInventory.getItem(13);
 
                 if(item.equals(MenuItemFactory.BACK_ITEM)) {
@@ -55,7 +55,7 @@ public class InventoryClickListener implements Listener {
 
                 event.setCancelled(true);
             }
-            else if(holder instanceof BuySellMenu) {
+            else if(holder instanceof ActionMenuHolder) {
                 ItemStack displayItem = clickedInventory.getItem(13);
 
                 if(item.equals(MenuItemFactory.BACK_ITEM)) {
@@ -99,9 +99,9 @@ public class InventoryClickListener implements Listener {
 
                 event.setCancelled(true);
             }
-            else if(holder instanceof ConfirmMenu) {
+            else if(holder instanceof ConfirmMenuHolder) {
                 if(event.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, ((ConfirmMenu) holder).getAction()));
+                    Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, ((ConfirmMenuHolder) holder).getAction()));
                     Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent(player, clickedInventory.getItem(22)));
                 }
                 else if(event.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS)) {

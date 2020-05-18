@@ -12,8 +12,8 @@ import java.util.List;
 
 public class ItemDescription implements ItemKey, RequiredKey {
     @Override
-    public void setValue(Item item, YamlConfiguration configuration, String itemSection, int ignore) throws InvalidConfigurationException {
-        List<String> values = configuration.getStringList(getKeyPath(itemSection));
+    public void setValue(Item item, YamlConfiguration configuration, String itemKey, int ignore) throws InvalidConfigurationException {
+        List<String> values = configuration.getStringList(getKeyPath(itemKey));
 
         if(values.isEmpty() && required())
             throw new InvalidConfigurationException("Description value must be set!");
@@ -27,8 +27,8 @@ public class ItemDescription implements ItemKey, RequiredKey {
     }
 
     @Override
-    public String getKeyPath(String itemSection) {
-        return "items." + itemSection + ".description";
+    public String getKeyPath(String itemKey) {
+        return "items." + itemKey + ".description";
     }
 
     @Override

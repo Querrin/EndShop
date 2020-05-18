@@ -3,7 +3,6 @@ package com.hooklite.endshop.config.item.requirement;
 import com.hooklite.endshop.config.interfaces.RequirementKey;
 import com.hooklite.endshop.config.item.ItemBuyable;
 import com.hooklite.endshop.config.item.ItemSellable;
-import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.requirements.Requirement;
 import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -12,9 +11,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class RequirementReq implements RequirementKey {
 
     @Override
-    public Requirement setValue(Requirement req, Item item, YamlConfiguration config, String itemSection, Action action) throws InvalidConfigurationException {
-        if(required(config, itemSection, action)) {
-            req.setRequirement(config.getString(getKeyPath(itemSection, action)));
+    public Requirement setValue(Requirement req, YamlConfiguration config, String itemKey, Action action) throws InvalidConfigurationException {
+        if(required(config, itemKey, action)) {
+            req.setRequirement(config.getString(getKeyPath(itemKey, action)));
         }
 
         return req;
