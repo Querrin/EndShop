@@ -24,6 +24,10 @@ public class ShopFactory {
         return maxSlot;
     }
 
+    /**
+     * Creates the shop models from a map of file names and configuration files.
+     * @return A list of shop objects.
+     */
     static List<Shop> getShops(Map<String, YamlConfiguration> map) {
         List<Shop> shops = new ArrayList<>();
         Iterator<YamlConfiguration> valueIterator = map.values().iterator();
@@ -57,7 +61,7 @@ public class ShopFactory {
                     }
                 }
 
-                shop.pages = PageFactory.getPages(shop, ItemFactory.getItems(yamlConfig));
+                shop.pages = PageFactory.getPages(shop.title, ItemFactory.getItems(yamlConfig));
                 shops.add(shop);
             }
             catch(InvalidConfigurationException e) {

@@ -11,9 +11,18 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 class RewardFactory {
-    static Reward getReward(YamlConfiguration config, Item item, String itemSection, Action action) throws InvalidConfigurationException {
-        if(required(config, itemSection, action)) {
-            String value = config.getString(getKeyPath(itemSection, action));
+
+    /**
+     * Creates the reward object from a configuration file.
+     * @param config The configuration file.
+     * @param itemKey The section key of item.
+     * @param action If the reward is for buying or selling
+     * @return A Reward object with its values.
+     * @throws InvalidConfigurationException If any key value is invalid.
+     */
+    static Reward getReward(YamlConfiguration config, String itemKey, Action action) throws InvalidConfigurationException {
+        if(required(config, itemKey, action)) {
+            String value = config.getString(getKeyPath(itemKey, action));
             Reward reward = getReward(value);
 
             if(reward == null)
@@ -21,13 +30,13 @@ class RewardFactory {
 
             for(ConfigKey rKey : Configuration.getRequiredKeys()) {
                 if(rKey instanceof RewardKey) {
-                    ((RewardKey) rKey).setValue(reward, item, config, itemSection, action);
+                    ((RewardKey) rKey).setValue(reward, config, itemKey, action);
                 }
             }
 
             for(ConfigKey cKey : Configuration.getConfigKeys()) {
                 if(cKey instanceof RewardKey) {
-                    ((RewardKey) cKey).setValue(reward, item, config, itemSection, action);
+                    ((RewardKey) cKey).setValue(reward, config, itemKey, action);
                 }
             }
 

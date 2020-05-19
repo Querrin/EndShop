@@ -21,13 +21,13 @@ class RequirementFactory {
 
             for(ConfigKey rKey : Configuration.getRequiredKeys()) {
                 if(rKey instanceof RequirementKey) {
-                    ((RequirementKey) rKey).setValue(req, item, config, itemSection, action);
+                    ((RequirementKey) rKey).setValue(req, config, itemSection, action);
                 }
             }
 
             for(ConfigKey cKey : Configuration.getConfigKeys()) {
                 if(cKey instanceof RequirementKey) {
-                    ((RequirementKey) cKey).setValue(req, item, config, itemSection, action);
+                    ((RequirementKey) cKey).setValue(req, config, itemSection, action);
                 }
             }
 

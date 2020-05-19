@@ -26,6 +26,12 @@ public class ItemFactory {
         return maxSlot;
     }
 
+    /**
+     * Creates a list of items from the configuration file.
+     * @param config The configuration file.
+     * @return A list of item objects.
+     * @throws InvalidConfigurationException If any configuration key values are invalid.
+     */
     static List<Item> getItems(YamlConfiguration config) throws InvalidConfigurationException {
         List<Item> items = new ArrayList<>();
         ConfigurationSection itemSection = config.getConfigurationSection("items");
@@ -50,8 +56,8 @@ public class ItemFactory {
                 String sectionKey = keyIteration.next();
 
                 try {
-                    item.buyReward = RewardFactory.getReward(config, item, sectionKey, Action.BUY);
-                    item.sellReward = RewardFactory.getReward(config, item, sectionKey, Action.SELL);
+                    item.buyReward = RewardFactory.getReward(config, sectionKey, Action.BUY);
+                    item.sellReward = RewardFactory.getReward(config, sectionKey, Action.SELL);
                     item.buyReq = RequirementFactory.getRequirement(config, item, sectionKey, Action.BUY);
                     item.sellReq = RequirementFactory.getRequirement(config, item, sectionKey, Action.SELL);
 
@@ -79,6 +85,10 @@ public class ItemFactory {
         return items;
     }
 
+    /**
+     * Gets the item object that contains the ItemStack.
+     * @return Item object if found, except null.
+     */
     public static Item getItemMatch(ItemStack eventItem) {
         for(Shop shop : Configuration.getShops()) {
             for(Page page : shop.pages) {

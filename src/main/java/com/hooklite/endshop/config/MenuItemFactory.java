@@ -52,6 +52,9 @@ public class MenuItemFactory {
         CANCEL_ITEM = cancelItem;
     }
 
+    /**
+     * Creates the confirm item and adds the amount nbt tag.
+     */
     public static ItemStack getConfirmItem(int amount) {
         ItemStack confirmItem = new ItemStack(Material.GREEN_STAINED_GLASS);
         ItemMeta confirmItemMeta = confirmItem.getItemMeta();
@@ -62,6 +65,9 @@ public class MenuItemFactory {
         return confirmItem;
     }
 
+    /**
+     * Returns the page index item from current page and page amount.
+     */
     static ItemStack getPageNumberItem(int page, int pages) {
         ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();

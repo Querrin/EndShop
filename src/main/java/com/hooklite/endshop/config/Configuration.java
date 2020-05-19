@@ -80,10 +80,6 @@ public class Configuration {
         return defaultConfig;
     }
 
-    public static Map<String, YamlConfiguration> getShopConfigs() {
-        return shopConfigs;
-    }
-
     public static List<Shop> getShops() {
         return shops;
     }
@@ -179,6 +175,9 @@ public class Configuration {
         }
     }
 
+    /**
+     * Reloads all configuration files and gui of the plugin.
+     */
     public static void reloadPlugin() {
         try {
             closeShopMenus(plugin.getServer().getOnlinePlayers());

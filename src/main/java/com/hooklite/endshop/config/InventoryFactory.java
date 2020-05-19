@@ -40,9 +40,9 @@ public class InventoryFactory {
      * @param pageAmount The amount of pages.
      * @return An inventory containing the page items.
      */
-    public static Inventory getPageInventory(Shop shop, Page page, int pageAmount) {
+    public static Inventory getPageInventory(String shopTitle, Page page, int pageAmount) {
         int inventorySize = getSize(page.getItems().size());
-        Inventory inventory = Bukkit.createInventory(new ItemMenuHolder(), inventorySize, shop.title);
+        Inventory inventory = Bukkit.createInventory(new ItemMenuHolder(), inventorySize, shopTitle);
 
         // Sets the inventory items
         for(Item pageItem : page.getItems()) {
