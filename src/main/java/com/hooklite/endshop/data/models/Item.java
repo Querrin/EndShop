@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 // TODO: Add one time buy option
-public class Item extends DataModel implements Serializable {
+public class Item extends DataModel {
     public String name;
     public List<String> description;
     public int slot;

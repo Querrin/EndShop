@@ -8,10 +8,10 @@ import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.rewards.Action;
 import com.hooklite.endshop.events.*;
 import com.hooklite.endshop.logging.MessageSender;
-import com.hooklite.endshop.shop.ActionMenuHolder;
-import com.hooklite.endshop.shop.ConfirmMenuHolder;
-import com.hooklite.endshop.shop.ItemMenuHolder;
-import com.hooklite.endshop.shop.ShopMenuHolder;
+import com.hooklite.endshop.holders.ActionMenuHolder;
+import com.hooklite.endshop.holders.ConfirmMenuHolder;
+import com.hooklite.endshop.holders.ItemMenuHolder;
+import com.hooklite.endshop.holders.ShopMenuHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -38,16 +38,14 @@ public class InventoryClickListener implements Listener {
                 event.setCancelled(true);
             }
             else if(holder instanceof ItemMenuHolder) {
-                ItemStack displayItem = clickedInventory.getItem(13);
-
                 if(item.equals(MenuItemFactory.BACK_ITEM)) {
                     Bukkit.getPluginManager().callEvent(new ShopMenuOpenEvent(player));
                 }
                 else if(item.equals(MenuItemFactory.NEXT_PAGE_ITEM)) {
-                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent(displayItem, player, PageNavigation.NEXT_PAGE));
+                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent((ItemMenuHolder) holder, player, PageNavigation.NEXT_PAGE));
                 }
                 else if(item.equals(MenuItemFactory.PREVIOUS_PAGE_ITEM)) {
-                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent(displayItem, player, PageNavigation.PREVIOUS_PAGE));
+                    Bukkit.getPluginManager().callEvent(new PageNavigationEvent((ItemMenuHolder) holder, player, PageNavigation.PREVIOUS_PAGE));
                 }
                 else if(!(item.getItemMeta().getDisplayName().contains("/")) && event.getClickedInventory() != player.getInventory()) {
                     Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent((Player) event.getWhoClicked(), item));
@@ -57,7 +55,6 @@ public class InventoryClickListener implements Listener {
             }
             else if(holder instanceof ActionMenuHolder) {
                 ItemStack displayItem = clickedInventory.getItem(13);
-
                 if(item.equals(MenuItemFactory.BACK_ITEM)) {
                     for(Shop shop : Configuration.getShops()) {
                         for(Page page : shop.pages) {

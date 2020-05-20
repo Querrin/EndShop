@@ -11,24 +11,8 @@ import org.bukkit.event.Listener;
 public class PageNavigationListener implements Listener {
     @EventHandler
     public void onPageNavigation(PageNavigationEvent event) {
-        Shop shop = null;
-        Page page = null;
-        boolean matchFound = false;
-
-        for(Shop eShop : Configuration.getShops()) {
-            if(matchFound)
-                break;
-
-            for(Page ePage : eShop.pages) {
-                if(event.getWhoClicked().getOpenInventory().getTopInventory().equals(ePage.getInventory())) {
-                    shop = eShop;
-                    page = ePage;
-                    matchFound = true;
-                    break;
-                }
-            }
-        }
-        assert page != null;
+        Shop shop = event.getHolder().SHOP;
+        Page page = event.getHolder().PAGE;
 
         if(event.getDirection() == PageNavigation.NEXT_PAGE) {
             int nextPage = page.getNumber() + 1;

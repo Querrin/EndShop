@@ -11,7 +11,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 class RequirementFactory {
-    static Requirement getRequirement(YamlConfiguration config, Item item, String itemSection, Action action) throws InvalidConfigurationException {
+    static Requirement getRequirement(YamlConfiguration config, String itemSection, Action action) throws InvalidConfigurationException {
         if(required(config, itemSection, action)) {
             String value = config.getString(getKeyPath(itemSection, action));
             Requirement req = getRequirement(value);

@@ -3,8 +3,8 @@ package com.hooklite.endshop.config;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
-import com.hooklite.endshop.shop.ItemMenuHolder;
-import com.hooklite.endshop.shop.ShopMenuHolder;
+import com.hooklite.endshop.holders.ItemMenuHolder;
+import com.hooklite.endshop.holders.ShopMenuHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -40,9 +40,9 @@ public class InventoryFactory {
      * @param pageAmount The amount of pages.
      * @return An inventory containing the page items.
      */
-    public static Inventory getPageInventory(String shopTitle, Page page, int pageAmount) {
+    public static Inventory getPageInventory(Shop shop, Page page, int pageAmount) {
         int inventorySize = getSize(page.getItems().size());
-        Inventory inventory = Bukkit.createInventory(new ItemMenuHolder(), inventorySize, shopTitle);
+        Inventory inventory = Bukkit.createInventory(new ItemMenuHolder(shop, page), inventorySize, shop.title);
 
         // Sets the inventory items
         for(Item pageItem : page.getItems()) {

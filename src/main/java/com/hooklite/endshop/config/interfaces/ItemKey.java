@@ -24,7 +24,6 @@ public interface ItemKey extends ConfigKey {
      * Returns the YamlConfiguration path representing the object value
      *
      * @param itemKey The key representing the given item.
-     * @return
      */
     String getKeyPath(String itemKey);
 

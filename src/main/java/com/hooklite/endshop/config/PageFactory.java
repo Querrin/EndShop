@@ -14,7 +14,7 @@ class PageFactory {
      * @param items A list of items to be loaded into pages.
      * @return A list of pages generated.
      */
-    static List<Page> getPages(String shopTitle, List<Item> items) {
+    static List<Page> getPages(Shop shop, List<Item> items) {
         ArrayList<Page> pages = new ArrayList<>();
         int pageAmount = (int) Math.ceil(items.size() / 45.0) == 0 ? 1 : (int) Math.ceil(items.size() / 45.0);
 
@@ -38,7 +38,7 @@ class PageFactory {
 
             page.setNumber(i);
             page.setItems(pageItems);
-            page.setInventory(InventoryFactory.getPageInventory(shopTitle, page, pageAmount));
+            page.setInventory(InventoryFactory.getPageInventory(shop, page, pageAmount));
 
             pages.add(page);
         }

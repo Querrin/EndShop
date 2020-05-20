@@ -61,7 +61,7 @@ public class ShopFactory {
                     }
                 }
 
-                shop.pages = PageFactory.getPages(shop.title, ItemFactory.getItems(yamlConfig));
+                shop.pages = PageFactory.getPages(shop, ItemFactory.getItems(yamlConfig));
                 shops.add(shop);
             }
             catch(InvalidConfigurationException e) {

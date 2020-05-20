@@ -58,8 +58,8 @@ public class ItemFactory {
                 try {
                     item.buyReward = RewardFactory.getReward(config, sectionKey, Action.BUY);
                     item.sellReward = RewardFactory.getReward(config, sectionKey, Action.SELL);
-                    item.buyReq = RequirementFactory.getRequirement(config, item, sectionKey, Action.BUY);
-                    item.sellReq = RequirementFactory.getRequirement(config, item, sectionKey, Action.SELL);
+                    item.buyReq = RequirementFactory.getRequirement(config, sectionKey, Action.BUY);
+                    item.sellReq = RequirementFactory.getRequirement(config, sectionKey, Action.SELL);
 
                     for(RequiredKey rKey : Configuration.getRequiredKeys()) {
                         if(rKey instanceof ItemKey) {
