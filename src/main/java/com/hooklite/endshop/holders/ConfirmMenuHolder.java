@@ -1,4 +1,4 @@
-package com.hooklite.endshop.shop;
+package com.hooklite.endshop.holders;
 
 import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.inventory.Inventory;

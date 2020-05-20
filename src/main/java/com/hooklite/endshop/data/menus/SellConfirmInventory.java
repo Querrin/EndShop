@@ -3,7 +3,7 @@ package com.hooklite.endshop.data.menus;
 import com.hooklite.endshop.config.MenuItemFactory;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.rewards.Action;
-import com.hooklite.endshop.shop.ConfirmMenuHolder;
+import com.hooklite.endshop.holders.ConfirmMenuHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.Inventory;
