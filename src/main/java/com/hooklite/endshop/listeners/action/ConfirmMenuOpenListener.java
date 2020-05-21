@@ -12,8 +12,8 @@ public class ConfirmMenuOpenListener implements Listener {
     @EventHandler
     public void onConfirmMenuOpen(ConfirmMenuOpenEvent event) {
         if(event.getAction() == Action.BUY)
-            event.getWhoOpened().openInventory(new BuyConfirmInventory().getMenu(ItemFactory.getItemMatch(event.getItem()), event.getAmount(), event.getAction()));
+            event.getWhoOpened().openInventory(new BuyConfirmInventory().getMenu(ItemFactory.getItemMatch(event.getItem()), event.getAmount(), event.getAction(), event.getHolder().BACK_INVENTORY));
         else
-            event.getWhoOpened().openInventory(new SellConfirmInventory().getMenu(ItemFactory.getItemMatch(event.getItem()), event.getAmount(), event.getAction()));
+            event.getWhoOpened().openInventory(new SellConfirmInventory().getMenu(ItemFactory.getItemMatch(event.getItem()), event.getAmount(), event.getAction(), event.getHolder().BACK_INVENTORY));
     }
 }

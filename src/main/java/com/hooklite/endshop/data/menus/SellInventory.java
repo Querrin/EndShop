@@ -10,8 +10,8 @@ import org.bukkit.inventory.Inventory;
 public class SellInventory implements ActionMenu {
 
     @Override
-    public Inventory getMenu(Item item, Player player) {
-        Inventory inventory = Bukkit.createInventory(new ActionMenuHolder(), 45, item.name);
+    public Inventory getMenu(Item item, Inventory backInventory, Player player) {
+        Inventory inventory = Bukkit.createInventory(new ActionMenuHolder(backInventory), 45, item.name);
 
         inventory.setItem(13, item.displayItem);
 

@@ -47,8 +47,8 @@ public class InventoryClickListener implements Listener {
                 else if(item.equals(MenuItemFactory.PREVIOUS_PAGE_ITEM)) {
                     Bukkit.getPluginManager().callEvent(new PageNavigationEvent((ItemMenuHolder) holder, player, PageNavigation.PREVIOUS_PAGE));
                 }
-                else if(!(item.getItemMeta().getDisplayName().contains("/")) && event.getClickedInventory() != player.getInventory()) {
-                    Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent((Player) event.getWhoClicked(), item));
+                else if(!item.getItemMeta().getDisplayName().contains("/") && event.getClickedInventory() != player.getInventory()) {
+                    Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent((Player) event.getWhoClicked(), item, (ItemMenuHolder) holder));
                 }
 
                 event.setCancelled(true);
@@ -56,16 +56,8 @@ public class InventoryClickListener implements Listener {
             else if(holder instanceof ActionMenuHolder) {
                 ItemStack displayItem = clickedInventory.getItem(13);
                 if(item.equals(MenuItemFactory.BACK_ITEM)) {
-                    for(Shop shop : Configuration.getShops()) {
-                        for(Page page : shop.pages) {
-                            for(Item eItem : page.getItems()) {
-                                if(eItem.displayItem.equals(clickedInventory.getItem(13))) {
-                                    player.openInventory(page.getInventory());
-                                    event.setCancelled(true);
-                                }
-                            }
-                        }
-                    }
+                    player.openInventory(((ActionMenuHolder) holder).BACK_INVENTORY);
+                    event.setCancelled(true);
                 }
                 else if(item.getType().equals(Material.GREEN_STAINED_GLASS_PANE)) {
                     if(item.getItemMeta().getDisplayName().contains("Max")) {
@@ -98,11 +90,11 @@ public class InventoryClickListener implements Listener {
             }
             else if(holder instanceof ConfirmMenuHolder) {
                 if(event.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, ((ConfirmMenuHolder) holder).getAction()));
-                    Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent(player, clickedInventory.getItem(22)));
+                    Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, ((ConfirmMenuHolder) holder).ACTION));
+                    player.openInventory(((ConfirmMenuHolder) holder).BACK_INVENTORY);
                 }
                 else if(event.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS)) {
-                    Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent(player, clickedInventory.getItem(22)));
+                    player.openInventory(((ConfirmMenuHolder) holder).BACK_INVENTORY);
                 }
 
                 event.setCancelled(true);

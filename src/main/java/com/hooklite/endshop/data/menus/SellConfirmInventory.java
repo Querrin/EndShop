@@ -9,8 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.Inventory;
 
 public class SellConfirmInventory {
-    public Inventory getMenu(Item item, int amount, Action action) {
-        Inventory inventory = Bukkit.createInventory(new ConfirmMenuHolder(action), 45, String.format("%s%sConfirm", ChatColor.DARK_GRAY, ChatColor.BOLD));
+    public Inventory getMenu(Item item, int amount, Action action, Inventory backInventory) {
+        Inventory inventory = Bukkit.createInventory(new ConfirmMenuHolder(action, backInventory), 45, String.format("%s%sConfirm", ChatColor.DARK_GRAY, ChatColor.BOLD));
 
         inventory.setItem(22, item.displayItem);
 
