@@ -14,6 +14,11 @@ public class ItemMenuHolder implements InventoryHolder, PluginHolder {
         return null;
     }
 
+    public ItemMenuHolder(PluginHolder holder) {
+        SHOP = holder.getShop();
+        PAGE = holder.getPage();
+    }
+
     public ItemMenuHolder(Shop shop, Page page) {
         SHOP = shop;
         PAGE = page;

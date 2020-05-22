@@ -6,19 +6,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 public class ActionMenuHolder implements InventoryHolder, PluginHolder {
-    public final Inventory BACK_INVENTORY;
-    public final Shop SHOP;
-    public final Page PAGE;
+    private final Shop SHOP;
+    private final Page PAGE;
 
     @Override
     public Inventory getInventory() {
-        return BACK_INVENTORY;
+        return null;
     }
 
-    public ActionMenuHolder(Inventory backInventory, Shop shop, Page page) {
-        BACK_INVENTORY = backInventory;
-        SHOP = shop;
-        PAGE = page;
+    public ActionMenuHolder(PluginHolder holder, Inventory previousInventory) {
+        SHOP = holder.getShop();
+        PAGE = holder.getPage();
     }
 
     @Override
