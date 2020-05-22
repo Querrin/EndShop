@@ -1,8 +1,10 @@
 package com.hooklite.endshop.data.items;
 
 import com.hooklite.endshop.data.models.Item;
+import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -23,13 +25,13 @@ public class SellItem {
         return sellItem;
     }
 
-    public static ItemStack getMax(Item item, int amount) {
+    public static ItemStack getMax(Item item, Player player) {
         ItemStack sellItem = new ItemStack(Material.RED_STAINED_GLASS_PANE);
         ItemMeta meta = sellItem.getItemMeta();
 
         assert meta != null;
         meta.setDisplayName(String.format("%s%sSell Max", ChatColor.GREEN, ChatColor.BOLD));
-        meta.setLore(getLore(item, amount));
+        meta.setLore(getLore(item, item.sellReq.getMaxAmount(item, player, Action.SELL)));
 
         sellItem.setItemMeta(meta);
 
