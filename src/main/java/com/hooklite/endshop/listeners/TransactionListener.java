@@ -1,17 +1,18 @@
-package com.hooklite.endshop.listeners.action;
+package com.hooklite.endshop.listeners;
 
 import com.hooklite.endshop.config.Configuration;
-import com.hooklite.endshop.config.MenuItemFactory;
+import com.hooklite.endshop.data.menus.BuyInventory;
+import com.hooklite.endshop.data.menus.BuySellInventory;
+import com.hooklite.endshop.data.menus.SellInventory;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.requirements.Requirement;
 import com.hooklite.endshop.data.rewards.Action;
 import com.hooklite.endshop.data.rewards.Reward;
-import com.hooklite.endshop.events.ActionMenuOpenEvent;
 import com.hooklite.endshop.events.TransactionEvent;
+import com.hooklite.endshop.holders.PluginHolder;
 import com.hooklite.endshop.logging.MessageSender;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +24,7 @@ public class TransactionListener implements Listener {
     public void onTransaction(TransactionEvent event) {
         Item item = getItem(event.getItem());
         Player player = event.getWhoClicked();
-        int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(MenuItemFactory.AMOUNT_KEY, PersistentDataType.INTEGER);
+        int amount = event.getClickedItem().getItemMeta().getPersistentDataContainer().get(Configuration.AMOUNT_KEY, PersistentDataType.INTEGER);
         Reward reward = event.getAction() == Action.BUY ? item.buyReward : item.sellReward;
         Requirement req = event.getAction() == Action.BUY ? item.buyReq : item.sellReq;
 
@@ -42,8 +43,6 @@ public class TransactionListener implements Listener {
         else {
             MessageSender.toPlayer(player, req.getFailedMessage());
         }
-
-        Bukkit.getPluginManager().callEvent(new ActionMenuOpenEvent(player, item));
     }
 
     private Item getItem(ItemStack item) {

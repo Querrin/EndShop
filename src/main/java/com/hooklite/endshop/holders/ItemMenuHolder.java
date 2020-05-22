@@ -6,8 +6,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 public class ItemMenuHolder implements InventoryHolder, PluginHolder {
-    public final Shop SHOP;
-    public final Page PAGE;
+    private final Shop SHOP;
+    private final Page PAGE;
 
     @Override
     public Inventory getInventory() {
@@ -32,5 +32,10 @@ public class ItemMenuHolder implements InventoryHolder, PluginHolder {
     @Override
     public Page getPage() {
         return PAGE;
+    }
+
+    @Override
+    public Inventory getPreviousInventory() {
+        return null;
     }
 }

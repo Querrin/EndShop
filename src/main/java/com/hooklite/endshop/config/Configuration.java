@@ -28,6 +28,7 @@ import com.hooklite.endshop.holders.ShopMenuHolder;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -50,6 +51,7 @@ public class Configuration {
     private static Plugin plugin;
     private static Economy econ;
     private static Permission perms;
+    public static final NamespacedKey AMOUNT_KEY = new NamespacedKey(Configuration.getPlugin(), "amount");
 
     static {
         addRequirement(new ItemRequirement());

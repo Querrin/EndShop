@@ -1,5 +1,6 @@
 package com.hooklite.endshop.config;
 
+import com.hooklite.endshop.data.items.*;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
@@ -28,7 +29,7 @@ public class InventoryFactory {
             inventory.setItem(shop.slot, shop.displayItem);
         }
 
-        inventory.setItem(inventory.getSize() - 5, MenuItemFactory.getBalanceItem(player));
+        inventory.setItem(inventory.getSize() - 5, BalanceItem.get(player));
 
         return inventory;
     }
@@ -51,11 +52,11 @@ public class InventoryFactory {
 
         // Adds navigation elements to the inventory
         if(pageAmount > 1) {
-            inventory.setItem(inventorySize - 6, MenuItemFactory.PREVIOUS_PAGE_ITEM);
-            inventory.setItem(inventorySize - 4, MenuItemFactory.NEXT_PAGE_ITEM);
+            inventory.setItem(inventorySize - 6, PreviousPageItem.get());
+            inventory.setItem(inventorySize - 4, NextPageItem.get());
         }
-        inventory.setItem(inventorySize - 9, MenuItemFactory.BACK_ITEM);
-        inventory.setItem(inventorySize - 5, MenuItemFactory.getPageNumberItem(page.getNumber(), pageAmount));
+        inventory.setItem(inventorySize - 9, BackItem.get());
+        inventory.setItem(inventorySize - 5, PageNumberItem.get(shop.pages.size(), pageAmount));
 
         return inventory;
     }

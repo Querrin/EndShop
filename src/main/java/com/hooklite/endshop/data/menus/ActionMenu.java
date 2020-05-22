@@ -15,5 +15,5 @@ public interface ActionMenu {
      * @param player The player that does the transaction.
      * @return The inventory to open.
      */
-    Inventory getMenu(Item item, PluginHolder previousHolder, Player player);
+    Inventory get(Item item, PluginHolder previousHolder, Inventory backInventory, Player player);
 }

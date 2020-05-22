@@ -84,22 +84,4 @@ public class ItemFactory {
 
         return items;
     }
-
-    /**
-     * Gets the item object that contains the ItemStack.
-     * @return Item object if found, except null.
-     */
-    public static Item getItemMatch(ItemStack eventItem) {
-        for(Shop shop : Configuration.getShops()) {
-            for(Page page : shop.pages) {
-                for(Item eItem : page.getItems()) {
-                    if(eItem.displayItem.equals(eventItem)) {
-                        return eItem;
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
 }

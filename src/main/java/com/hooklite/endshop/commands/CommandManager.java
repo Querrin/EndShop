@@ -5,7 +5,7 @@ import com.hooklite.endshop.commands.subcommands.AddShopCommand;
 import com.hooklite.endshop.commands.subcommands.ReloadCommand;
 import com.hooklite.endshop.commands.subcommands.SubCommand;
 import com.hooklite.endshop.config.Configuration;
-import com.hooklite.endshop.events.ShopMenuOpenEvent;
+import com.hooklite.endshop.config.InventoryFactory;
 import com.hooklite.endshop.logging.MessageSender;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
@@ -50,7 +50,7 @@ public class CommandManager implements TabExecutor {
             if(sender instanceof Player) {
                 if(CommandStatus.isShopCommandEnabled()) {
                     if(perms.has(player, "endshop.shop")) {
-                        Bukkit.getServer().getPluginManager().callEvent(new ShopMenuOpenEvent(((Player) sender).getPlayer()));
+                        InventoryFactory.getShopMenu(Configuration.getShops(), (Player) sender);
                     }
                     else {
                         MessageSender.noPermission(player, "endshop.shop");

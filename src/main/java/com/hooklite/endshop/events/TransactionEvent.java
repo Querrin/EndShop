@@ -1,9 +1,11 @@
 package com.hooklite.endshop.events;
 
 import com.hooklite.endshop.data.rewards.Action;
+import com.hooklite.endshop.holders.PluginHolder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class TransactionEvent extends Event {
