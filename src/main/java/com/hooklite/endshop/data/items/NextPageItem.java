@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.navigation;
+package com.hooklite.endshop.data.items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

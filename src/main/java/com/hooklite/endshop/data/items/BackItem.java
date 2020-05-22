@@ -1,4 +1,4 @@
-package com.hooklite.endshop.data.navigation;
+package com.hooklite.endshop.data.items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ public class BackItem {
         BACK_ITEM.setItemMeta(meta);
     }
 
-    public static ItemStack get() {
+    public ItemStack get() {
         return BACK_ITEM;
     }
 }
