@@ -1,14 +1,11 @@
 package com.hooklite.endshop.holders;
 
-import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import java.util.List;
-
-public class ItemMenuHolder implements InventoryHolder {
+public class ItemMenuHolder implements InventoryHolder, PluginHolder {
     public final Shop SHOP;
     public final Page PAGE;
 
@@ -20,5 +17,15 @@ public class ItemMenuHolder implements InventoryHolder {
     public ItemMenuHolder(Shop shop, Page page) {
         SHOP = shop;
         PAGE = page;
+    }
+
+    @Override
+    public Shop getShop() {
+        return SHOP;
+    }
+
+    @Override
+    public Page getPage() {
+        return PAGE;
     }
 }
