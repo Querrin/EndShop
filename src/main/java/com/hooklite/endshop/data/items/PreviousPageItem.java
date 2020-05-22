@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class PreviousPageItem {
-    public static final ItemStack PREVIOUS_PAGE_ITEM = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+    private static final ItemStack PREVIOUS_PAGE_ITEM = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
 
     static {
         ItemMeta meta = PREVIOUS_PAGE_ITEM.getItemMeta();

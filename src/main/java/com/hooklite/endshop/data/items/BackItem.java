@@ -16,7 +16,7 @@ public class BackItem {
         BACK_ITEM.setItemMeta(meta);
     }
 
-    public ItemStack get() {
+    public static ItemStack get() {
         return BACK_ITEM;
     }
 }
