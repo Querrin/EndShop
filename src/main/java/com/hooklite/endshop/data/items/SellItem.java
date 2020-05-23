@@ -1,5 +1,6 @@
 package com.hooklite.endshop.data.items;
 
+import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.ChatColor;
@@ -7,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ public class SellItem {
 
         assert meta != null;
         meta.setDisplayName(String.format("%s%sSell %sx%s%s", ChatColor.GREEN, ChatColor.BOLD, ChatColor.GRAY, ChatColor.GOLD, amount));
+        meta.getPersistentDataContainer().set(Configuration.AMOUNT_KEY, PersistentDataType.INTEGER, amount);
         meta.setLore(getLore(item, amount));
 
         sellItem.setItemMeta(meta);
@@ -28,10 +31,12 @@ public class SellItem {
     public static ItemStack getMax(Item item, Player player) {
         ItemStack sellItem = new ItemStack(Material.RED_STAINED_GLASS_PANE);
         ItemMeta meta = sellItem.getItemMeta();
+        int amount = item.sellReq.getMaxAmount(item, player, Action.SELL);
 
         assert meta != null;
         meta.setDisplayName(String.format("%s%sSell Max", ChatColor.GREEN, ChatColor.BOLD));
-        meta.setLore(getLore(item, item.sellReq.getMaxAmount(item, player, Action.SELL)));
+        meta.getPersistentDataContainer().set(Configuration.AMOUNT_KEY, PersistentDataType.INTEGER, amount);
+        meta.setLore(getLore(item, amount));
 
         sellItem.setItemMeta(meta);
 
