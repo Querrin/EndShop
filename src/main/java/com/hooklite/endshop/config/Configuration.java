@@ -51,7 +51,7 @@ public class Configuration {
     private static Plugin plugin;
     private static Economy econ;
     private static Permission perms;
-    public static final NamespacedKey AMOUNT_KEY = new NamespacedKey(Configuration.getPlugin(), "amount");
+    public static NamespacedKey AMOUNT_KEY;
 
     static {
         addRequirement(new ItemRequirement());
@@ -147,6 +147,8 @@ public class Configuration {
     public static void configurePlugin(Plugin pl) {
         try {
             plugin = pl;
+
+            AMOUNT_KEY = new NamespacedKey(Configuration.getPlugin(), "amount");
 
             CommandStatus.enableShopCommand();
             setDefaultConfig();
