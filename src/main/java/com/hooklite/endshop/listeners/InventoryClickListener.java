@@ -94,9 +94,8 @@ public class InventoryClickListener implements Listener {
                     }
                     else {
                         Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.BUY));
+                        player.openInventory(updateActionInventory(clickedInventory, ((ActionMenuHolder) holder).getItem(), player));
                     }
-
-                    player.openInventory(updateActionInventory(clickedInventory, ((ActionMenuHolder) holder).getItem(), player));
                 }
                 else if(clickedItem.getType().equals(Material.RED_STAINED_GLASS_PANE)) {
                     if(clickedItem.getItemMeta().getDisplayName().contains("Max")) {
@@ -109,9 +108,8 @@ public class InventoryClickListener implements Listener {
                     }
                     else {
                         Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.SELL));
+                        player.openInventory(updateActionInventory(clickedInventory, ((ActionMenuHolder) holder).getItem(), player));
                     }
-
-                    player.openInventory(updateActionInventory(clickedInventory, ((ActionMenuHolder) holder).getItem(), player));
                 }
 
                 event.setCancelled(true);
@@ -119,10 +117,11 @@ public class InventoryClickListener implements Listener {
             else if(holder instanceof ConfirmMenuHolder) {
                 if(event.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS)) {
                     Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, ((ConfirmMenuHolder) holder).getAction()));
-                    player.openInventory(((ConfirmMenuHolder) holder).getPreviousInventory());
+                    player.openInventory(updateActionInventory(((ConfirmMenuHolder) holder).getPreviousInventory(), ((ConfirmMenuHolder) holder).getItem(), player));
                 }
                 else if(event.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS)) {
                     player.openInventory(((ConfirmMenuHolder) holder).getPreviousInventory());
+
                 }
 
                 event.setCancelled(true);
@@ -130,9 +129,9 @@ public class InventoryClickListener implements Listener {
         }
     }
 
-    private Item findMatch(Page page, ItemStack itemStack) {
+    private Item findMatch(Page page, ItemStack clickedItem) {
         for(Item item : page.getItems()) {
-            if(item.displayItem == itemStack)
+            if(item.displayItem.equals(clickedItem))
                 return item;
         }
 
