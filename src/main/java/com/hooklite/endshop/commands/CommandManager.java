@@ -50,7 +50,7 @@ public class CommandManager implements TabExecutor {
             if(sender instanceof Player) {
                 if(CommandStatus.isShopCommandEnabled()) {
                     if(perms.has(player, "endshop.shop")) {
-                        InventoryFactory.getShopMenu(Configuration.getShops(), (Player) sender);
+                        ((Player) sender).openInventory(InventoryFactory.getShopMenu(Configuration.getShops(), (Player) sender));
                     }
                     else {
                         MessageSender.noPermission(player, "endshop.shop");
