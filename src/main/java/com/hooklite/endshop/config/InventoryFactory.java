@@ -46,8 +46,8 @@ public class InventoryFactory {
         Inventory inventory = Bukkit.createInventory(new ItemMenuHolder(shop, page), inventorySize, shop.title);
 
         // Sets the inventory items
-        for(Item pageItem : page.getItems()) {
-            inventory.setItem(pageItem.slot % 45, pageItem.displayItem);
+        for(int i = 0; i < page.getItems().size(); i++) {
+            inventory.setItem(i, page.getItems().get(i).displayItem);
         }
 
         // Adds navigation elements to the inventory

@@ -18,7 +18,7 @@ class PageFactory {
         ArrayList<Page> pages = new ArrayList<>();
         int pageAmount = (int) Math.ceil(items.size() / 45.0) == 0 ? 1 : (int) Math.ceil(items.size() / 45.0);
 
-        int j = 0;
+        int j = 1;
         for(int i = 0; i < pageAmount; i++) {
             Page page = new Page();
 
@@ -29,7 +29,7 @@ class PageFactory {
 
                 pageItems.add(item);
 
-                if(j % 44 == 0 && j != 0) {
+                if(j % 45 == 0) {
                     j++;
                     break;
                 }
