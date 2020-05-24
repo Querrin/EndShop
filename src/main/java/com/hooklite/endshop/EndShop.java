@@ -16,7 +16,7 @@ public final class EndShop extends JavaPlugin {
     @Override
     public void onEnable() {
         Metrics metrics = new Metrics(this, BSTATS_PLUGIN_ID);
-        MessageSender.toConsole("bStats:" + (metrics.isEnabled() ? "enabled" : "disabled"));
+        MessageSender.toConsole("bStats: " + (metrics.isEnabled() ? "enabled" : "disabled"));
 
         getPluginManager().registerEvents(new InventoryClickListener(), this);
         getPluginManager().registerEvents(new TransactionListener(), this);
