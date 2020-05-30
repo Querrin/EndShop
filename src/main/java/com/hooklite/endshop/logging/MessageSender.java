@@ -13,11 +13,11 @@ public class MessageSender {
         player.sendMessage(LoggingData.PREFIX + " " + message);
     }
 
-    public static void buyMessage(Player player, String requirement, String reward, int amount) {
+    public static void buyMessage(Player player, String requirement, String reward) {
         player.sendMessage(String.format("%sSuccessfully bought %s%s%s%s%s for %s%s%s", ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, reward, ChatColor.RESET, ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, requirement));
     }
 
-    public static void sellMessage(Player player, String requirement, String reward, int amount) {
+    public static void sellMessage(Player player, String requirement, String reward) {
         player.sendMessage(String.format("%sSuccessfully sold %s%s%s%s%s for %s%s%s", ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, requirement, ChatColor.RESET, ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, reward));
     }
 

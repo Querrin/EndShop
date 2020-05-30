@@ -31,9 +31,9 @@ public class TransactionListener implements Listener {
         if(req.check(player, amount) && req.doTransaction(player, amount)) {
             if(reward.execute(item, player, amount)) {
                 if(event.getAction() == Action.BUY)
-                    MessageSender.buyMessage(player, req.getName(amount), reward.getReward(amount), amount);
+                    MessageSender.buyMessage(player, req.getName(amount), reward.getReward(amount));
                 else
-                    MessageSender.sellMessage(player, req.getName(amount), reward.getReward(amount), amount);
+                    MessageSender.sellMessage(player, req.getName(amount), reward.getReward(amount));
             }
             else {
                 req.undoTransaction(player, amount);
