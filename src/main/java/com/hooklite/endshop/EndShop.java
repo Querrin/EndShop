@@ -2,8 +2,8 @@ package com.hooklite.endshop;
 
 import com.hooklite.endshop.commands.CommandManager;
 import com.hooklite.endshop.config.Configuration;
-import com.hooklite.endshop.listeners.TransactionListener;
 import com.hooklite.endshop.listeners.InventoryClickListener;
+import com.hooklite.endshop.listeners.TransactionListener;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,7 +16,8 @@ public final class EndShop extends JavaPlugin {
     @Override
     public void onEnable() {
         Metrics metrics = new Metrics(this, BSTATS_PLUGIN_ID);
-        MessageSender.toConsole("bStats: " + (metrics.isEnabled() ? "enabled" : "disabled"));
+
+        MessageSender.toConsole("bStats:" + (metrics.isEnabled() ? " enabled" : " disabled"));
 
         getPluginManager().registerEvents(new InventoryClickListener(), this);
         getPluginManager().registerEvents(new TransactionListener(), this);

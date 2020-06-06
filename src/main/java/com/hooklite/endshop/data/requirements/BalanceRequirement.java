@@ -5,7 +5,6 @@ import com.hooklite.endshop.config.Configuration;
 import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.rewards.Action;
 import com.hooklite.endshop.logging.MessageSender;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
@@ -62,7 +61,7 @@ public class BalanceRequirement implements Requirement {
 
     @Override
     public String getName(int amount) {
-        return String.format("%s$%.2f", ChatColor.GREEN, requirement * amount * configAmount);
+        return String.format("$%.2f", requirement * amount * configAmount);
     }
 
     @Override

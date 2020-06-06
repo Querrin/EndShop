@@ -1,5 +1,6 @@
 package com.hooklite.endshop.logging;
 
+import com.hooklite.endshop.data.rewards.Action;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,12 +14,14 @@ public class MessageSender {
         player.sendMessage(LoggingData.PREFIX + " " + message);
     }
 
-    public static void buyMessage(Player player, String requirement, String reward, int amount) {
-        player.sendMessage(String.format("%sSuccessfully bought %s%s%s%s%s for %s%s%s", ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, reward, ChatColor.RESET, ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, requirement));
+    public static void buyMessage(Player player, String requirement, String reward) {
+        player.sendMessage(String.format("%sSuccessfully bought %s%s%s%s for %s%s", ChatColor.BOLD, ChatColor.GREEN, reward, ChatColor.RESET, ChatColor.BOLD, ChatColor.RED, requirement));
+        TransactionLogger.log(player, requirement, reward, Action.BUY);
     }
 
-    public static void sellMessage(Player player, String requirement, String reward, int amount) {
-        player.sendMessage(String.format("%sSuccessfully sold %s%s%s%s%s for %s%s%s", ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, requirement, ChatColor.RESET, ChatColor.BOLD, ChatColor.RESET, ChatColor.GRAY, reward));
+    public static void sellMessage(Player player, String requirement, String reward) {
+        player.sendMessage(String.format("%sSuccessfully sold %s%s%s%s for %s%s", ChatColor.BOLD, ChatColor.RED, requirement, ChatColor.RESET, ChatColor.BOLD, ChatColor.GREEN, reward));
+        TransactionLogger.log(player, requirement, reward, Action.SELL);
     }
 
     public static void noPermission(Player player, String permission) {

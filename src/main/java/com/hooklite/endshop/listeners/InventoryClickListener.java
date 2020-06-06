@@ -10,7 +10,7 @@ import com.hooklite.endshop.data.models.Item;
 import com.hooklite.endshop.data.models.Page;
 import com.hooklite.endshop.data.models.Shop;
 import com.hooklite.endshop.data.rewards.Action;
-import com.hooklite.endshop.events.*;
+import com.hooklite.endshop.events.TransactionEvent;
 import com.hooklite.endshop.holders.*;
 import com.hooklite.endshop.logging.MessageSender;
 import org.bukkit.Bukkit;
@@ -93,7 +93,7 @@ public class InventoryClickListener implements Listener {
                             MessageSender.toPlayer(player, "You do not meet the requirements!");
                     }
                     else {
-                        Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.BUY));
+                        Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, (PluginHolder) holder, Action.BUY));
                         player.openInventory(updateActionInventory(clickedInventory, ((ActionMenuHolder) holder).getItem(), player));
                     }
                 }
@@ -107,7 +107,7 @@ public class InventoryClickListener implements Listener {
                             MessageSender.toPlayer(player, "You do not meet the requirements!");
                     }
                     else {
-                        Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, Action.SELL));
+                        Bukkit.getPluginManager().callEvent(new TransactionEvent(displayItem, event.getCurrentItem(), player, (PluginHolder) holder, Action.SELL));
                         player.openInventory(updateActionInventory(clickedInventory, ((ActionMenuHolder) holder).getItem(), player));
                     }
                 }
@@ -116,7 +116,7 @@ public class InventoryClickListener implements Listener {
             }
             else if(holder instanceof ConfirmMenuHolder) {
                 if(event.getCurrentItem().getType().equals(Material.GREEN_STAINED_GLASS)) {
-                    Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, ((ConfirmMenuHolder) holder).getAction()));
+                    Bukkit.getPluginManager().callEvent(new TransactionEvent(clickedInventory.getItem(22), event.getCurrentItem(), player, (PluginHolder) holder, ((ConfirmMenuHolder) holder).getAction()));
                     player.openInventory(updateActionInventory(((ConfirmMenuHolder) holder).getPreviousInventory(), ((ConfirmMenuHolder) holder).getItem(), player));
                 }
                 else if(event.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS)) {
