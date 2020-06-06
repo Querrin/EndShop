@@ -2,7 +2,6 @@ package com.hooklite.endshop.data.rewards;
 
 import com.hooklite.endshop.config.Balance;
 import com.hooklite.endshop.data.models.Item;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 
@@ -17,7 +16,7 @@ public class BalanceReward implements Reward {
 
     @Override
     public String getReward(int amount) {
-        return String.format("%s$%.2f", ChatColor.GREEN, reward * amount * configAmount);
+        return String.format("$%.2f", reward * amount * configAmount);
     }
 
     @Override
