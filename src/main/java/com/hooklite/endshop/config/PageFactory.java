@@ -24,8 +24,8 @@ class PageFactory {
 
             // Loads the items into this current page
             List<Item> pageItems = new ArrayList<>();
-            while(j < items.size()) {
-                Item item = items.get(j);
+            while(j <= items.size()) {
+                Item item = items.get(j - 1);
 
                 pageItems.add(item);
 
