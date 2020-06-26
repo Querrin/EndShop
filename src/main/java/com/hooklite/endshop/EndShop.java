@@ -1,34 +1,32 @@
 package com.hooklite.endshop;
 
-import com.hooklite.endshop.commands.CommandManager;
-import com.hooklite.endshop.config.Configuration;
-import com.hooklite.endshop.listeners.InventoryClickListener;
-import com.hooklite.endshop.listeners.TransactionListener;
-import com.hooklite.endshop.logging.MessageSender;
-import org.bstats.bukkit.Metrics;
+import co.aikar.commands.BukkitCommandManager;
+import com.hooklite.endshop.commands.ShopCommand;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static org.bukkit.Bukkit.getPluginManager;
-
 public final class EndShop extends JavaPlugin {
-    private final int BSTATS_PLUGIN_ID = 7622;
+    private static Plugin plugin;
+    private static BukkitCommandManager commandManager;
+
+    public static Plugin getPlugin() {
+        return plugin;
+    }
+
+    public static BukkitCommandManager getCommandManager() {
+        return commandManager;
+    }
 
     @Override
     public void onEnable() {
-        Metrics metrics = new Metrics(this, BSTATS_PLUGIN_ID);
+        plugin = this;
+        commandManager = new BukkitCommandManager(this);
 
-        MessageSender.toConsole("bStats:" + (metrics.isEnabled() ? " enabled" : " disabled"));
-
-        getPluginManager().registerEvents(new InventoryClickListener(), this);
-        getPluginManager().registerEvents(new TransactionListener(), this);
-        Configuration.configurePlugin(this);
-
-        getCommand("endshop").setExecutor(new CommandManager());
-        getCommand("shop").setExecutor(new CommandManager());
+        commandManager.registerCommand(new ShopCommand());
     }
 
     @Override
     public void onDisable() {
-        Configuration.closeShopMenus(this.getServer().getOnlinePlayers());
+
     }
 }
