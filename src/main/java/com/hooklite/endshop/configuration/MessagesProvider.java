@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MessagesProvider {
     private static YamlConfiguration config;
@@ -25,8 +26,9 @@ public class MessagesProvider {
 
         try {
             if(!file.exists()) {
-                if(!file.createNewFile())
-                    throw new IOException("Unable to create messages.yml file.");
+                YamlConfiguration internalConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(MessagesProvider.class.getResourceAsStream("/messages.yml")));
+
+                internalConfig.save(file);
             }
 
             config = new YamlConfiguration();
@@ -38,7 +40,7 @@ public class MessagesProvider {
         }
         catch(IOException e) {
             MessageSender.printStackTrace(e);
-            MessageSender.logError(e.getMessage());
+            MessageSender.logError("Failed creating messages.yml file.");
 
             Bukkit.getPluginManager().disablePlugin(EndShop.getPlugin());
         }
