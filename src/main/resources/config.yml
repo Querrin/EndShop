@@ -1,4 +1,21 @@
-# The shop names should be unique, otherwise the plugin will not load them properly!
+#  _____          _ _____ _
+# |  ___|        | /  ___| |
+# | |__ _ __   __| \ `--.| |__   ___  _ __
+# |  __| '_ \ / _` |`--. \ '_ \ / _ \| '_ \
+# | |__| | | | (_| /\__/ / | | | (_) | |_) |
+# \____/_| |_|\__,_\____/|_| |_|\___/| .__/
+#                                    | |
+#                                    |_|
 
+# Set to true to enable additional logging to console
+debug: false
+
+# Set to false to disable transaction logging
+logging: true
+
+# Set the prefix used by the plugin
+prefix: '&7&l[&dEndShop&7&l]'
+
+# Register your shop files located in shops directory here
 shops:
-  - example-shop
+  - example.yml

@@ -1,0 +1,30 @@
+#  ---------------------------------------------
+#  PLACEHOLDERS
+#  ---------------------------------------------
+#
+# %current_page%  -> Displays the current page number (used in display item)
+# %page_amount%   -> Displays the amount of pages in the shop (used in display item)
+
+
+shops-menu: '&8&lShops'
+
+  #  ---------------------------------------------
+#  MENU ITEMS
+#  ---------------------------------------------
+
+# NEXT PAGE ITEM
+next-page-item: '&a&lNext Page'
+next-page-material: GREEN_STAINED_GLASS_PANE
+
+# PREVIOUS PAGE ITEM
+previous-page-item: '&a&lPrevious Page'
+previous-page-material: GREEN_STAINED_GLASS_PANE
+
+# PAGE DISPLAY ITEM
+display-page-item: '&c%current_page%&7&l/&c%page_amount%'
+display-page-material: YELLOW_STAINED_GLASS_PANE
+
+# BACK ITEM
+back-item: '&c&lBack'
+back-material: RED_STAINED_GLASS_PANE
+

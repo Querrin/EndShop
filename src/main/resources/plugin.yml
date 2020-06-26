@@ -1,32 +1,10 @@
 name: EndShop
 version: ${project.version}
 main: com.hooklite.endshop.EndShop
-load: POSTWORLD
 api-version: 1.13
+load: POSTWORLD
 prefix: EndShop
 author: Querrin
 description: An advanced shop for survival servers.
 website: hooklite.com
-depend: [Vault]
-commands:
-  endshop:
-    description: Commands for endshop
-    aliases: [es]
-  shop:
-    description: Opens the shop menu
-permissions:
-  endshop:
-    default: op
-    description: Allows the use of "/endshop" command
-  endshop.*:
-    default: op
-    description: Allows the use of all commands that the plugin offers
-  endshop.reload:
-    default: op
-    description: Allows the use of "/endshop reload" command to reload the configurations
-  endshop.shop:
-    default: op
-    description: Allows the use of "/shop" command to open the shop menu
-  endshop.add:
-    default: op
-    description: Allows the use of "/endshop add <shop>" command to register a new shop
+softdepend: [Vault]
