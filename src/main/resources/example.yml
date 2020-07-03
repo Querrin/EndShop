@@ -1,0 +1,43 @@
+#
+#
+#
+
+title: '&aEx&bam&cpl&de'
+description:
+  - '&6Hey &ethere&f!'
+  - '&dThis is an example&f!'
+display-item: YELLOW_STAINED_GLASS
+show-conditions: true
+show-rewards: true
+slot: 1
+
+items:
+  oak-item:
+    title: '&a&lOak &7log'
+    display-item: OAK_LOG
+    buy: true
+    sell: true
+
+    buy-conditions:
+      condition1:
+        type: item
+        amount: 5
+        condition: DIRT_BLOCK
+
+    buy-rewards:
+      reward1:
+        type: item
+        amount: 1
+        reward: OAK_LOG
+
+    sell-conditions:
+      condition1:
+        type: item
+        amount: 1
+        condition: OAK_LOG
+
+    sell-rewards:
+      reward1:
+        type: item
+        amount: 4
+        reward: DIRT_BLOCK

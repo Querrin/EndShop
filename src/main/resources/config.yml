@@ -7,6 +7,9 @@
 #                                    | |
 #                                    |_|
 
+# Set the language of the file
+language: EN
+
 # Set to true to enable additional logging to console
 debug: false
 
