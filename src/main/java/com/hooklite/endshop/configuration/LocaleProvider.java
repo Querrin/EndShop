@@ -10,23 +10,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class MessagesProvider {
+public class LocaleProvider {
     private static YamlConfiguration config;
-
-    static {
-        loadConfig();
-    }
 
     public static YamlConfiguration getConfig() {
         return config;
     }
 
-    private static void loadConfig() {
-        File file = new File(EndShop.getPlugin().getDataFolder().getPath() + "messages.yml");
+    public static void loadConfig() {
+        File file = new File(EndShop.getPlugin().getDataFolder().getPath() + "languages/locale_EN.yml");
 
         try {
+            MessageSender.logDebug("Attempting to load locales file...");
+
             if(!file.exists()) {
-                YamlConfiguration internalConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(MessagesProvider.class.getResourceAsStream("/messages.yml")));
+                YamlConfiguration internalConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(LocaleProvider.class.getResourceAsStream("/languages/locale_EN.yml")));
 
                 internalConfig.save(file);
             }
@@ -36,11 +34,11 @@ public class MessagesProvider {
         }
         catch(InvalidConfigurationException e) {
             e.printStackTrace();
-            MessageSender.logError("There is an error in your messages.yml file.");
+            MessageSender.logError("There is an error in your locale_EN.yml file.");
         }
         catch(IOException e) {
             MessageSender.printStackTrace(e);
-            MessageSender.logError("Failed creating messages.yml file.");
+            MessageSender.logError("Failed creating locale_EN.yml file.");
 
             Bukkit.getPluginManager().disablePlugin(EndShop.getPlugin());
         }

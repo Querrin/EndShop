@@ -8,21 +8,21 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShopsProvider {
     private static List<YamlConfiguration> configs;
-
-    static {
-        loadConfigs();
-    }
 
     public static List<YamlConfiguration> getConfigs() {
         return configs;
     }
 
     public static void loadConfigs() {
+        MessageSender.logDebug("Attempting to load shop files...");
+
         File file = new File(EndShop.getPlugin().getDataFolder().getPath().concat("shops/"));
+        configs = new ArrayList<>();
 
         try {
             if(!file.exists()) {
@@ -33,11 +33,17 @@ public class ShopsProvider {
             for(String shop : DefaultProvider.shops()) {
                 File shopFile = new File(EndShop.getPlugin().getDataFolder().getPath().concat("shops/").concat(shop));
 
+                MessageSender.logDebug(String.format("Found file %s in config.yml", shop));
+
                 if(!shopFile.exists()) {
-                    YamlConfiguration internalConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(MessagesProvider.class.getResourceAsStream("/example.yml")));
+                    MessageSender.logDebug(String.format("%s doesn't exist, loading example...", shop));
+
+                    YamlConfiguration internalConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(LocaleProvider.class.getResourceAsStream("/example.yml")));
 
                     internalConfig.save(shopFile);
                 }
+
+                configs.add(YamlConfiguration.loadConfiguration(shopFile));
             }
         }
         catch(IOException e) {

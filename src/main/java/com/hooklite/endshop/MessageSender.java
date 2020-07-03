@@ -1,5 +1,6 @@
 package com.hooklite.endshop;
 
+import com.hooklite.endshop.configuration.DefaultProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -8,6 +9,11 @@ public class MessageSender {
 
     public static void toConsole(String message) {
         Bukkit.getConsoleSender().sendMessage(CONSOLE_PREFIX + " " + message);
+    }
+
+    public static void logDebug(String message) {
+        if(DefaultProvider.debug())
+            Bukkit.getConsoleSender().sendMessage(CONSOLE_PREFIX + " " + message);
     }
 
     public static void logError(String message) {

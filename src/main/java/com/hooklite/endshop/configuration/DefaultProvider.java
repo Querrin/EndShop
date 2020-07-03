@@ -8,18 +8,16 @@ import java.util.List;
 public class DefaultProvider {
     private static YamlConfiguration config;
 
-    static {
-        config = (YamlConfiguration) EndShop.getPlugin().getConfig();
-        EndShop.getPlugin().saveDefaultConfig();
-    }
-
     public static YamlConfiguration getConfig() {
         return config;
     }
 
-    public static void reloadConfig() {
+    public static void loadConfig() {
         EndShop.getPlugin().reloadConfig();
+
         config = (YamlConfiguration) EndShop.getPlugin().getConfig();
+
+        EndShop.getPlugin().saveDefaultConfig();
     }
 
     public static boolean debug() {
