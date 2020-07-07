@@ -1,6 +1,6 @@
 package com.hooklite.endshop;
 
-import com.hooklite.endshop.configuration.DefaultProvider;
+import com.hooklite.endshop.data.configuration.DefaultProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 

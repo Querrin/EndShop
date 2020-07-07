@@ -1,7 +1,8 @@
-package com.hooklite.endshop.configuration;
+package com.hooklite.endshop.data.configuration;
 
 import com.hooklite.endshop.EndShop;
 import com.hooklite.endshop.MessageSender;
+import com.hooklite.endshop.data.YamlResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -12,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopsProvider {
-    private static List<YamlConfiguration> configs;
+    private static List<ShopConfig> configs;
 
-    public static List<YamlConfiguration> getConfigs() {
+    public static List<ShopConfig> getConfigs() {
         return configs;
     }
 
@@ -43,10 +44,10 @@ public class ShopsProvider {
                     internalConfig.save(shopFile);
                 }
 
-                configs.add(YamlConfiguration.loadConfiguration(shopFile));
+                configs.add(YamlResolver.resolveValues(YamlConfiguration.loadConfiguration(shopFile), new ShopConfig()));
             }
         }
-        catch(IOException e) {
+        catch(IOException | IllegalAccessException e) {
             MessageSender.printStackTrace(e);
             MessageSender.logError("Unable to create shops directory or it's files.");
 

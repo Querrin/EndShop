@@ -2,9 +2,9 @@ package com.hooklite.endshop;
 
 import co.aikar.commands.BukkitCommandManager;
 import com.hooklite.endshop.commands.ShopCommand;
-import com.hooklite.endshop.configuration.DefaultProvider;
-import com.hooklite.endshop.configuration.LocaleProvider;
-import com.hooklite.endshop.configuration.ShopsProvider;
+import com.hooklite.endshop.data.configuration.DefaultProvider;
+import com.hooklite.endshop.data.configuration.LocaleProvider;
+import com.hooklite.endshop.data.configuration.ShopsProvider;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 

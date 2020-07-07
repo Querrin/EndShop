@@ -1,4 +1,4 @@
-package com.hooklite.endshop.configuration;
+package com.hooklite.endshop.data.configuration;
 
 import com.hooklite.endshop.EndShop;
 import com.hooklite.endshop.MessageSender;
