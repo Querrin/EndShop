@@ -2,6 +2,7 @@ package com.hooklite.endshop.data.configuration;
 
 import com.hooklite.endshop.EndShop;
 import com.hooklite.endshop.MessageSender;
+import com.hooklite.endshop.data.ShopConfig;
 import com.hooklite.endshop.data.YamlResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -44,7 +45,11 @@ public class ShopsProvider {
                     internalConfig.save(shopFile);
                 }
 
-                configs.add(YamlResolver.resolveValues(YamlConfiguration.loadConfiguration(shopFile), new ShopConfig()));
+                ShopConfig config = YamlResolver.resolveValues(YamlConfiguration.loadConfiguration(shopFile), new ShopConfig());
+
+                config.items = ItemResolver.
+
+                        configs.add();
             }
         }
         catch(IOException | IllegalAccessException e) {

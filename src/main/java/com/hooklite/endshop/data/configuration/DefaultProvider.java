@@ -1,34 +1,36 @@
 package com.hooklite.endshop.data.configuration;
 
 import com.hooklite.endshop.EndShop;
+import com.hooklite.endshop.data.DefaultConfig;
+import com.hooklite.endshop.data.YamlResolver;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.List;
 
 public class DefaultProvider {
-    private static YamlConfiguration config;
+    private static DefaultConfig config;
 
-    public static YamlConfiguration getConfig() {
+    public static DefaultConfig getConfig() {
         return config;
     }
 
-    public static void loadConfig() {
+    public static void loadConfig() throws IllegalAccessException {
         EndShop.getPlugin().reloadConfig();
 
-        config = (YamlConfiguration) EndShop.getPlugin().getConfig();
+        config = YamlResolver.resolveValues((YamlConfiguration) EndShop.getPlugin().getConfig(), new DefaultConfig());
 
         EndShop.getPlugin().saveDefaultConfig();
     }
 
     public static boolean debug() {
-        return config.getBoolean("debug", false);
+        return config.debug;
     }
 
     public static boolean logging() {
-        return config.getBoolean("logging", true);
+        return config.logging;
     }
 
     public static List<String> shops() {
-        return config.getStringList("shops");
+        return config.shops;
     }
 }

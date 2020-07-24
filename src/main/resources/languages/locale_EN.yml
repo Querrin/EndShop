@@ -12,7 +12,7 @@ language: EN
 #    MESSAGE LOCALES
 #  ---------------------------------------------
 
-
+no-permission: '&cNo permission.'
 
 #  ---------------------------------------------
 #    MENU LOCALES
