@@ -8,7 +8,7 @@
 #                                    |_|
 
 # Set the language of the file
-language: EN
+language: 'lang_en.yml'
 
 # Set to true to enable additional logging to console
 debug: false
@@ -17,7 +17,7 @@ debug: false
 logging: true
 
 # Set the prefix used by the plugin
-prefix: '&7&l[&dEndShop&7&l]'
+prefix: '&5END&dSHOP &8> &f'
 
 # Register your shop files located in shops directory here
 shops:

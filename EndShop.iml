@@ -34,6 +34,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.bstats:bstats-bukkit:1.7" level="project" />
     <orderEntry type="library" name="Maven: co.aikar:acf-bukkit:0.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: me.clip:placeholderapi:2.10.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: me.clip:placeholderapi:2.10.8" level="project" />
   </component>
 </module>
