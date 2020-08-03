@@ -18,7 +18,7 @@ public class LanguageProvider {
         defaultLanguages.add("lang_en.yml");
     }
 
-    public static void loadConfig(Plugin plugin) {
+    public static void loadConfig(Plugin plugin) throws IOException {
         loadDefaults(plugin);
         String language = DefaultProvider.getConfig().getString("language");
 
@@ -37,24 +37,19 @@ public class LanguageProvider {
         return config;
     }
 
-    private static void loadDefaults(Plugin plugin) {
+    private static void loadDefaults(Plugin plugin) throws IOException {
         File langFolder = new File(plugin.getDataFolder().toString() + "/languages/");
 
-        try {
-            if(!langFolder.mkdir())
-                throw new IOException();
+        if(!langFolder.mkdir())
+            throw new IOException();
 
-            for(String language : defaultLanguages) {
-                File file = new File(plugin.getDataFolder().toString() + "/languages/" + language);
+        for(String language : defaultLanguages) {
+            File file = new File(plugin.getDataFolder().toString() + "/languages/" + language);
 
-                if(!file.exists()) {
-                    YamlConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(LanguageProvider.class.getResourceAsStream("/languages/" + language)));
-                    config.save(file);
-                }
+            if(!file.exists()) {
+                YamlConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(LanguageProvider.class.getResourceAsStream("/languages/" + language)));
+                config.save(file);
             }
-        }
-        catch(IOException e) {
-            e.printStackTrace();
         }
     }
 }
